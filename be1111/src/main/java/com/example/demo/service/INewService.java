@@ -10,4 +10,5 @@ public interface INewService {
     List<EmployeeModel> getAllEmployees();
     EmployeeModel updateEmployee(EmployeeModel employee, long id);
     void deleteEmployee(long id);
+    public List<EmployeeModel> findByName(String name);
 }
