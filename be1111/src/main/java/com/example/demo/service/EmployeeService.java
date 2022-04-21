@@ -36,9 +36,9 @@ public class EmployeeService implements INewService {
         // check whether a employee exist in a DB or not
         employeeRepository.deleteById(id);
     }
-    @Override
-    public List<EmployeeModel> findEmployeeByName(String name)  {
-        return employeeRepository.findAll(name);
-    }
+//    @Override
+//    public List<EmployeeModel> findEmployeeByName(String name)  {
+//        return employeeRepository.findAll(name);
+//    }
 
 }

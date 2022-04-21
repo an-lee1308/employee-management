@@ -1,0 +1,21 @@
+.head_container {
+    display: flex;
+    margin: 0 20px;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    margin: 0;
+    padding: 2rem;
+    box-shadow: 0 1px 1px #ccc;
+    &__title{
+        font-size:1.5rem;
+    }
+    &__button{
+        display: flex;
+        font-size:1.5rem;
+        padding: 0.2rem;
+        &--delete{
+            color: rgba(0,0,0,0.5);
+        }
+    }
+}

@@ -60,16 +60,16 @@ public class EmployeeController {
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody EmployeeModel employee){
         return new ResponseEntity<EmployeeModel>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
     }
-    @GetMapping(value = "/list")
+    @GetMapping(value = "/employee")
     public List<EmployeeModel> getAllEmployees(){
         return employeeService.getAllEmployees();
     }
-    @PutMapping("{id}")
+    @PutMapping("/employee/{id}")
     public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable("id") long id
             ,@RequestBody EmployeeModel employee){
         return new ResponseEntity<EmployeeModel>(employeeService.updateEmployee(employee, id), HttpStatus.OK);
     }
-    @DeleteMapping("{id}")
+    @DeleteMapping("/employee/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id){
 
         // delete employee from DB
@@ -77,8 +77,8 @@ public class EmployeeController {
 
         return new ResponseEntity<String>("Employee deleted successfully!.", HttpStatus.OK);
     }
-    @GetMapping(value = "/list/{name}")
-    public List<EmployeeModel> findEmployee(@PathVariable("name") String name){
-        return employeeService.findEmployeeByName();
-    }
+//    @GetMapping(value = "/list/{name}")
+//    public List<EmployeeModel> findEmployee(@PathVariable("name") String name){
+//        return employeeService.findEmployeeByName();
+//    }
 }
