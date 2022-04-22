@@ -14,8 +14,99 @@
         display: flex;
         font-size:1.5rem;
         padding: 0.2rem;
+        cursor: pointer;
         &--delete{
             color: rgba(0,0,0,0.5);
         }
     }
+}
+.ant-modal-header{
+    background-color:rgb(71, 30, 184);
+}
+#rcDialogTitle1{
+    color: white;
+}
+
+.group-container{
+    display: flex;
+}
+.group-input{
+
+        position: relative; 
+        margin-bottom: 45px; 
+    
+    input {
+        font-size: 18px;
+        padding: 10px 10px 10px 5px;
+        -webkit-appearance: none;
+        display: block;
+        // background: #fafafa;
+        color: #636363;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+        // border-bottom: 1px solid #757575;
+        .highlight {
+            position: absolute;
+            height: 60%; 
+            width: 100px; 
+            top: 25%; 
+            left: 0;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+                .bar {
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+
+        .bar:before, .bar:after {
+            content: '';
+            height: 2px; 
+            width: 0;
+            bottom: 1px; 
+            position: absolute;
+            background: #4a89dc; 
+            transition: all 0.2s ease;
+        }
+
+        .bar:before { left: 50%; }
+
+        .bar:after { right: 50%; }
+    }
+    input:focus { outline: none; }
+    // label {
+    //     color: #999; 
+    //     font-size: 18px;
+    //     font-weight: normal;
+    //     position: absolute;
+    //     pointer-events: none;
+    //     left: 5px;
+    //     top: 10px;
+    //     transition: all 0.2s ease;
+    // }
+    /* active */
+    
+    input:focus ~ label, input.used ~ label {
+        top: -20px;
+      transform: scale(.75); left: -2px;
+        /* font-size: 14px; */
+        color: #4a89dc;
+    }
+}
+
+form {
+	width: 380px;
+	margin: 4em auto;
+	padding: 3em 2em 2em 2em;
+	// background: #fafafa;
+	// border: 1px solid #ebebeb;
+	// box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+}
+/* Animations */
+
+@keyframes inputHighlighter {
+	from { background: #4a89dc; }
+	to 	{ width: 0; background: transparent; }
 }

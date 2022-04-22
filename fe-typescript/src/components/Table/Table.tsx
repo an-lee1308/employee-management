@@ -1,14 +1,17 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Table, Button, Tag } from 'antd';
+import { cursorTo } from 'readline';
 
 
-type Props = {
-    some?: any,
-    style?: string,
-    rowSelection?: any
-};
+// type Props = {
+//     some?: any,
+//     style?: string,
+//     rowSelection?: any
+// };
+interface info {
 
+}
 const data: any = [];
 for (let i = 0; i < 46; i++) {
     data.push({
@@ -36,7 +39,8 @@ const columns = [{
     title: 'Tags',
     key: 'tags',
     dataIndex: 'tags',
-    render: () => <a>Delete</a>,
+    render: () => <div style={{ cursor: 'pointer' }} onClick={() => console.log("hello")
+    } > Delete</div >
 },];
 class TableUI extends React.Component {
 
@@ -71,14 +75,14 @@ class TableUI extends React.Component {
         return (
             <div>
                 <div style={{ marginBottom: 16 }}>
-                    <Button
+                    {/* <Button
                         type="primary"
                         onClick={this.start}
                         disabled={!hasSelected}
                         loading={loading}
                     >
                         Reload
-                    </Button>
+                    </Button> */}
                     <span style={{ marginLeft: 8 }}>
                         {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
                     </span>

@@ -14,19 +14,7 @@ function Heading() {
         <div className="header-limiter">
 
           <h1><span>E</span>Employee Management</h1>
-          {/* <Row>
-            <Col xs={24} xl={8}>
-              One of three columns
-            </Col>
-            <Col xs={24} xl={8}>
-              One of three columns
-            </Col>
-            <Col xs={24} xl={8}>
-              One of three columns
-            </Col>
-          </Row> */}
-
-          <nav>
+          <div>
 
             <Button type="primary" style={{ margin: "auto", borderRadius: "20px" }}>
               Employee
@@ -34,17 +22,11 @@ function Heading() {
             <Button type="default" style={{ margin: "auto", borderRadius: "20px" }}>
               Team
             </Button>
-          </nav>
+          </div>
 
         </div>
 
       </header>
-      {/* <Header>
-        <Row>
-          <Col span={6}> </Col>
-          <Col span={6}></Col>
-        </Row>
-      </Header> */}
     </>
   );
 }
