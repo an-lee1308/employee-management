@@ -1,11 +1,11 @@
 import "antd/dist/antd.css";
-// import { Layout, Row, Col } from "antd";
-import { Button, Radio } from "antd";
+import { Button } from "antd";
 // const { Header, Content, Footer, Sider } = Layout;
 import "./Header.scss";
 function Heading() {
   type Props = {
-    some?: string;
+    some?: any,
+    style?: string,
   };
   return (
     <>
@@ -13,26 +13,20 @@ function Heading() {
 
         <div className="header-limiter">
 
-          <h1><a href="#">Employee Management</a></h1>
+          <h1><span>E</span>Employee Management</h1>
+          <div>
 
-          <nav>
-            <Button type="primary">
+            <Button type="primary" style={{ margin: "auto", borderRadius: "20px" }}>
               Employee
             </Button>
-            <Button type="default" >
+            <Button type="default" style={{ margin: "auto", borderRadius: "20px" }}>
               Team
             </Button>
-          </nav>
+          </div>
 
         </div>
 
       </header>
-      {/* <Header>
-        <Row>
-          <Col span={6}> </Col>
-          <Col span={6}></Col>
-        </Row>
-      </Header> */}
     </>
   );
 }
