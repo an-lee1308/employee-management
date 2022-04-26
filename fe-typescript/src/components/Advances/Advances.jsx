@@ -1,3 +1,4 @@
+import { FaPlusCircle, FaTrashAlt } from 'react-icons/fa';
 import './Advances.scss';
 import 'antd/dist/antd.css';
 import { Table, Tag, Space } from 'antd';
@@ -10,47 +11,31 @@ function Advances(props) {
 	const columns = [
 		{
 			title: 'No',
-			dataIndex: 'name',
-			key: 'name',
-			render: (text) => <a>{text}</a>,
+			dataIndex: 'key',
+			key: 'key',
 		},
 		{
 			title: 'Date',
-			dataIndex: 'age',
-			key: 'age',
+			dataIndex: 'date',
+			key: 'date',
 		},
 		{
 			title: 'Money',
-			dataIndex: 'address',
-			key: 'address',
-		},
-		{
-			title: 'Tags',
-			key: 'tags',
-			dataIndex: 'tags',
-			render: (tags) => (
-				<>
-					{tags.map((tag) => {
-						let color = tag.length > 5 ? 'geekblue' : 'green';
-						if (tag === 'loser') {
-							color = 'volcano';
-						}
-						return (
-							<Tag color={color} key={tag}>
-								{tag.toUpperCase()}
-							</Tag>
-						);
-					})}
-				</>
-			),
+			dataIndex: 'money',
+			key: 'money',
 		},
 		{
 			title: 'Option',
-			key: 'action',
-			render: (text, record) => (
+			key: 'option',
+			render: (piece) => (
 				<Space size='middle'>
-					<a>Invite {record.name}</a>
-					<a>Delete</a>
+					<div
+						onClick={() => console.log(piece.key)}
+						// className='head_container__button head_container__button--add'
+						// onClick={showModal}
+					>
+						<FaTrashAlt />
+					</div>
 				</Space>
 			),
 		},
@@ -59,29 +44,31 @@ function Advances(props) {
 	const data = [
 		{
 			key: '1',
-			name: 'John Brown',
-			age: 32,
-			address: 'New York No. 1 Lake Park',
-			tags: ['nice', 'developer'],
+			date: Date.now(),
+			money: 32,
 		},
 		{
-			key: '2',
-			name: 'Jim Green',
-			age: 42,
-			address: 'London No. 1 Lake Park',
-			tags: ['loser'],
+			key: Math.random(),
+			date: Date.now(),
+			money: 42,
 		},
 		{
 			key: '3',
-			name: 'Joe Black',
-			age: 32,
-			address: 'Sidney No. 1 Lake Park',
-			tags: ['cool', 'teacher'],
+			date: Date.now(),
+			money: 32,
 		},
 	];
 	return (
 		<>
-			<h1>ADVANCES</h1>
+			<div style={{ display: 'flex' }}>
+				<h1>ADVANCES</h1>
+				<div
+				// className='head_container__button head_container__button--add'
+				// onClick={showModal}
+				>
+					<FaPlusCircle />
+				</div>
+			</div>
 			<div className='advances-container'>
 				<Table columns={columns} dataSource={data} />
 			</div>
