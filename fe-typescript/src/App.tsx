@@ -17,9 +17,9 @@ function App() {
     <>
       <Header />
       <HeadContainer />
-      <EmployeeDetail />
-      {/* <Container />
-      <Table /> */}
+      {/* <EmployeeDetail /> */}
+      <Container />
+      <Table />
     </>
   );
 }
