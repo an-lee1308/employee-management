@@ -97,7 +97,7 @@ function HeadContainer() {
 						<Input />
 					</Form.Item>
 					<Form.Item label='Start day'>
-						<DatePicker />
+						<DatePicker onChange={(e) => console.log(e._d)} />
 					</Form.Item>
 
 					<Form.Item label='Money/hour'>

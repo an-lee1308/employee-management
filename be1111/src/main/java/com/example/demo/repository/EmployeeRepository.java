@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeModel,Long>{
 
+    public List<EmployeeModel> findByFullName(String fullName);
 }

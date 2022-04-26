@@ -47,9 +47,9 @@ import java.util.List;
 //        };
 //        }
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/employees")
 public class EmployeeController {
-    public static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+//    public static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
     @Autowired
     EmployeeRepository employeeRepository;
@@ -60,16 +60,16 @@ public class EmployeeController {
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody EmployeeModel employee){
         return new ResponseEntity<EmployeeModel>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
     }
-    @GetMapping(value = "/employee")
+    @GetMapping(value = "/list")
     public List<EmployeeModel> getAllEmployees(){
         return employeeService.getAllEmployees();
     }
-    @PutMapping("/employee/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable("id") long id
             ,@RequestBody EmployeeModel employee){
         return new ResponseEntity<EmployeeModel>(employeeService.updateEmployee(employee, id), HttpStatus.OK);
     }
-    @DeleteMapping("/employee/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id){
 
         // delete employee from DB
@@ -81,4 +81,18 @@ public class EmployeeController {
 //    public List<EmployeeModel> findEmployee(@PathVariable("name") String name){
 //        return employeeService.findEmployeeByName();
 //    }
+
+    @GetMapping(value = "/name/{name}")
+    public List<EmployeeModel> findEmployeeById(@PathVariable ("name") String employeeName){
+//        return employeeService.getEmployeeById(employeeId);
+        System.out.println(employeeName);
+        return employeeService.findByName(employeeName);
+    }
+
+    @GetMapping(value = "{id}")
+    public ResponseEntity<EmployeeModel> findEmployeeById(@PathVariable ("id") long employeeId){
+//        return employeeService.getEmployeeById(employeeId);
+        System.out.println(employeeId);
+        return new ResponseEntity<EmployeeModel>(employeeService.getEmployeeById(employeeId), HttpStatus.OK);
+    }
 }
