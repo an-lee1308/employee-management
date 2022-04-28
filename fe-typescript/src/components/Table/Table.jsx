@@ -1,8 +1,9 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { FaTrashAlt, FaInfo } from 'react-icons/fa';
-import { useState } from 'react';
-import { Table, Space, Divider } from 'antd';
+// import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Table, Space } from 'antd';
 
 const columns = [
 	{
@@ -27,13 +28,15 @@ const columns = [
 		// dataIndex: 'option',
 		render: (data) => (
 			<Space size='middle'>
-				<div
-					onClick={() => console.log(data.id)}
+				<Link to={`/employee-detail/${data.id}`}>
+					<div
+					// onClick={() => console.log(data.id)}
 					// className='head_container__button head_container__button--add'
 					// onClick={showModal}
-				>
-					<FaInfo style={{ color: 'blue', cursor: 'pointer' }} />
-				</div>
+					>
+						<FaInfo style={{ color: 'blue', cursor: 'pointer' }} />
+					</div>
+				</Link>
 				<div
 					onClick={() => console.log(data.id)}
 					// className='head_container__button head_container__button--add'
@@ -79,7 +82,7 @@ const TableUI = (props) => {
 			key: index + 1,
 			fullname: employee.fullName,
 			phone: employee.phoneNumber,
-			team: employee.teamID,
+			team: employee.team,
 		});
 	});
 

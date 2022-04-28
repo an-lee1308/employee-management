@@ -6,7 +6,7 @@
     align-items: center;
     margin: 0;
     padding: 1em;
-    box-shadow: 0 1px 1px #ccc;
+    // box-shadow: 0 1px 1px #ccc;
     &__title{
         font-size:1.5rem;
     }
@@ -21,7 +21,10 @@
     }
 }
 .ant-modal-header{
-    background-color:rgb(71, 30, 184);
+    background-color:#7c5cd5;
+}
+.ant-modal-title{
+    color:#fff;
 }
 #rcDialogTitle1{
     color: white;

@@ -44,7 +44,7 @@ public class EmployeeService implements INewService {
         existingEmployee.setMoneyPerHour(employee.getMoneyPerHour());
         existingEmployee.setTotalHours(employee.getTotalHours());
         existingEmployee.setImageURL(employee.getImageURL());
-        existingEmployee.setTeamID(employee.getTeamID());
+        existingEmployee.setTeam(employee.getTeam());
 
 
 

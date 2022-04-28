@@ -18,7 +18,7 @@ public class EmployeeModel implements Serializable {
     @Column(name="age")
     private int age;
     @Column(name="gender")
-    private int gender;
+    private String gender;
     @Column(name="address")
     private String address;
     @Column(name="phone_number")
@@ -31,8 +31,8 @@ public class EmployeeModel implements Serializable {
     private int totalHours;
     @Column(name="image_URL")
     private String imageURL;
-    @Column(name="teamID")
-    private int teamID;
+    @Column(name="team")
+    private String team;
 
     public long getId() {
         return id;
@@ -46,7 +46,7 @@ public class EmployeeModel implements Serializable {
         return age;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
@@ -74,8 +74,8 @@ public class EmployeeModel implements Serializable {
         return imageURL;
     }
 
-    public int getTeamID() {
-        return teamID;
+    public String getTeam() {
+        return team;
     }
 
     public void setId(long id) {
@@ -90,7 +90,7 @@ public class EmployeeModel implements Serializable {
         this.age = age;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -118,7 +118,7 @@ public class EmployeeModel implements Serializable {
         this.imageURL = imageURL;
     }
 
-    public void setTeamID(int teamID) {
-        this.teamID = teamID;
+    public void setTeam(String team) {
+        this.team = team;
     }
 }
