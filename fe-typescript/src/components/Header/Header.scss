@@ -1,131 +1,76 @@
-.header-fixed {
-	background: color #000;;
-	box-shadow:0 1px 1px #ccc;
-	padding: 20px;
-	height: 80px;
-	color: #ffffff;
-	box-sizing: border-box;
-	top:-100px;
-
-	-webkit-transition:top 0.3s;
-	transition:top 0.3s;
-	h1 {
-		color: #000;
-		span{
-			font-size: 50px;
-			color: #000 !important;
-			padding-right: 20px
-		}
-	}
-}
-
-.header-fixed .header-limiter {
-	// max-width: 1200px;
-	text-align: center;
-	margin: 0 auto;
+  .site-header { 
+	border-bottom: 1px solid #ccc;
+	padding: .5em 1em;
 	display: flex;
 	justify-content: space-between;
-}
-
-/*	The header placeholder. It is displayed when the header is fixed to the top of the
-	browser window, in order to prevent the content of the page from jumping up. */
-
-.header-fixed-placeholder{
-	height: 80px;
-	display: none;
-}
-
-/* Logo */
-
-.header-fixed .header-limiter h1 {
-	float: left;
-	font: normal 28px Cookie, Arial, Helvetica, sans-serif;
-	line-height: 40px;
-	margin: 0;
-}
-
-.header-fixed .header-limiter h1 span {
-	color: #5383d3;
-}
-
-/* The navigation links */
-
-.header-fixed .header-limiter a {
-	color: #ffffff;
-	text-decoration: none;
-}
-
-.header-fixed .header-limiter nav {
-	font:16px Arial, Helvetica, sans-serif;
-	line-height: 40px;
-	float: right;
-}
-
-.header-fixed .header-limiter nav a{
+	background-color: rgba(238, 228, 228, 0.808);
+	a{
+		color: black;
+	}
+  }
+  
+  .site-identity h1 {
+	font-size: 1.5em;
+	margin: .6em 0;
 	display: inline-block;
-	padding: 0 5px;
-	text-decoration:none;
+  }
+  
+  
+  .site-navigation ul, 
+  .site-navigation li {
+	margin: 0; 
+	padding: 0;
+  }
+  
+  .site-navigation li {
+	display: inline-block;
+	margin:0.6 em;
+  }
+
+  //@at-root
+  .btn {
+	appearance: none;
+	  -webkit-appearance: none;
+	font-family: sans-serif;
+	cursor: pointer;
+	padding: 12px;
+	min-width: 100px;
+	border: 0px;
+	  -webkit-transition: background-color 100ms linear;
+	  -ms-transition: background-color 100ms linear;
+	   transition: background-color 100ms linear;
+	   color: #3498db;
+  }
+  
+  .btn:focus, .btn.focus {
+	outline: 0;
+  }
+  
+  .btn-round-1 {
+	border-radius: 8px;
+  }
+  
+  .btn-round-2 {
+	border-radius: 20px;
+  }
+
+  
+  .btn-light {
+	background: #ededed;
+	color: #3498db;
+  }
+  
+  .btn-light:hover {
+	background: #dbdbdb;
+	color: #3498db;
+  }
+  
+  .btn-active {
+	background: #3498db;
 	color: #ffffff;
-	opacity: 0.9;
-}
-
-.header-fixed .header-limiter nav a:hover{
-	opacity: 1;
-}
-
-.header-fixed .header-limiter nav a.selected {
-	color: #608bd2;
-	pointer-events: none;
-	opacity: 1;
-}
-
-/* Fixed version of the header */
-
-// body.fixed .header-fixed {
-// 	padding: 10px 40px;
-// 	height: 50px;
-// 	// position: fixed;
-// 	width: 100%;
-// 	top: 0;
-// 	left: 0;
-// 	z-index: 1;
-// }
-
-
-
-/* Making the header responsive */
-
-@media all and (max-width: 600px) {
-
-	.header-fixed {
-		padding: 20px 0;
-		height: 75px;
-	}
-
-	.header-fixed .header-limiter h1 {
-		float: none;
-		margin: -8px 0 10px;
-		text-align: center;
-		font-size: 24px;
-		line-height: 1;
-	}
-
-	.header-fixed .header-limiter nav {
-		line-height: 1;
-		float:none;
-	}
-
-	.header-fixed .header-limiter nav a {
-		font-size: 13px;
-	}
-
-	body.fixed .header-fixed {
-		display: none;
-	}
-
-}
-/*
-	 We are clearing the body's margin and padding, so that the header fits properly.
-	 We are also adding a height to demonstrate the scrolling behavior. You can remove
-	 these styles.
- */
+  }
+  
+  .btn-active:hover {
+	background: #2980b9;
+	color: #ffffff;
+  }
