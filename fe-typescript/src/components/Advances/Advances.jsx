@@ -60,11 +60,18 @@ function Advances(props) {
 	];
 	return (
 		<>
-			<div style={{ display: 'flex' }}>
+			<div
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'space-between',
+				}}
+			>
 				<h1>ADVANCES</h1>
 				<div
-				// className='head_container__button head_container__button--add'
-				// onClick={showModal}
+					style={{ fontSize: '2em' }}
+					// className='head_container__button head_container__button--add'
+					// onClick={showModal}
 				>
 					<FaPlusCircle />
 				</div>

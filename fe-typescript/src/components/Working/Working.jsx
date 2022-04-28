@@ -1,6 +1,6 @@
 import './Working.scss';
 import 'antd/dist/antd.css';
-import { FaTrashAlt } from 'react-icons/fa';
+import { FaPlusCircle, FaTrashAlt } from 'react-icons/fa';
 import { Table, Tag, Space } from 'antd';
 
 function Working(props) {
@@ -115,7 +115,22 @@ function Working(props) {
 	];
 	return (
 		<>
-			<h1>WORKING</h1>
+			<div
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'space-between',
+				}}
+			>
+				<h1>ADVANCES</h1>
+				<div
+					style={{ fontSize: '2em' }}
+					// className='head_container__button head_container__button--add'
+					// onClick={showModal}
+				>
+					<FaPlusCircle />
+				</div>
+			</div>
 			<div className='working-container'>
 				<Table columns={columns} dataSource={data} />
 			</div>

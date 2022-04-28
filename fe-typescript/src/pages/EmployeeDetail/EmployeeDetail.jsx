@@ -19,11 +19,11 @@ function EmployeeDetail() {
 	// };
 	return (
 		<>
-			<Row>
+			<Row className='padding-top'>
 				<Col className='gutter-row' span={5}>
 					<div className='employee-detail__few-info'>
 						<div className='employee-detail__img'>
-							<img src='https://freetuts.net/upload/tut_post/images/2014/08/14/122/xay-dung-chuc-nang-scrollto-voi-jquery.gif' />
+							<img src='https://danviet.mediacdn.vn/2021/2/13/dichlenhietba6-1613220430583-1613220430583923058279.jpg' />
 							<div className='flex__out'>
 								<div className='flex__in'>
 									<div className='info-tag tag--no'>No:1</div>

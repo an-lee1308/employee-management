@@ -3,18 +3,20 @@ import 'antd/dist/antd.css';
 import { Input } from 'antd';
 
 const { Search } = Input;
-function Container() {
+function Container(props) {
 	// type Props = {
 	//     some?: any,
 	//     style?: string,
 	// };
+
+	const { total } = props;
 	const onSearch = (e) => {
 		console.log(e);
 	};
 	return (
 		<>
 			<div className='search-block'>
-				<div className='search-block__total-list'>Total 6 employees</div>
+				<div className='search-block__total-list'>Total {total} employees</div>
 				<div className='search-block__search-input'>
 					<Search
 						placeholder='input search text'

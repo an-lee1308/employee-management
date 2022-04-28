@@ -46,6 +46,7 @@ import java.util.List;
 //        System.out.println(list);
 //        };
 //        }
+@CrossOrigin
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
