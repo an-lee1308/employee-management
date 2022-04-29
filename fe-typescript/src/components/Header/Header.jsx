@@ -1,6 +1,6 @@
 import 'antd/dist/antd.css';
 
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, NavLink } from 'react-router-dom';
 // const { Header, Content, Footer, Sider } = Layout;
 import './Header.scss';
 
@@ -44,24 +44,36 @@ function Heading() {
 				<nav className='site-navigation'>
 					<ul className='nav'>
 						<li>
-							<Link to='/'>
-								<button
+							<NavLink
+								to='/total'
+								className='btn btn-primary btn-round-1'
+								activeClassName='btn-active'
+							>
+								Employee
+								{/* <button
 									className='btn btn-primary btn-round-1'
 									// onClick={handleOnClickEmployee}
 								>
 									Employee
-								</button>
-							</Link>
+								</button> */}
+							</NavLink>
 						</li>
 						<li>
-							<Link to='/teams'>
-								<button
-									className='btn btn-primary btn-round-1 btn-active'
+							{' '}
+							<NavLink
+								to='/teams'
+								className='btn btn-primary btn-round-1'
+								activeClassName='btn-active'
+							>
+								{/* <button
+									className='btn btn-primary btn-round-1'
 									// onClick={handleOnClickTeam}
 								>
+									{' '}
 									Team
-								</button>
-							</Link>
+								</button> */}
+								Team
+							</NavLink>
 						</li>
 					</ul>
 				</nav>

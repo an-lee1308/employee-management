@@ -4,6 +4,17 @@ import { FaTrashAlt, FaInfo } from 'react-icons/fa';
 // import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Space } from 'antd';
+import axios from 'axios';
+
+const handleDeleteAnEmployee = async (data) => {
+	console.log('log', data);
+	if (window.confirm('Are you sure you want to delete') === true) {
+		console.log(`cho phép gửi api xóa ${data}`);
+		const response = await axios.delete(
+			`http://localhost:8080/api/employees/${data}`
+		);
+	}
+};
 
 const columns = [
 	{
@@ -38,7 +49,7 @@ const columns = [
 					</div>
 				</Link>
 				<div
-					onClick={() => console.log(data.id)}
+					onClick={() => handleDeleteAnEmployee(data.id)}
 					// className='head_container__button head_container__button--add'
 					// onClick={showModal}
 				>

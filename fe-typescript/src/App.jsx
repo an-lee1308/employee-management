@@ -11,6 +11,7 @@ import HeadContainer from './components/HeadContainer/HeadContainer';
 import Home from './pages/Home/Home';
 import EmployeeDetail from './pages/EmployeeDetail/EmployeeDetail';
 import Teams from './pages/Teams/Teams';
+import Background from './pages/Background/BackGround';
 
 function App() {
 	// console.log(
@@ -23,9 +24,10 @@ function App() {
 	return (
 		<>
 			<Header />
-			{location === '/' ? <HeadContainer /> : ''}
+			{location === '/total' ? <HeadContainer /> : ''}
 			<Switch>
-				<Route path='/' exact={true} component={Home} />
+				<Route path='/' exact={true} component={Background} />
+				<Route path='/total' exact={true} component={Home} />
 				<Route
 					path='/employee-detail/:id'
 					exact={true}
