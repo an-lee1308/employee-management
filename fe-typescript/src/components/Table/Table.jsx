@@ -11,8 +11,10 @@ const handleDeleteAnEmployee = async (data) => {
 	if (window.confirm('Are you sure you want to delete') === true) {
 		console.log(`cho phép gửi api xóa ${data}`);
 		const response = await axios.delete(
-			`http://localhost:8080/api/employees/${data}`
+			// `http://localhost:8080/api/employees/${data}`
+			`http://localhost:8080/api/employees/200`
 		);
+		console.log(response);
 	}
 };
 
@@ -39,7 +41,7 @@ const columns = [
 		// dataIndex: 'option',
 		render: (data) => (
 			<Space size='middle'>
-				<Link to={`/employee-detail/${data.id}`}>
+				<Link to={`/employee/${data.id}`}>
 					<div
 					// onClick={() => console.log(data.id)}
 					// className='head_container__button head_container__button--add'

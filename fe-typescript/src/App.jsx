@@ -24,15 +24,11 @@ function App() {
 	return (
 		<>
 			<Header />
-			{location === '/total' ? <HeadContainer /> : ''}
+			{location === '/employee' ? <HeadContainer /> : ''}
 			<Switch>
 				<Route path='/' exact={true} component={Background} />
-				<Route path='/total' exact={true} component={Home} />
-				<Route
-					path='/employee-detail/:id'
-					exact={true}
-					component={EmployeeDetail}
-				/>
+				<Route path='/employee' exact={true} component={Home} />
+				<Route path='/employee/:id' exact={true} component={EmployeeDetail} />
 				<Route path='/teams' exact={true} component={Teams} />
 			</Switch>
 		</>

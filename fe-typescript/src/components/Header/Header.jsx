@@ -45,7 +45,7 @@ function Heading() {
 					<ul className='nav'>
 						<li>
 							<NavLink
-								to='/total'
+								to='/employee'
 								className='btn btn-primary btn-round-1'
 								activeClassName='btn-active'
 							>
