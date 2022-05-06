@@ -15,7 +15,7 @@ function TableTeamList(props) {
 			key: 'key',
 		},
 		{
-			title: 'nameteam',
+			title: 'Name Team',
 			dataIndex: 'nameteam',
 			key: 'nameteam',
 		},

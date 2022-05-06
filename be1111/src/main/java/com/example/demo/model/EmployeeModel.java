@@ -1,24 +1,28 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
 @Table(name="employee")
 public class EmployeeModel implements Serializable {
+//    @Autowired WorkingModel workingModel;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long employeeId;
     @Column(name="full_name",nullable = false)
     private String fullName;
     @Column(name="age")
     private int age;
     @Column(name="gender")
-    private int gender;
+    private String gender;
     @Column(name="address")
     private String address;
     @Column(name="phone_number")
@@ -31,11 +35,16 @@ public class EmployeeModel implements Serializable {
     private int totalHours;
     @Column(name="image_URL")
     private String imageURL;
-    @Column(name="teamID")
-    private int teamID;
+    @Column(name="team")
+    private String team;
+//    @OneToMany(mappedBy = "working",cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//
+//    private Set<WorkingModel> workings;
 
-    public long getId() {
-        return id;
+// mapping onetomany
+    public long getEmployeeId() {
+        return employeeId;
     }
 
     public String getFullName() {
@@ -46,7 +55,7 @@ public class EmployeeModel implements Serializable {
         return age;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
@@ -74,12 +83,12 @@ public class EmployeeModel implements Serializable {
         return imageURL;
     }
 
-    public int getTeamID() {
-        return teamID;
+    public String getTeam() {
+        return team;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setEmployeeId(long id) {
+        this.employeeId = id;
     }
 
     public void setFullName(String fullName) {
@@ -90,7 +99,7 @@ public class EmployeeModel implements Serializable {
         this.age = age;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -118,7 +127,7 @@ public class EmployeeModel implements Serializable {
         this.imageURL = imageURL;
     }
 
-    public void setTeamID(int teamID) {
-        this.teamID = teamID;
+    public void setTeam(String team) {
+        this.team = team;
     }
 }

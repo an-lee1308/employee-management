@@ -1,5 +1,6 @@
 import './Information.scss';
 import 'antd/dist/antd.css';
+import moment from 'moment';
 import { Row, Col } from 'antd';
 
 function Information(props) {
@@ -7,22 +8,26 @@ function Information(props) {
 	//     some?: any,
 	//     style?: string,
 	// };
+	console.log(props.information);
+	const { startDay, team, address, moneyPerHour } = props.information;
 	return (
 		<>
 			<h1>INFORMATION</h1>
 			<div className='info-container'>
 				<Row gutter={16}>
 					<Col className='gutter-row' span={12}>
-						<div className='info-box'>Start day 17-01-2021</div>
+						<div className='info-box'>
+							Start day : {moment(startDay).utc().format('DD/MM/YYYY')}
+						</div>
 					</Col>
 					<Col className='gutter-row' span={12}>
-						<div className='info-box'>Team : IT Support</div>
+						<div className='info-box'>Team : {team}</div>
 					</Col>
 					<Col className='gutter-row' span={12}>
-						<div className='info-box'>Address : Quy Nhơn</div>
+						<div className='info-box'>Address : {address}</div>
 					</Col>
 					<Col className='gutter-row' span={12}>
-						<div className='info-box'>Salary Per hour : 2$S</div>
+						<div className='info-box'>Salary Per hour : {moneyPerHour}$</div>
 					</Col>
 				</Row>
 			</div>

@@ -1,8 +1,22 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { FaTrashAlt, FaInfo } from 'react-icons/fa';
-import { useState } from 'react';
-import { Table, Space, Divider } from 'antd';
+// import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Table, Space } from 'antd';
+import axios from 'axios';
+
+const handleDeleteAnEmployee = async (data) => {
+	console.log('log', data);
+	if (window.confirm('Are you sure you want to delete') === true) {
+		console.log(`cho phép gửi api xóa ${data}`);
+		const response = await axios.delete(
+			// `http://localhost:8080/api/employees/${data}`
+			`http://localhost:8080/api/employees/200`
+		);
+		console.log(response);
+	}
+};
 
 const columns = [
 	{
@@ -27,15 +41,17 @@ const columns = [
 		// dataIndex: 'option',
 		render: (data) => (
 			<Space size='middle'>
-				<div
-					onClick={() => console.log(data.id)}
+				<Link to={`/employee/${data.id}`}>
+					<div
+					// onClick={() => console.log(data.id)}
 					// className='head_container__button head_container__button--add'
 					// onClick={showModal}
-				>
-					<FaInfo style={{ color: 'blue', cursor: 'pointer' }} />
-				</div>
+					>
+						<FaInfo style={{ color: 'blue', cursor: 'pointer' }} />
+					</div>
+				</Link>
 				<div
-					onClick={() => console.log(data.id)}
+					onClick={() => handleDeleteAnEmployee(data.id)}
 					// className='head_container__button head_container__button--add'
 					// onClick={showModal}
 				>
@@ -79,7 +95,7 @@ const TableUI = (props) => {
 			key: index + 1,
 			fullname: employee.fullName,
 			phone: employee.phoneNumber,
-			team: employee.teamID,
+			team: employee.team,
 		});
 	});
 

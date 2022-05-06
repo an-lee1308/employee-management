@@ -3,9 +3,9 @@
 	padding: .5em 1em;
 	display: flex;
 	justify-content: space-between;
-	background-color: rgba(238, 228, 228, 0.808);
+	background-color: rgba(243, 243, 243, 0.8);
 	a{
-		color: black;
+		color: 3498db;
 	}
   }
   
@@ -40,6 +40,8 @@
 	  -ms-transition: background-color 100ms linear;
 	   transition: background-color 100ms linear;
 	   color: #3498db;
+	display: inline-block;
+	text-align: center;
   }
   
   .btn:focus, .btn.focus {
@@ -47,7 +49,7 @@
   }
   
   .btn-round-1 {
-	border-radius: 8px;
+	border-radius: 20px;
   }
   
   .btn-round-2 {
@@ -67,7 +69,7 @@
   
   .btn-active {
 	background: #3498db;
-	color: #ffffff;
+	color: #ffffff!important;
   }
   
   .btn-active:hover {

@@ -4,7 +4,11 @@ import { Tabs, Row, Col } from 'antd';
 import Working from '../../components/Working/Working';
 import Information from '../../components/Information/Information';
 import Advances from '../../components/Advances/Advances';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Statistics from '../../components/Statistics/Statistics';
+import axios from 'axios';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const { TabPane } = Tabs;
 
@@ -17,20 +21,66 @@ function EmployeeDetail() {
 	//     some?: any,
 	//     style?: string,
 	// };
+	const { id } = useParams();
+	const [dataEmployee, setDataEmployee] = useState({});
+	// console.log(id);
+
+	useEffect(() => {
+		async function getEmployee() {
+			// SetLoading(true);
+			const response = await axios.get(
+				`http://localhost:8080/api/employees/${id}`
+			);
+			setDataEmployee(response.data);
+			console.log(response.data);
+		}
+		getEmployee();
+	}, [id]);
+	console.log('set state', dataEmployee);
+	const {
+		// address,
+		age,
+		fullName,
+		gender,
+		// id,
+		imageURL,
+		// moneyPerHour,
+		// phoneNumber,
+		// startDay,
+		// team,
+		// totalHours,
+	} = dataEmployee;
 	return (
 		<>
+			<div className='head_container'>
+				<div className='head_container__title'>{fullName}</div>
+				<div className='head_container__button'>
+					<div
+						className='head_container__button head_container__button--add'
+						onClick={() => alert('edit')}
+					>
+						<FaEdit />{' '}
+					</div>
+					<div
+						className='head_container__button head_container__button--delete'
+						onClick={() => alert('delete')}
+					>
+						<FaTrashAlt />{' '}
+					</div>
+				</div>
+			</div>
 			<Row className='padding-top'>
 				<Col className='gutter-row' span={5}>
 					<div className='employee-detail__few-info'>
 						<div className='employee-detail__img'>
-							<img src='https://danviet.mediacdn.vn/2021/2/13/dichlenhietba6-1613220430583-1613220430583923058279.jpg' />
+							<img src={imageURL} alt={'anh hài'} />
 							<div className='flex__out'>
 								<div className='flex__in'>
-									<div className='info-tag tag--no'>No:1</div>
-									<div className='info-tag tag--age'>Age:22</div>
+									<div className='info-tag tag--no'>No :{id}</div>
+									<div className='info-tag tag--age'>Age:{age}</div>
 								</div>
 
-								<div className='info-tag tag--sex'>Sex:male</div>
+								<div className='info-tag tag--sex'>Sex:{gender}</div>
 							</div>
 						</div>
 					</div>
@@ -42,16 +92,16 @@ function EmployeeDetail() {
 					<div className='employee-detail__information carrd-container'>
 						<Tabs type='card' defaultActiveKey='1' onChange={callback}>
 							<TabPane tab='INFORMATION' key='information'>
-								<Information name='hihi' />
+								<Information information={dataEmployee} />
 							</TabPane>
 							<TabPane tab='WORKING' key='working'>
-								<Working name='haha' />{' '}
+								<Working working={dataEmployee} />{' '}
 							</TabPane>
 							<TabPane tab='ADVANCES' key='advances'>
-								<Advances name='haha' />{' '}
+								<Advances advances={dataEmployee} />{' '}
 							</TabPane>
 							<TabPane tab='STATISTICS' key='statistics'>
-								<Statistics name='haha' />{' '}
+								<Statistics statistics={dataEmployee} />{' '}
 							</TabPane>
 						</Tabs>
 					</div>
