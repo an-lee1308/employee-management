@@ -1,18 +1,22 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @Entity
 @Table(name="employee")
 public class EmployeeModel implements Serializable {
+//    @Autowired WorkingModel workingModel;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long employeeId;
     @Column(name="full_name",nullable = false)
     private String fullName;
     @Column(name="age")
@@ -33,9 +37,14 @@ public class EmployeeModel implements Serializable {
     private String imageURL;
     @Column(name="team")
     private String team;
+//    @OneToMany(mappedBy = "working",cascade = CascadeType.ALL)
+//    @JsonManagedReference
+//
+//    private Set<WorkingModel> workings;
 
-    public long getId() {
-        return id;
+// mapping onetomany
+    public long getEmployeeId() {
+        return employeeId;
     }
 
     public String getFullName() {
@@ -78,8 +87,8 @@ public class EmployeeModel implements Serializable {
         return team;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setEmployeeId(long id) {
+        this.employeeId = id;
     }
 
     public void setFullName(String fullName) {
