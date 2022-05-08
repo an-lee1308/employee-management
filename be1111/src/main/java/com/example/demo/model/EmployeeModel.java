@@ -5,18 +5,19 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name="employee")
-public class EmployeeModel implements Serializable {
+public class EmployeeModel{
 //    @Autowired WorkingModel workingModel;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long employeeId;
+    @Column(name="employee_id")
+    private int employeeId;
     @Column(name="full_name",nullable = false)
     private String fullName;
     @Column(name="age")
@@ -37,13 +38,11 @@ public class EmployeeModel implements Serializable {
     private String imageURL;
     @Column(name="team")
     private String team;
-//    @OneToMany(mappedBy = "working",cascade = CascadeType.ALL)
-//    @JsonManagedReference
-//
-//    private Set<WorkingModel> workings;
+    @OneToMany(mappedBy = "working",cascade = CascadeType.ALL)
+    private List<WorkingModel> workings = new ArrayList<>();
 
 // mapping onetomany
-    public long getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
@@ -87,7 +86,11 @@ public class EmployeeModel implements Serializable {
         return team;
     }
 
-    public void setEmployeeId(long id) {
+    public List<WorkingModel> getWorkings() {
+        return workings;
+    }
+
+    public void setEmployeeId(int id) {
         this.employeeId = id;
     }
 
@@ -130,4 +133,9 @@ public class EmployeeModel implements Serializable {
     public void setTeam(String team) {
         this.team = team;
     }
+
+    public void setWorkings(List<WorkingModel> workings) {
+        this.workings = workings;
+    }
+
 }

@@ -32,7 +32,7 @@ function EmployeeDetail() {
 				`http://localhost:8080/api/employees/${id}`
 			);
 			setDataEmployee(response.data);
-			console.log(response.data);
+			console.log('response', response.data);
 		}
 		getEmployee();
 	}, [id]);

@@ -91,7 +91,7 @@ const TableUI = (props) => {
 		// };
 		// console.log('employee object', employeeObject);
 		employeeRender.push({
-			id: employee.id,
+			id: employee.employeeId,
 			key: index + 1,
 			fullname: employee.fullName,
 			phone: employee.phoneNumber,
