@@ -4,8 +4,7 @@ import com.example.demo.model.EmployeeModel;
 import com.example.demo.model.ResponseObject;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,7 +75,7 @@ public class EmployeeController {
             );
     }
     @PutMapping("/update/{id}")
-    ResponseEntity<ResponseObject>updateEmployee(@RequestBody EmployeeModel newEmployee,@PathVariable Long id) {
+    ResponseEntity<ResponseObject>updateEmployee(@RequestBody EmployeeModel newEmployee,@PathVariable int id) {
         EmployeeModel updateEmployee=employeeRepository.findById(id)
                 .map(employee->{
                     employee.setImageURL(newEmployee.getImageURL());
@@ -90,7 +89,7 @@ public class EmployeeController {
         );
     }
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject>deleteEmployeeById(@PathVariable Long id) {
+    ResponseEntity<ResponseObject>deleteEmployeeById(@PathVariable int id) {
         boolean exist=employeeRepository.existsById(id);
         if(!exist)  {
             employeeRepository.deleteById(id);
@@ -102,15 +101,16 @@ public class EmployeeController {
     }
     @GetMapping(value = "/list")
     public List<EmployeeModel> getAllEmployees(){
-        return employeeService.getAllEmployees();
+//        return employeeService.getAllEmployees();
+        return employeeRepository.findAll();
     }
     @PutMapping("{id}")
-    public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable("id") long id
+    public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable("id") int id
             ,@RequestBody EmployeeModel employee){
         return new ResponseEntity<EmployeeModel>(employeeService.updateEmployee(employee, id), HttpStatus.OK);
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id){
+    public ResponseEntity<String> deleteEmployee(@PathVariable("id") int id){
 
         // delete employee from DB
         employeeService.deleteEmployee(id);
@@ -131,14 +131,14 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "{id}")
-    public ResponseEntity<EmployeeModel> findEmployeeById(@PathVariable ("id") long employeeId){
+    public ResponseEntity<EmployeeModel> findEmployeeById(@PathVariable ("id") int employeeId){
 //        return employeeService.getEmployeeById(employeeId);
         System.out.println(employeeId);
         return new ResponseEntity<EmployeeModel>(employeeService.getEmployeeById(employeeId), HttpStatus.OK);
     }
     //Chuẩn response
     @GetMapping(value = "/working/{id}")
-    public ResponseEntity<ResponseObject> findMyAEmployee(@PathVariable Long id) {
+    public ResponseEntity<ResponseObject> findMyAEmployee(@PathVariable int id) {
         Optional<EmployeeModel> foundEmployee=employeeRepository.findById(id);
         if(foundEmployee.isPresent())   {
             return ResponseEntity.status(HttpStatus.OK).body(
