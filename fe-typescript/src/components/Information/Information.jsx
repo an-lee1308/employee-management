@@ -2,14 +2,16 @@ import './Information.scss';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import { Row, Col } from 'antd';
+import { useEffect, useState } from 'react';
 
 function Information(props) {
 	// type Props = {
 	//     some?: any,
 	//     style?: string,
 	// };
+	const [test, setTest] = useState(true);
 	console.log(props.information);
-	const { startDay, team, address, moneyPerHour } = props.information;
+	const { startDay, teamInfo, address, moneyPerHour } = props.information;
 	return (
 		<>
 			<h1>INFORMATION</h1>
@@ -21,7 +23,7 @@ function Information(props) {
 						</div>
 					</Col>
 					<Col className='gutter-row' span={12}>
-						<div className='info-box'>Team : {team}</div>
+						<div className='info-box'>Team : {teamInfo.name}</div>
 					</Col>
 					<Col className='gutter-row' span={12}>
 						<div className='info-box'>Address : {address}</div>

@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
+import com.example.demo.DTO.EmployeeDTO;
+import com.example.demo.mapper.Mapper;
 import com.example.demo.model.EmployeeModel;
 import com.example.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,15 +15,29 @@ import java.util.List;
 public class EmployeeService implements INewService {
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private Mapper mapper;
 
     @Override
     public EmployeeModel saveEmployee(EmployeeModel employee) {
         return employeeRepository.save(employee);
     }
+//    @Override
+//    public List<EmployeeDTO> getAllEmployees() {
+//
+//        return  employeeRepository.findAll();
+//    }
     @Override
-    public List<EmployeeModel> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
+public List<EmployeeDTO> getAllEmployees() {
+    List<EmployeeModel> employeeList=employeeRepository.findAll();
+    System.out.println(employeeList);
+    List<EmployeeDTO>employeeDTOList=new ArrayList<>();
+        employeeList.stream().forEach(employee->{
+//            EmployeeDTO employeeDTO=mapper.toEmployeeDTO(employee);
+            employeeDTOList.add(mapper.toEmployeeDTO(employee));
+        });
+    return  employeeDTOList;
+}
     @Override
     public EmployeeModel updateEmployee(EmployeeModel employee, int id) {
 
@@ -44,7 +61,7 @@ public class EmployeeService implements INewService {
         existingEmployee.setMoneyPerHour(employee.getMoneyPerHour());
         existingEmployee.setTotalHours(employee.getTotalHours());
         existingEmployee.setImageURL(employee.getImageURL());
-        existingEmployee.setTeam(employee.getTeam());
+        existingEmployee.setEmployeeTeam(employee.getEmployeeTeam());
 
 
 
@@ -66,7 +83,9 @@ public class EmployeeService implements INewService {
 
 
 @Override
-public EmployeeModel getEmployeeById(int id)       {
-    return employeeRepository.findById(id).get(); //No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
+public EmployeeDTO getEmployeeById(int id)       {
+    EmployeeModel employee=employeeRepository.getById(id);
+    EmployeeDTO employeeDTO=mapper.toEmployeeDTO(employee);
+    return  employeeDTO;
 }
 }

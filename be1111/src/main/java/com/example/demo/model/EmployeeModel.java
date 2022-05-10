@@ -1,17 +1,19 @@
 package com.example.demo.model;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="employee")
-public class EmployeeModel {
+public class EmployeeModel implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int employeeId;
@@ -33,18 +35,27 @@ public class EmployeeModel {
     private int totalHours;
     @Column(name="image_URL")
     private String imageURL;
-//    @Column(name="team_id")
-//    private int teamId;
-    @ManyToOne
-    @JoinColumn(name="team_id")
-    private Team team;
 
+
+    //    @Column(name="team_id")
+//    private int teamId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="team_id")
+    @JsonIgnore
+    private Team employeeTeam;
     @OneToMany(mappedBy = "workingEmployee",fetch = FetchType.LAZY)
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     private List<WorkingModel> workings = new ArrayList<>();
+//    private Set<WorkingModel> workings =new HashSet<>();
 
     @OneToMany(mappedBy = "advancesEmployee",fetch = FetchType.LAZY)
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     private List<Advances> advances = new ArrayList<>();
+//    private Set<Advances> advances =new HashSet<>();
 //    private List<WorkingModel> workings = new ArrayList<>();
 
 // mapping onetomany

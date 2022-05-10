@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DTO.EmployeeDTO;
 import com.example.demo.model.EmployeeModel;
 import com.example.demo.model.ResponseObject;
 import com.example.demo.repository.EmployeeRepository;
@@ -57,6 +58,7 @@ public class EmployeeController {
     EmployeeRepository employeeRepository;
     @Autowired
     EmployeeService employeeService;
+
 //CRUD api
     @PostMapping()
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody EmployeeModel employee){
@@ -100,9 +102,9 @@ public class EmployeeController {
                 new ResponseObject("fail","Cannot find employee to delete",""));
     }
     @GetMapping(value = "/list")
-    public List<EmployeeModel> getAllEmployees(){
-//        return employeeService.getAllEmployees();
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getAll(){
+        return employeeService.getAllEmployees();
+//        return employeeRepository.findAll();
     }
     @PutMapping("{id}")
     public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable("id") int id
@@ -131,10 +133,15 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "{id}")
-    public ResponseEntity<EmployeeModel> findEmployeeById(@PathVariable ("id") int employeeId){
+    public ResponseEntity<EmployeeDTO> findEmployeeById(@PathVariable ("id") int employeeId){
 //        return employeeService.getEmployeeById(employeeId);
-        System.out.println(employeeId);
-        return new ResponseEntity<EmployeeModel>(employeeService.getEmployeeById(employeeId), HttpStatus.OK);
+        try {
+            System.out.println(employeeId);
+            return new ResponseEntity<EmployeeDTO>(employeeService.getEmployeeById(employeeId), HttpStatus.OK);
+        }
+        catch (Exception exception){
+            return null;
+                    }
     }
     //Chuẩn response
     @GetMapping(value = "/working/{id}")
