@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<EmployeeModel,Long>{
+public interface EmployeeRepository extends JpaRepository<EmployeeModel,Integer>{
 
     public List<EmployeeModel> findByFullName(String fullName);
 //        @Query("SELECT u FROM User u WHERE u.def = :def")

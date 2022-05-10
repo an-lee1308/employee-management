@@ -1,16 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.EmployeeModel;
+import com.example.demo.model.ResponseObject;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.EmployeeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 //@GetMapping("/query/{fruitname}")
 //public ResponseEntity<Fruit> queryFruit(@PathVariable String fruitname){
 //        if (fruitname.equalsIgnoreCase("banana"))
@@ -61,17 +62,55 @@ public class EmployeeController {
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody EmployeeModel employee){
         return new ResponseEntity<EmployeeModel>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
     }
+    @PostMapping("/insert")
+    ResponseEntity<ResponseObject> insertEmployee(@RequestBody EmployeeModel employee) {
+        Optional<EmployeeModel> foundEmployee = employeeRepository.findById(employee.getEmployeeId());
+        if (foundEmployee.equals(true)) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                    new ResponseObject("fail", "Employee already taken", "")
+            );
+        }
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("OK", "Insert Employee sucessfully", employeeRepository.save(employee))
+            );
+    }
+    @PutMapping("/update/{id}")
+    ResponseEntity<ResponseObject>updateEmployee(@RequestBody EmployeeModel newEmployee,@PathVariable int id) {
+        EmployeeModel updateEmployee=employeeRepository.findById(id)
+                .map(employee->{
+                    employee.setImageURL(newEmployee.getImageURL());
+                    return employeeRepository.save(employee);
+                }).orElseGet(()->{
+                    newEmployee.setEmployeeId(id);
+                    return employeeRepository.save(newEmployee);
+                });
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok","Update sucessfully",updateEmployee)
+        );
+    }
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<ResponseObject>deleteEmployeeById(@PathVariable int id) {
+        boolean exist=employeeRepository.existsById(id);
+        if(!exist)  {
+            employeeRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok","Delete employee Successfully",""));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("fail","Cannot find employee to delete",""));
+    }
     @GetMapping(value = "/list")
     public List<EmployeeModel> getAllEmployees(){
-        return employeeService.getAllEmployees();
+//        return employeeService.getAllEmployees();
+        return employeeRepository.findAll();
     }
     @PutMapping("{id}")
-    public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable("id") long id
+    public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable("id") int id
             ,@RequestBody EmployeeModel employee){
         return new ResponseEntity<EmployeeModel>(employeeService.updateEmployee(employee, id), HttpStatus.OK);
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id){
+    public ResponseEntity<String> deleteEmployee(@PathVariable("id") int id){
 
         // delete employee from DB
         employeeService.deleteEmployee(id);
@@ -92,9 +131,23 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "{id}")
-    public ResponseEntity<EmployeeModel> findEmployeeById(@PathVariable ("id") long employeeId){
+    public ResponseEntity<EmployeeModel> findEmployeeById(@PathVariable ("id") int employeeId){
 //        return employeeService.getEmployeeById(employeeId);
         System.out.println(employeeId);
         return new ResponseEntity<EmployeeModel>(employeeService.getEmployeeById(employeeId), HttpStatus.OK);
+    }
+    //Chuẩn response
+    @GetMapping(value = "/working/{id}")
+    public ResponseEntity<ResponseObject> findMyAEmployee(@PathVariable int id) {
+        Optional<EmployeeModel> foundEmployee=employeeRepository.findById(id);
+        if(foundEmployee.isPresent())   {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok","Query successfully",foundEmployee)
+            );
+        }   else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ResponseObject("fail","Cannot find product with id = "+id,"")
+            );
+        }
     }
 }

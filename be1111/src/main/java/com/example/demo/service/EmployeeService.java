@@ -22,7 +22,7 @@ public class EmployeeService implements INewService {
         return employeeRepository.findAll();
     }
     @Override
-    public EmployeeModel updateEmployee(EmployeeModel employee, long id) {
+    public EmployeeModel updateEmployee(EmployeeModel employee, int id) {
 
         // we need to check whether employee with given id is exist in DB or not
 
@@ -53,7 +53,7 @@ public class EmployeeService implements INewService {
         return existingEmployee;
     }
     @Override
-    public void deleteEmployee(long id) {
+    public void deleteEmployee(int id) {
 
         // check whether a employee exist in a DB or not
         employeeRepository.deleteById(id);
@@ -66,7 +66,7 @@ public class EmployeeService implements INewService {
 
 
 @Override
-public EmployeeModel getEmployeeById(long id)       {
+public EmployeeModel getEmployeeById(int id)       {
     return employeeRepository.findById(id).get(); //No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor
 }
 }
