@@ -12,45 +12,45 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
-@Table(name="employee")
-public class EmployeeModel implements Serializable{
+@Table(name = "employee")
+public class EmployeeModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int employeeId;
-    @Column(name="full_name",nullable = false)
+    @Column(name = "full_name", nullable = false)
     private String fullName;
-    @Column(name="age")
+    @Column(name = "age")
     private int age;
-    @Column(name="gender")
+    @Column(name = "gender")
     private String gender;
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
-    @Column(name="phone_number")
+    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column(name="start_day")
+    @Column(name = "start_day")
     private Date startDay;
-    @Column(name="money_per_hour")
+    @Column(name = "money_per_hour")
     private int moneyPerHour;
-    @Column(name="total_hours")
+    @Column(name = "total_hours")
     private int totalHours;
-    @Column(name="image_URL")
+    @Column(name = "image_URL")
     private String imageURL;
 
 
     //    @Column(name="team_id")
 //    private int teamId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="team_id")
+    @JoinColumn(name = "team_id")
     @JsonIgnore
     private Team employeeTeam;
-    @OneToMany(mappedBy = "workingEmployee",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "workingEmployee", fetch = FetchType.LAZY)
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonIgnore
     private List<WorkingModel> workings = new ArrayList<>();
 //    private Set<WorkingModel> workings =new HashSet<>();
 
-    @OneToMany(mappedBy = "advancesEmployee",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "advancesEmployee", fetch = FetchType.LAZY)
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonIgnore

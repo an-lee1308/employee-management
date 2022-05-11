@@ -26,19 +26,19 @@ public class TeamController {
 
 
     @GetMapping(value = "/list")
-    public List<Team> getAllTeam(){
+    public List<Team> getAllTeam() {
         return teamRepository.findAll();
 //        return employeeRepository.findAll();
     }
 
     @GetMapping(value = "/{id}")
-    public TeamDTO getTeam(@PathVariable("id") int id){
+    public TeamDTO getTeam(@PathVariable("id") int id) {
         return teamService.getTeamById(id);
 //        return employeeRepository.findAll();
     }
 
     @GetMapping(value = "/test/{id}")
-    public List<EmployeeModel> Test(@PathVariable("id") int id){
+    public List<EmployeeModel> Test(@PathVariable("id") int id) {
         return employeeRepository.findEmployeeInTeam(id);
 //        return employeeRepository.findAll();
     }

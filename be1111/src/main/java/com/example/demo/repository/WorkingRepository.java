@@ -10,6 +10,6 @@ import java.util.List;
 
 
 @Repository
-    public interface WorkingRepository extends JpaRepository<WorkingModel,Integer> {
+public interface WorkingRepository extends JpaRepository<WorkingModel, Integer> {
 
 }

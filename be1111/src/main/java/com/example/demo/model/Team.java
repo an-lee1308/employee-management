@@ -14,16 +14,16 @@ import java.util.*;
 
 @Getter
 @Setter
-    @Entity
-    @Table(name="team")
-    public class Team  implements Serializable{
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int teamId;
-        @Column(name="name")
-        private String name;
-    @OneToMany(mappedBy = "employeeTeam",fetch = FetchType.LAZY)
+@Entity
+@Table(name = "team")
+public class Team implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int teamId;
+    @Column(name = "name")
+    private String name;
+    @OneToMany(mappedBy = "employeeTeam", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<EmployeeModel> employee = new ArrayList<>();
 //    private Set<EmployeeModel> employees =new HashSet<>();
-    }
+}

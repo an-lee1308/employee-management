@@ -2,15 +2,10 @@ package com.example.demo.mapper;
 
 import com.example.demo.DTO.EmployeeDTO;
 import com.example.demo.DTO.TeamDTO;
-import com.example.demo.model.Advances;
 import com.example.demo.model.EmployeeModel;
 import com.example.demo.model.Team;
-import com.example.demo.model.WorkingModel;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
+import org.springframework.stereotype.Component;
 
 
 @Component
@@ -31,28 +26,28 @@ public class Mapper {
         return entity;
     }
 
-        public EmployeeDTO toEmployeeDTO(EmployeeModel entity) {
-            EmployeeDTO dto = new EmployeeDTO();
-            if (entity.getEmployeeId()!=0) {
-                dto.setEmployeeId(entity.getEmployeeId());
-            }
+    public EmployeeDTO toEmployeeDTO(EmployeeModel entity) {
+        EmployeeDTO dto = new EmployeeDTO();
+        if (entity.getEmployeeId() != 0) {
             dto.setEmployeeId(entity.getEmployeeId());
-            dto.setFullName(entity.getFullName());
-            dto.setAge(entity.getAge());
-            dto.setGender(entity.getGender());
-            dto.setAddress(entity.getAddress());
-            dto.setPhoneNumber(entity.getPhoneNumber());
-            dto.setStartDay(entity.getStartDay());
-            dto.setMoneyPerHour(entity.getMoneyPerHour());
-            dto.setTotalHours(entity.getTotalHours());
-            dto.setImageURL(entity.getImageURL());
-            dto.setTeamInfo( entity.getEmployeeTeam());
-            dto.setWorkingInfo( entity.getWorkings());
-            dto.setAdvancesInfo( entity.getAdvances());
-            return dto;
         }
+        dto.setEmployeeId(entity.getEmployeeId());
+        dto.setFullName(entity.getFullName());
+        dto.setAge(entity.getAge());
+        dto.setGender(entity.getGender());
+        dto.setAddress(entity.getAddress());
+        dto.setPhoneNumber(entity.getPhoneNumber());
+        dto.setStartDay(entity.getStartDay());
+        dto.setMoneyPerHour(entity.getMoneyPerHour());
+        dto.setTotalHours(entity.getTotalHours());
+        dto.setImageURL(entity.getImageURL());
+        dto.setTeamInfo(entity.getEmployeeTeam());
+        dto.setWorkingInfo(entity.getWorkings());
+        dto.setAdvancesInfo(entity.getAdvances());
+        return dto;
+    }
 
-    public Team toTeamEntity (TeamDTO dto) {
+    public Team toTeamEntity(TeamDTO dto) {
         Team entity = new Team();
         entity.setTeamId(dto.getTeamId());
         entity.setName(dto.getName());
@@ -63,7 +58,7 @@ public class Mapper {
 
     public TeamDTO toTeamDTO(Team entity) {
         TeamDTO dto = new TeamDTO();
-        if (entity.getTeamId()!=0) {
+        if (entity.getTeamId() != 0) {
             dto.setTeamId(entity.getTeamId());
         }
         dto.setTeamId(entity.getTeamId());

@@ -14,17 +14,17 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name="working")
+@Table(name = "working")
 public class WorkingModel implements Serializable {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int workingId;
-        @Column(name="date")
-        private Date date;
-        @Column(name="hour")
-        private int hour;
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name="employee_id")
-        @JsonIgnore
-        private EmployeeModel workingEmployee;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int workingId;
+    @Column(name = "date")
+    private Date date;
+    @Column(name = "hour")
+    private int hour;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    @JsonIgnore
+    private EmployeeModel workingEmployee;
+}

@@ -12,20 +12,20 @@ import java.util.Date;
 
 @Getter
 @Setter
-    @Entity
-    @Table(name="advances")
-    public class Advances implements Serializable{
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int advancesId;
-        @Column(name="date")
-        private Date date;
-        @Column(name="money")
-        private int money;
+@Entity
+@Table(name = "advances")
+public class Advances implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int advancesId;
+    @Column(name = "date")
+    private Date date;
+    @Column(name = "money")
+    private int money;
 
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name="employee_id")
-        @JsonIgnore
-        private EmployeeModel advancesEmployee;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    @JsonIgnore
+    private EmployeeModel advancesEmployee;
+}
