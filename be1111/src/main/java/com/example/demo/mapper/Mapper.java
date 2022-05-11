@@ -56,6 +56,7 @@ public class Mapper {
         Team entity = new Team();
         entity.setTeamId(dto.getTeamId());
         entity.setName(dto.getName());
+        entity.setEmployee(dto.getEmployee());
 
         return entity;
     }
@@ -67,6 +68,7 @@ public class Mapper {
         }
         dto.setTeamId(entity.getTeamId());
         dto.setName(entity.getName());
+        dto.setEmployee(entity.getEmployee());
 
         return dto;
     }

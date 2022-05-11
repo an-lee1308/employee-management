@@ -24,7 +24,6 @@ import java.util.*;
         private String name;
     @OneToMany(mappedBy = "employeeTeam",fetch = FetchType.LAZY)
     @JsonIgnore
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<EmployeeModel> employee = new ArrayList<>();
 //    private Set<EmployeeModel> employees =new HashSet<>();
     }

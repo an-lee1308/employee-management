@@ -7,8 +7,10 @@ body {
 /* align-items: center;
     max-width: 1200px; */
     /* // height: 1500px; */
-    padding: 0 10%;
+    /* padding: 0 10%; */
     overflow: hidden;
+    width:1200px !important;
+    margin: 0 auto !important;
 }
 
 code {

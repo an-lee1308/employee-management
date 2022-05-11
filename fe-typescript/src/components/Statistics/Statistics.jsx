@@ -11,7 +11,7 @@ function Statistics(props) {
 	const { employeeId, fullName, moneyPerHour, workingInfo, advancesInfo } =
 		props.statistics;
 	console.log(moneyPerHour, workingInfo);
-	const allMoney = (moneyPerHour, workingInfo) => {
+	const totalGet = (moneyPerHour, workingInfo) => {
 		console.log(workingInfo);
 		let totalHours = workingInfo.reduce((prev, curr) => {
 			return prev + curr.hour;
@@ -21,7 +21,6 @@ function Statistics(props) {
 	const numberOfWorkingDay = (workingInfo) => {
 		return workingInfo.length;
 	};
-	const totalGet = () => {};
 
 	const totalAdvances = (advancesInfo) => {
 		console.log(advancesInfo);
@@ -30,7 +29,9 @@ function Statistics(props) {
 		}, 0);
 		return totalAdvances;
 	};
-	const Sumary = () => {};
+	const Sumary = () => {
+		return totalGet(moneyPerHour, workingInfo) - totalAdvances(advancesInfo);
+	};
 
 	return (
 		<>
@@ -38,33 +39,30 @@ function Statistics(props) {
 			<div className='info-container'>
 				<Row gutter={24}>
 					<Col className='gutter-row' span={24}>
-						<div className='info-box'>
-							All money {allMoney(moneyPerHour, workingInfo)}$
+						<div className='info-box' style={{ backgroundColor: 'green' }}>
+							Number of working day : {numberOfWorkingDay(workingInfo)}
 						</div>
 					</Col>
 				</Row>
 				<Row gutter={24}>
 					<Col className='gutter-row' span={24}>
-						<div className='info-box'>
-							Number of working day {numberOfWorkingDay(workingInfo)}
+						<div className='info-box' style={{ backgroundColor: 'white' }}>
+							Total get : {totalGet(moneyPerHour, workingInfo)}$
 						</div>
 					</Col>
 				</Row>
 				<Row gutter={24}>
 					<Col className='gutter-row' span={24}>
-						<div className='info-box'>Total get</div>
-					</Col>
-				</Row>
-				<Row gutter={24}>
-					<Col className='gutter-row' span={24}>
-						<div className='info-box'>
-							Total advances {totalAdvances(advancesInfo)}
+						<div className='info-box' style={{ backgroundColor: 'blue' }}>
+							Total advances : {totalAdvances(advancesInfo)}
 						</div>
 					</Col>
 				</Row>
 				<Row gutter={24}>
 					<Col className='gutter-row' span={24}>
-						<div className='info-box'>Sumary</div>
+						<div className='info-box' style={{ backgroundColor: 'red' }}>
+							Sumary : {Sumary()}$
+						</div>
 					</Col>
 				</Row>
 			</div>
