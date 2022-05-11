@@ -22,7 +22,7 @@ const columns = [
 		render: (piece) => (
 			<Space size='middle'>
 				<div
-					onClick={() => console.log(piece.key)}
+					onClick={() => console.log(piece.id)}
 					// className='head_container__button head_container__button--add'
 					// onClick={showModal}
 				>
@@ -34,64 +34,29 @@ const columns = [
 ];
 
 function Working(props) {
-	// type Props = {
-	//     some?: any,
-	//     style?: string,
-	// };
-	console.log(props.working);
-	const no = props.working;
+	const { workingInfo } = props.working;
+	console.log(workingInfo);
 
-	// const employeeRender = [];
-	// console.log(employeeRender);
-	// no.forEach((employee, index) => {
-	// 	// console.log(employee);
-	// 	// const employeeObject = {
-	// 	// 	no: index,
-	// 	// 	fullname: employee.fullName,
-	// 	// 	phone: employee.phoneNumber,
-	// 	// 	team: employee.teamID,
-	// 	// };
-	// 	// console.log('employee object', employeeObject);
-	// 	employeeRender.push({
-	// 		no: employee.id,
-	// 		key: index + 1,
-	// 		date: Date.now(),
-	// 		hour: 8,
-	// 	});
-	// });
-
-	const data = [
-		{
-			no: 1,
-			key: '1',
-			date: moment(Date.now()).utc().format('DD/MM/YYYY'),
-			hour: 32,
-		},
-		{
-			no: 2,
-			key: Math.random(),
-			date: moment(Date.now()).utc().format('DD/MM/YYYY'),
-			hour: 42,
-		},
-		{
-			no: 3,
-			key: '3',
-			date: moment(Date.now()).utc().format('DD/MM/YYYY'),
-			hour: 32,
-		},
-		{
-			no: Math.random(),
-			key: Math.random(),
-			date: moment(Date.now()).utc().format('DD/MM/YYYY'),
-			hour: 42,
-		},
-		{
-			no: Math.random(),
-			key: Math.random(),
-			date: moment(Date.now()).utc().format('DD/MM/YYYY'),
-			hour: 42,
-		},
-	];
+	const workingRender = [];
+	console.log(workingRender);
+	workingInfo.forEach((working, index) => {
+		// console.log(employee);
+		// const employeeObject = {
+		// 	no: index,
+		// 	fullname: employee.fullName,
+		// 	phone: employee.phoneNumber,
+		// 	team: employee.teamID,
+		// };
+		// console.log('employee object', employeeObject);
+		workingRender.push({
+			id: working.workingId,
+			no: index + 1,
+			key: index + 1,
+			date: moment(working.date).utc().format('DD/MM/YYYY'),
+			hour: working.hour,
+		});
+	});
+	console.log(workingRender);
 	return (
 		<>
 			<div
@@ -111,7 +76,7 @@ function Working(props) {
 				</div>
 			</div>
 			<div className='working-container'>
-				<Table columns={columns} dataSource={data} />
+				<Table columns={columns} dataSource={workingRender} />
 			</div>
 		</>
 	);

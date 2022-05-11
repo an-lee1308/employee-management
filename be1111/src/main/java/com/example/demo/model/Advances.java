@@ -1,16 +1,20 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 
-    @Data
+@Getter
+@Setter
     @Entity
     @Table(name="advances")
-    public class Advances{
+    public class Advances implements Serializable{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int advancesId;
@@ -19,7 +23,9 @@ import java.util.Date;
         @Column(name="money")
         private int money;
 
-        @ManyToOne
+
+        @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name="employee_id")
+        @JsonIgnore
         private EmployeeModel advancesEmployee;
     }

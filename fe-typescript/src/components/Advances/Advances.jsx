@@ -2,62 +2,65 @@ import { FaPlusCircle, FaTrashAlt } from 'react-icons/fa';
 import './Advances.scss';
 import 'antd/dist/antd.css';
 import { Table, Tag, Space } from 'antd';
+import moment from 'moment';
+
+const columns = [
+	{
+		title: 'No',
+		dataIndex: 'no',
+	},
+	{
+		title: 'Date',
+		dataIndex: 'date',
+	},
+	{
+		title: 'Money',
+		dataIndex: 'money',
+	},
+	{
+		title: 'Option',
+		render: (piece) => (
+			<Space size='middle'>
+				<div
+					onClick={() => console.log(piece.id)}
+					// className='head_container__button head_container__button--add'
+					// onClick={showModal}
+				>
+					<FaTrashAlt />
+				</div>
+			</Space>
+		),
+	},
+];
 
 function Advances(props) {
 	// type Props = {
 	//     some?: any,
 	//     style?: string,
 	// };
-	const columns = [
-		{
-			title: 'No',
-			dataIndex: 'key',
-			key: 'key',
-		},
-		{
-			title: 'Date',
-			dataIndex: 'date',
-			key: 'date',
-		},
-		{
-			title: 'Money',
-			dataIndex: 'money',
-			key: 'money',
-		},
-		{
-			title: 'Option',
-			key: 'option',
-			render: (piece) => (
-				<Space size='middle'>
-					<div
-						onClick={() => console.log(piece.key)}
-						// className='head_container__button head_container__button--add'
-						// onClick={showModal}
-					>
-						<FaTrashAlt />
-					</div>
-				</Space>
-			),
-		},
-	];
+	const { advancesInfo } = props.advances;
+	console.log(advancesInfo);
 
-	const data = [
-		{
-			key: '1',
-			date: Date.now(),
-			money: 32,
-		},
-		{
-			key: Math.random(),
-			date: Date.now(),
-			money: 42,
-		},
-		{
-			key: '3',
-			date: Date.now(),
-			money: 32,
-		},
-	];
+	const advancesRender = [];
+	console.log(advancesRender);
+	advancesInfo.forEach((advance, index) => {
+		// console.log(employee);
+		// const employeeObject = {
+		// 	no: index,
+		// 	fullname: employee.fullName,
+		// 	phone: employee.phoneNumber,
+		// 	team: employee.teamID,
+		// };
+		// console.log('employee object', employeeObject);
+		advancesRender.push({
+			id: advance.advancesId,
+			no: index + 1,
+			key: index + 1,
+			date: moment(advance.date).utc().format('DD/MM/YYYY'),
+			money: advance.money,
+		});
+	});
+	console.log('log', advancesRender);
 	return (
 		<>
 			<div
@@ -77,7 +80,7 @@ function Advances(props) {
 				</div>
 			</div>
 			<div className='advances-container'>
-				<Table columns={columns} dataSource={data} />
+				<Table columns={columns} dataSource={advancesRender} />
 			</div>
 		</>
 	);

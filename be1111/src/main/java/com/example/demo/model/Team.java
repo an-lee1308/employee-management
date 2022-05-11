@@ -1,23 +1,30 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
-@Data
+@Getter
+@Setter
     @Entity
     @Table(name="team")
-    public class Team {
+    public class Team  implements Serializable{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int teamId;
         @Column(name="name")
         private String name;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<EmployeeModel> employeeModelList = new ArrayList<>();
+    @OneToMany(mappedBy = "employeeTeam",fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<EmployeeModel> employee = new ArrayList<>();
+//    private Set<EmployeeModel> employees =new HashSet<>();
     }
