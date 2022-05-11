@@ -10,6 +10,10 @@ function HeadContainer() {
 	//     style?: string,
 	//     Modal?: any
 	// };
+
+	const handleDelete = () => {
+		console.log('hihihihi');
+	};
 	const { Option } = Select;
 	const formItemLayout = {
 		labelCol: {
@@ -58,8 +62,11 @@ function HeadContainer() {
 					>
 						<FaPlusCircle />{' '}
 					</div>
-					<div className='head_container__button head_container__button--delete'>
-						<FaTrashAlt />{' '}
+					<div
+						className='head_container__button head_container__button--delete'
+						onClick={handleDelete}
+					>
+						<FaTrashAlt />
 					</div>
 				</div>
 			</div>
