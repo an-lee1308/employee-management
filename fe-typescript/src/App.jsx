@@ -28,6 +28,7 @@ function App() {
 				<Route path='/employee' exact={true} component={Home} />
 				<Route path='/employee/:id' exact={true} component={EmployeeDetail} />
 				<Route path='/teams' exact={true} component={Teams} />
+				<Route path='/teams/:id' exact={true} component={Teams} />
 			</Switch>
 		</>
 	);

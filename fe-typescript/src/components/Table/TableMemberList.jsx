@@ -7,31 +7,50 @@ function TableMemberList(props) {
 	//     some?: any,
 	//     style?: string,
 	// };
+	// const { teamMember } = props;
+	const teamMember = props.teamMember.employee;
+	console.log('team member', teamMember);
+
+	const meberRender = [];
+	teamMember.forEach((member, index) => {
+		// console.log(employee);
+		// const employeeObject = {
+		// 	no: index,
+		// 	fullname: employee.fullName,
+		// 	phone: employee.phoneNumber,
+		// 	team: employee.teamID,
+		// };
+		// console.log('employee object', employeeObject);
+		meberRender.push({
+			id: member.employeeId,
+			no: index + 1,
+			key: index + 1,
+			fullname: member.fullName,
+			phone: member.phoneNumber,
+			address: member.address,
+			sex: member.gender,
+		});
+	});
 	const columns = [
 		{
 			title: 'No',
 			dataIndex: 'no',
-			key: 'no',
 		},
 		{
 			title: 'FullName',
 			dataIndex: 'fullname',
-			key: 'fullname',
 		},
 		{
 			title: 'Phone',
 			dataIndex: 'phone',
-			key: 'phone',
 		},
 		{
 			title: 'Address',
 			dataIndex: 'address',
-			key: 'address',
 		},
 		{
 			title: 'Sex',
 			dataIndex: 'sex',
-			key: 'sex',
 		},
 	];
 
@@ -67,7 +86,11 @@ function TableMemberList(props) {
 	];
 	return (
 		<>
-			<Table className='hiden-pagination' columns={columns} dataSource={data} />
+			<Table
+				className='hiden-pagination'
+				columns={columns}
+				dataSource={meberRender}
+			/>
 		</>
 	);
 }

@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,10 +34,6 @@ public class EmployeeModel implements Serializable {
     private int totalHours;
     @Column(name = "image_URL")
     private String imageURL;
-
-
-    //    @Column(name="team_id")
-//    private int teamId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     @JsonIgnore
@@ -59,6 +54,5 @@ public class EmployeeModel implements Serializable {
 //    private List<WorkingModel> workings = new ArrayList<>();
 
 // mapping onetomany
-
 
 }
