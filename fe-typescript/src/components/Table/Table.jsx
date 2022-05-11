@@ -95,7 +95,7 @@ const TableUI = (props) => {
 			key: index + 1,
 			fullname: employee.fullName,
 			phone: employee.phoneNumber,
-			team: employee.team,
+			team: employee.teamInfo.name,
 		});
 	});
 

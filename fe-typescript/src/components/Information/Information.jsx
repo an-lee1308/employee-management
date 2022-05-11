@@ -9,7 +9,6 @@ function Information(props) {
 	//     some?: any,
 	//     style?: string,
 	// };
-	const [test, setTest] = useState(true);
 	console.log(props.information);
 	const { startDay, teamInfo, address, moneyPerHour } = props.information;
 	return (

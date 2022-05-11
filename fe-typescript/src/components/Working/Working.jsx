@@ -32,7 +32,9 @@ const columns = [
 		),
 	},
 ];
-
+const handleOnClick = () => {
+	console.log('hello');
+};
 function Working(props) {
 	const { workingInfo } = props.working;
 	console.log(workingInfo);
@@ -71,6 +73,7 @@ function Working(props) {
 					style={{ fontSize: '2em' }}
 					// className='head_container__button head_container__button--add'
 					// onClick={showModal}
+					onClick={handleOnClick}
 				>
 					<FaPlusCircle />
 				</div>

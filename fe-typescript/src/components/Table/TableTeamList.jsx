@@ -1,6 +1,7 @@
 import { FaAddressCard } from 'react-icons/fa';
 import 'antd/dist/antd.css';
 import './Table.scss';
+import { useHistory } from 'react-router-dom';
 import { Table, Tag, Space } from 'antd';
 
 function TableTeamList(props) {
@@ -8,26 +9,47 @@ function TableTeamList(props) {
 	//     some?: any,
 	//     style?: string,
 	// };
+	const history = useHistory();
+	const { teamList } = props;
+
+	const teamRender = [];
+	teamList.forEach((team, index) => {
+		// console.log(employee);
+		// const employeeObject = {
+		// 	no: index,
+		// 	fullname: employee.fullName,
+		// 	phone: employee.phoneNumber,
+		// 	team: employee.teamID,
+		// };
+		// console.log('employee object', employeeObject);
+		teamRender.push({
+			id: team.workingId,
+			no: index + 1,
+			key: index + 1,
+			nameteam: team.name,
+		});
+	});
+
 	const columns = [
 		{
 			title: 'No',
 			dataIndex: 'key',
-			key: 'key',
 		},
 		{
 			title: 'Name Team',
 			dataIndex: 'nameteam',
-			key: 'nameteam',
 		},
 		{
 			title: 'Option',
-			key: 'option',
+
 			render: (piece) => (
 				<Space size='middle'>
 					<div
-						onClick={() => console.log(piece.key)}
-						// className='head_container__button head_container__button--add'
-						// onClick={showModal}
+						style={{ cursor: 'pointer' }}
+						onClick={() => {
+							console.log(piece.key);
+							history.push(`/teams/${piece.key}`);
+						}}
 					>
 						<FaAddressCard />
 					</div>
@@ -36,26 +58,13 @@ function TableTeamList(props) {
 		},
 	];
 
-	const data = [
-		{
-			key: '1',
-			nameteam: `IT Support`,
-			money: 32,
-		},
-		{
-			key: Math.random(),
-			nameteam: `HR execute`,
-			money: 42,
-		},
-		{
-			key: '3',
-			nameteam: `Manager`,
-			money: 32,
-		},
-	];
 	return (
 		<>
-			<Table className='hiden-pagination' columns={columns} dataSource={data} />
+			<Table
+				className='hiden-pagination'
+				columns={columns}
+				dataSource={teamRender}
+			/>
 		</>
 	);
 }

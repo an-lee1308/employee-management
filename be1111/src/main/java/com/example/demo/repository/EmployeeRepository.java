@@ -2,14 +2,18 @@ package com.example.demo.repository;
 
 import com.example.demo.model.EmployeeModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<EmployeeModel,Integer>{
+public interface EmployeeRepository extends JpaRepository<EmployeeModel, Integer> {
 
     public List<EmployeeModel> findByFullName(String fullName);
+
+    @Query(value = "SELECT * from employee  where team_id=?1", nativeQuery = true)
+    List<EmployeeModel> findEmployeeInTeam(int id);
 //        @Query("SELECT u FROM User u WHERE u.def = :def")
 //        public List<EmployeeModel> findUserByDefQuery(@Param("def") Integer def);
 

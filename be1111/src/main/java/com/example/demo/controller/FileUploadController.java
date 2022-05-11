@@ -19,28 +19,29 @@ public class FileUploadController {
     //Inject Storage Service here
     @Autowired
     private IstorageService storageService;
+
     @PostMapping("")
-    public ResponseEntity<ResponseObject>uploadFile(@RequestParam("file")MultipartFile file)    {
-        try{
+    public ResponseEntity<ResponseObject> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
             //save files to a folder => use a service
-            String generateFileName=storageService.storeFile(file);
+            String generateFileName = storageService.storeFile(file);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok","upload file sucessfully",generateFileName)
+                    new ResponseObject("ok", "upload file sucessfully", generateFileName)
             );
-        } catch (Exception exception){
+        } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("OK",exception.getMessage(),"")
+                    new ResponseObject("OK", exception.getMessage(), "")
             );
         }
     }
 
     @GetMapping("/files/{fileName:.+}")
-        public ResponseEntity<byte[]> readDetailFile(@PathVariable String fileName) {
+    public ResponseEntity<byte[]> readDetailFile(@PathVariable String fileName) {
         try {
-            byte[] bytes=storageService.readFileContent((fileName));
+            byte[] bytes = storageService.readFileContent((fileName));
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
                     .body(bytes);
-        } catch (Exception exception)   {
+        } catch (Exception exception) {
             return ResponseEntity.noContent().build();
         }
     }

@@ -4,6 +4,10 @@ import 'antd/dist/antd.css';
 import { Table, Tag, Space } from 'antd';
 import moment from 'moment';
 
+const handleOnClick = () => {
+	console.log('hello');
+};
+
 const columns = [
 	{
 		title: 'No',
@@ -75,6 +79,7 @@ function Advances(props) {
 					style={{ fontSize: '2em' }}
 					// className='head_container__button head_container__button--add'
 					// onClick={showModal}
+					onClick={handleOnClick}
 				>
 					<FaPlusCircle />
 				</div>

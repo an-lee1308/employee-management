@@ -20,6 +20,7 @@ export default function Home() {
 	};
 	const [employeeList, setEmployeeList] = useState([]);
 	const [data, setData] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 	useEffect(() => {
 		async function fetchData() {
 			try {
@@ -29,6 +30,7 @@ export default function Home() {
 				console.log(response);
 				setEmployeeList(response.data);
 				setData(response.data);
+				setIsLoading(false);
 			} catch (error) {
 				console.error(error);
 			}
@@ -37,6 +39,7 @@ export default function Home() {
 	}, []);
 
 	const totalEmployees = employeeList.length;
+
 	return (
 		<div>
 			<div className='search-block'>
@@ -55,7 +58,7 @@ export default function Home() {
 				<div className='container__search-result'>Search result</div>
 				<div className='container-table'></div>
 			</div>
-			<Table employeeList={employeeList} />
+			{employeeList.length > 0 && <Table employeeList={employeeList} />}
 		</div>
 	);
 }

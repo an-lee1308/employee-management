@@ -22,22 +22,24 @@ public class EmployeeService implements INewService {
     public EmployeeModel saveEmployee(EmployeeModel employee) {
         return employeeRepository.save(employee);
     }
-//    @Override
+
+    //    @Override
 //    public List<EmployeeDTO> getAllEmployees() {
 //
 //        return  employeeRepository.findAll();
 //    }
     @Override
-public List<EmployeeDTO> getAllEmployees() {
-    List<EmployeeModel> employeeList=employeeRepository.findAll();
-    System.out.println(employeeList);
-    List<EmployeeDTO>employeeDTOList=new ArrayList<>();
-        employeeList.stream().forEach(employee->{
+    public List<EmployeeDTO> getAllEmployees() {
+        List<EmployeeModel> employeeList = employeeRepository.findAll();
+        System.out.println(employeeList);
+        List<EmployeeDTO> employeeDTOList = new ArrayList<>();
+        employeeList.stream().forEach(employee -> {
 //            EmployeeDTO employeeDTO=mapper.toEmployeeDTO(employee);
             employeeDTOList.add(mapper.toEmployeeDTO(employee));
         });
-    return  employeeDTOList;
-}
+        return employeeDTOList;
+    }
+
     @Override
     public EmployeeModel updateEmployee(EmployeeModel employee, int id) {
 
@@ -64,11 +66,11 @@ public List<EmployeeDTO> getAllEmployees() {
         existingEmployee.setEmployeeTeam(employee.getEmployeeTeam());
 
 
-
         // save existing employee to DB
         employeeRepository.save(existingEmployee);
         return existingEmployee;
     }
+
     @Override
     public void deleteEmployee(int id) {
 
@@ -78,14 +80,14 @@ public List<EmployeeDTO> getAllEmployees() {
 
     @Override
     public List<EmployeeModel> findByName(String name) {
-        return  employeeRepository.findByFullName(name);
+        return employeeRepository.findByFullName(name);
     }
 
 
-@Override
-public EmployeeDTO getEmployeeById(int id)       {
-    EmployeeModel employee=employeeRepository.getById(id);
-    EmployeeDTO employeeDTO=mapper.toEmployeeDTO(employee);
-    return  employeeDTO;
-}
+    @Override
+    public EmployeeDTO getEmployeeById(int id) {
+        EmployeeModel employee = employeeRepository.getById(id);
+        EmployeeDTO employeeDTO = mapper.toEmployeeDTO(employee);
+        return employeeDTO;
+    }
 }

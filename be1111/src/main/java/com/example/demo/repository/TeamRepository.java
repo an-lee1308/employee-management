@@ -1,15 +1,16 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.EmployeeModel;
-import com.example.demo.model.WorkingModel;
+import com.example.demo.model.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Stream;
+
+import static org.hibernate.loader.Loader.SELECT;
 
 
-@Repository
-public interface WorkingRepository extends JpaRepository<WorkingModel, Integer> {
+public interface TeamRepository extends JpaRepository<Team, Integer> {
 
 }
