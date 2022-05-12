@@ -1,31 +1,27 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.EmployeeModel;
+import com.example.demo.model.Advances;
 import com.example.demo.model.ResponseObject;
 
-import com.example.demo.model.WorkingModel;
+import com.example.demo.repository.AdvancesRepository;
 import com.example.demo.repository.EmployeeRepository;
-import com.example.demo.repository.WorkingRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-
 @CrossOrigin
 @RestController
-@RequestMapping("/api/working")
-public class WorkingController {
-
+@RequestMapping("/api/advances")
+public class AdvancesController {
     @Autowired
-    WorkingRepository workingRepository;
+    AdvancesRepository advancesRepository;
     //CRUD api
     @Autowired
     EmployeeRepository employeeRepository;
     @PostMapping(value="/insert")
-    ResponseEntity<ResponseObject> addWorking(@RequestBody WorkingModel working) {
+    ResponseEntity<ResponseObject> addAdvances(@RequestBody Advances advances) {
 //        Optional<WorkingModel> foundWorking = workingRepository.findById(working.getWorkingId());
 //        if (foundWorking.equals(true)) {
 //            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
@@ -36,9 +32,10 @@ public class WorkingController {
 //        System.out.println(req);
 //        EmployeeModel employeeModel = employeeRepository.findById(working.getEmployeeModel().getEmployeeId()).get();
 //        working.setEmployeeModel(employeeModel);
-        System.out.println(working);
+        System.out.println("hello");
+        System.out.println(advances);
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("OK", "Insert Working sucessfully", workingRepository.save(working))
+                new ResponseObject("OK", "Insert Advances sucessfully", advancesRepository.save(advances))
         );
     }
 
@@ -57,15 +54,15 @@ public class WorkingController {
 //    }
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteEmployeeById(@PathVariable int id) {
+    ResponseEntity<ResponseObject> deleteAdvancesById(@PathVariable int id) {
         System.out.println(id);
-        boolean exist = workingRepository.existsById(id);
+        boolean exist = advancesRepository.existsById(id);
         if (exist) {
-            workingRepository.deleteById(id);
+            advancesRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Delete Working Successfully", ""));
+                    new ResponseObject("ok", "Delete Advances Successfully", ""));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("fail", "Cannot find Working to delete", ""));
+                new ResponseObject("fail", "Cannot find Advances to delete", ""));
     }
 }

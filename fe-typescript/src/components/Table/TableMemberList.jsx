@@ -13,14 +13,6 @@ function TableMemberList(props) {
 
 	const meberRender = [];
 	teamMember.forEach((member, index) => {
-		// console.log(employee);
-		// const employeeObject = {
-		// 	no: index,
-		// 	fullname: employee.fullName,
-		// 	phone: employee.phoneNumber,
-		// 	team: employee.teamID,
-		// };
-		// console.log('employee object', employeeObject);
 		meberRender.push({
 			id: member.employeeId,
 			no: index + 1,

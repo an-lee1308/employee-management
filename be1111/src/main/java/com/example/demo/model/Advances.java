@@ -24,8 +24,8 @@ public class Advances implements Serializable {
     private int money;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "employee_id")
-    @JsonIgnore
-    private EmployeeModel advancesEmployee;
+//    @JsonIgnore
+    private EmployeeModel employeeModel;
 }
