@@ -23,8 +23,7 @@ public class WorkingModel implements Serializable {
     private Date date;
     @Column(name = "hour")
     private int hour;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "employee_id")
-    @JsonIgnore
-    private EmployeeModel workingEmployee;
+    private EmployeeModel employeeModel;
 }

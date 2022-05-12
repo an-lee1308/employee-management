@@ -38,14 +38,14 @@ public class EmployeeModel implements Serializable {
     @JoinColumn(name = "team_id")
     @JsonIgnore
     private Team employeeTeam;
-    @OneToMany(mappedBy = "workingEmployee", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employeeModel",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonIgnore
     private List<WorkingModel> workings = new ArrayList<>();
 //    private Set<WorkingModel> workings =new HashSet<>();
 
-    @OneToMany(mappedBy = "advancesEmployee", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employeeModel", fetch = FetchType.LAZY)
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonIgnore

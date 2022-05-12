@@ -4,6 +4,7 @@ import com.example.demo.model.EmployeeModel;
 import com.example.demo.model.ResponseObject;
 
 import com.example.demo.model.WorkingModel;
+import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.repository.WorkingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,20 @@ public class WorkingController {
     @Autowired
     WorkingRepository workingRepository;
     //CRUD api
+    @Autowired
+    EmployeeRepository employeeRepository;
     @PostMapping(value="/insert")
-    ResponseEntity<ResponseObject> addWorking(@RequestBody (required = false) WorkingModel working) {
+    ResponseEntity<ResponseObject> addWorking(@RequestBody WorkingModel working) {
 //        Optional<WorkingModel> foundWorking = workingRepository.findById(working.getWorkingId());
 //        if (foundWorking.equals(true)) {
 //            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
 //                    new ResponseObject("fail", "Working already taken", "")
 //            );
 //        }
+//        WorkingModel working = new WorkingModel();
+//        System.out.println(req);
+//        EmployeeModel employeeModel = employeeRepository.findById(working.getEmployeeModel().getEmployeeId()).get();
+//        working.setEmployeeModel(employeeModel);
         System.out.println(working);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK", "Insert Working sucessfully", workingRepository.save(working))
@@ -49,15 +56,16 @@ public class WorkingController {
 //        );
 //    }
 
-//    @DeleteMapping("/delete/{id}")
-//    ResponseEntity<ResponseObject> deleteEmployeeById(@PathVariable int id) {
-//        boolean exist = employeeRepository.existsById(id);
-//        if (!exist) {
-//            employeeRepository.deleteById(id);
-//            return ResponseEntity.status(HttpStatus.OK).body(
-//                    new ResponseObject("ok", "Delete employee Successfully", ""));
-//        }
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-//                new ResponseObject("fail", "Cannot find employee to delete", ""));
-//    }
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<ResponseObject> deleteEmployeeById(@PathVariable int id) {
+        System.out.println(id);
+        boolean exist = workingRepository.existsById(id);
+        if (exist) {
+            workingRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Delete Working Successfully", ""));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ResponseObject("fail", "Cannot find Working to delete", ""));
+    }
 }
