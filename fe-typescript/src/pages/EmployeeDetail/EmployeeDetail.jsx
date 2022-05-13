@@ -100,7 +100,7 @@ function EmployeeDetail() {
 									<Information information={dataEmployee} />
 								</TabPane>
 								<TabPane tab='WORKING' key='working'>
-									<Working working={dataEmployee} />{' '}
+									{dataEmployee && <Working working={dataEmployee} />}
 								</TabPane>
 								<TabPane tab='ADVANCES' key='advances'>
 									<Advances advances={dataEmployee} />{' '}

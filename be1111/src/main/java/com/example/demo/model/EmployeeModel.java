@@ -15,11 +15,11 @@ import java.util.*;
 public class EmployeeModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int employeeId;
+    private Integer employeeId;
     @Column(name = "full_name", nullable = false)
     private String fullName;
     @Column(name = "age")
-    private int age;
+    private Integer age;
     @Column(name = "gender")
     private String gender;
     @Column(name = "address")
@@ -29,16 +29,16 @@ public class EmployeeModel implements Serializable {
     @Column(name = "start_day")
     private Date startDay;
     @Column(name = "money_per_hour")
-    private int moneyPerHour;
+    private Integer moneyPerHour;
     @Column(name = "total_hours")
-    private int totalHours;
+    private Integer totalHours;
     @Column(name = "image_URL")
     private String imageURL;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "team_id")
     @JsonIgnore
     private Team employeeTeam;
-    @OneToMany(mappedBy = "employeeModel",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employeeModel",fetch = FetchType.LAZY)
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonIgnore
@@ -54,5 +54,6 @@ public class EmployeeModel implements Serializable {
 //    private List<WorkingModel> workings = new ArrayList<>();
 
 // mapping onetomany
+
 
 }

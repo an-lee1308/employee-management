@@ -12,11 +12,11 @@ import java.util.List;
 @Getter
 @Setter
 public class EmployeeDTO {
-    private int employeeId;
+    private Integer employeeId;
 
     private String fullName;
 
-    private int age;
+    private Integer age;
 
     private String gender;
 
@@ -26,13 +26,14 @@ public class EmployeeDTO {
 
     private Date startDay;
 
-    private int moneyPerHour;
+    private Integer moneyPerHour;
 
-    private int totalHours;
+    private Integer totalHours;
 
     private String imageURL;
 
     private Team teamInfo;
+    private String teamName;
     private List<WorkingModel> workingInfo;
     private List<Advances> advancesInfo;
 }

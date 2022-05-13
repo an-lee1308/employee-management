@@ -67,14 +67,14 @@ public class EmployeeController {
         return new ResponseEntity<EmployeeModel>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/create")
     ResponseEntity<ResponseObject> insertEmployee(@RequestBody EmployeeModel employee) {
-        Optional<EmployeeModel> foundEmployee = employeeRepository.findById(employee.getEmployeeId());
-        if (foundEmployee.equals(true)) {
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                    new ResponseObject("fail", "Employee already taken", "")
-            );
-        }
+//        Optional<EmployeeModel> foundEmployee = employeeRepository.findById(employee.getEmployeeId());
+//        if (foundEmployee.equals(true)) {
+//            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+//                    new ResponseObject("fail", "Employee already taken", "")
+//            );
+//        }
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("OK", "Insert Employee sucessfully", employeeRepository.save(employee))
         );
@@ -84,7 +84,17 @@ public class EmployeeController {
     ResponseEntity<ResponseObject> updateEmployee(@RequestBody EmployeeModel newEmployee, @PathVariable int id) {
         EmployeeModel updateEmployee = employeeRepository.findById(id)
                 .map(employee -> {
-                    employee.setImageURL(newEmployee.getImageURL());
+//                    employee.setImageURL(newEmployee.getImageURL());
+                    employee.setFullName(newEmployee.getFullName());
+                    employee.setAge(newEmployee.getAge());
+                    employee.setEmployeeTeam(newEmployee.getEmployeeTeam());
+                    employee.setGender(newEmployee.getGender());
+                    employee.setAddress(newEmployee.getAddress());
+                    employee.setPhoneNumber(newEmployee.getPhoneNumber());
+                    employee.setStartDay(newEmployee.getStartDay());
+                    employee.setMoneyPerHour(newEmployee.getMoneyPerHour());
+                    employee.setTotalHours(newEmployee.getTotalHours());
+//                    employee.setImageURL(newEmployee.getImageURL());
                     return employeeRepository.save(employee);
                 }).orElseGet(() -> {
                     newEmployee.setEmployeeId(id);
@@ -98,7 +108,8 @@ public class EmployeeController {
     @DeleteMapping("/delete/{id}")
     ResponseEntity<ResponseObject> deleteEmployeeById(@PathVariable int id) {
         boolean exist = employeeRepository.existsById(id);
-        if (!exist) {
+        System.out.println(id);
+        if (exist) {
             employeeRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("ok", "Delete employee Successfully", ""));
@@ -107,38 +118,66 @@ public class EmployeeController {
                 new ResponseObject("fail", "Cannot find employee to delete", ""));
     }
 
+    @DeleteMapping("/delete")
+    ResponseEntity<ResponseObject> deleteManyEmployeeById(@RequestBody List<Integer> ids) {
+
+        employeeRepository.deleteAllById(ids);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Delete employee Successfully", ""));
+    }
+
     @GetMapping(value = "/list")
-    public List<EmployeeDTO> getAll() {
+    public List<EmployeeDTO> getAllEmployee() {
+        System.out.println("hello");
         return employeeService.getAllEmployees();
+//        if(listContact.isEmpty()) {
+//            return new ResponseEntity(HttpStatus.NO_CONTENT);
+//        }
 //        return employeeRepository.findAll();
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable("id") int id
-            , @RequestBody EmployeeModel employee) {
-        return new ResponseEntity<EmployeeModel>(employeeService.updateEmployee(employee, id), HttpStatus.OK);
+    @GetMapping(value = "/listEmployee")
+    public ResponseEntity<ResponseObject> getAllEmployeeNoPagination() {
+        System.out.println("hello");
+        List<EmployeeDTO> ListEmployee = employeeService.getAllEmployees();
+        if (ListEmployee.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ResponseObject("ok", "No Employee In List", ""));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Cannot find employee with id = ", ListEmployee)
+            );
+        }
+//        return employeeRepository.findAll();
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable("id") int id) {
-
-        // delete employee from DB
-        employeeService.deleteEmployee(id);
-        System.out.println(id);
-
-        return new ResponseEntity<String>("Employee deleted successfully!.", HttpStatus.OK);
-    }
+//
+//    @PutMapping("{id}")
+//    public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable("id") int id
+//            , @RequestBody EmployeeModel employee) {
+//        return new ResponseEntity<EmployeeModel>(employeeService.updateEmployee(employee, id), HttpStatus.OK);
+//    }
+//
+//    @DeleteMapping("{id}")
+//    public ResponseEntity<String> deleteEmployee(@PathVariable("id") int id) {
+//
+//        // delete employee from DB
+//        employeeService.deleteEmployee(id);
+//        System.out.println(id);
+//
+//        return new ResponseEntity<String>("Employee deleted successfully!.", HttpStatus.OK);
+//    }
 //    @GetMapping(value = "/list/{name}")
 //    public List<EmployeeModel> findEmployee(@PathVariable("name") String name){
 //        return employeeService.findEmployeeByName();
 //    }
 
-    @GetMapping(value = "/name/{name}")
-    public List<EmployeeModel> findEmployeeById(@PathVariable("name") String employeeName) {
-//        return employeeService.getEmployeeById(employeeId);
-        System.out.println(employeeName);
-        return employeeService.findByName(employeeName);
-    }
+//    @GetMapping(value = "/name/{name}")
+//    public List<EmployeeModel> findEmployeeById(@PathVariable("name") String employeeName) {
+////        return employeeService.getEmployeeById(employeeId);
+//        System.out.println(employeeName);
+//        return employeeService.findByName(employeeName);
+//    }
 
     @GetMapping(value = "{id}")
     public ResponseEntity<EmployeeDTO> findEmployeeById(@PathVariable("id") int employeeId) {
@@ -153,7 +192,7 @@ public class EmployeeController {
 
     //Chuẩn response
     @GetMapping(value = "/working/{id}")
-    public ResponseEntity<ResponseObject> findMyAEmployee(@PathVariable int id) {
+    public ResponseEntity<ResponseObject> findMyAnEmployee(@PathVariable int id) {
         Optional<EmployeeModel> foundEmployee = employeeRepository.findById(id);
         if (foundEmployee.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -161,7 +200,7 @@ public class EmployeeController {
             );
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("fail", "Cannot find product with id = " + id, "")
+                    new ResponseObject("fail", "Cannot find employee with id = " + id, "")
             );
         }
     }

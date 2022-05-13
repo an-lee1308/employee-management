@@ -4,13 +4,26 @@ import 'antd/dist/antd.css';
 import { Form, Select, Input, Button, Upload, Modal, DatePicker } from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import './HeadContainer.scss';
+import axios from 'axios';
+import { useEffect } from 'react';
+
 function HeadContainer() {
 	// type Props = {
 	//     some?: any,
 	//     style?: string,
 	//     Modal?: any
 	// };
+	const [teamList, setTeamList] = useState([]);
+	useEffect(() => {
+		async function getTeamList() {
+			// SetLoading(true);
+			const response = await axios.get(`http://localhost:8080/api/team/list`);
 
+			console.log('response', response.data);
+			setTeamList(response.data);
+		}
+		getTeamList();
+	}, []);
 	const handleDelete = () => {
 		console.log('hihihihi');
 	};
@@ -130,7 +143,17 @@ function HeadContainer() {
 						<Input />
 					</Form.Item>
 					<Form.Item label='Team'>
-						<Input />
+						<Select>
+							{teamList &&
+								teamList.length > 0 &&
+								teamList.map((team, index) => {
+									return (
+										<Select.Option value={team.teamId} key={index}>
+											{team.name}
+										</Select.Option>
+									);
+								})}
+						</Select>
 					</Form.Item>
 					<Form.Item
 						wrapperCol={{

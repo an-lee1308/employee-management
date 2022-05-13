@@ -81,13 +81,13 @@ const TableUI = (props) => {
 	const employeeRender = [];
 	console.log(employeeRender);
 	const { employeeList } = props;
-	employeeList.forEach((employee, index) => {
-		employeeRender.push({
+	employeeList.forEach(async (employee, index) => {
+		await employeeRender.push({
 			id: employee.employeeId,
 			key: index + 1,
 			fullname: employee.fullName,
-			phone: employee.phoneNumber,
 			team: employee.teamInfo.name,
+			phone: employee.phoneNumber,
 		});
 	});
 
