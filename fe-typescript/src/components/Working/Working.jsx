@@ -41,7 +41,7 @@ function Working(props) {
 
 	const workingRender = [];
 	console.log(workingRender);
-	workingInfo.forEach((working, index) => {
+	workingInfo.forEach(async (working, index) => {
 		// console.log(employee);
 		// const employeeObject = {
 		// 	no: index,
@@ -50,7 +50,7 @@ function Working(props) {
 		// 	team: employee.teamID,
 		// };
 		// console.log('employee object', employeeObject);
-		workingRender.push({
+		await workingRender.push({
 			id: working.workingId,
 			no: index + 1,
 			key: index + 1,

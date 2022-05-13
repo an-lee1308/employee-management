@@ -28,9 +28,9 @@ public class Mapper {
 
     public EmployeeDTO toEmployeeDTO(EmployeeModel entity) {
         EmployeeDTO dto = new EmployeeDTO();
-        if (entity.getEmployeeId() != 0) {
-            dto.setEmployeeId(entity.getEmployeeId());
-        }
+//        if (entity.getEmployeeId() != 0) {
+//            dto.setEmployeeId(entity.getEmployeeId());
+//        }
         dto.setEmployeeId(entity.getEmployeeId());
         dto.setFullName(entity.getFullName());
         dto.setAge(entity.getAge());
@@ -42,8 +42,31 @@ public class Mapper {
         dto.setTotalHours(entity.getTotalHours());
         dto.setImageURL(entity.getImageURL());
         dto.setTeamInfo(entity.getEmployeeTeam());
-        dto.setWorkingInfo(entity.getWorkings());
-        dto.setAdvancesInfo(entity.getAdvances());
+        dto.setTeamName(entity.getEmployeeTeam().getName());
+//        dto.setWorkingInfo(entity.getWorkings());
+//        dto.setAdvancesInfo(entity.getAdvances());
+        return dto;
+    }
+
+    public EmployeeDTO toEmployeeDTOList(EmployeeModel entity) {
+        EmployeeDTO dto = new EmployeeDTO();
+//        if (entity.getEmployeeId() != 0) {
+//            dto.setEmployeeId(entity.getEmployeeId());
+//        }
+        dto.setEmployeeId(entity.getEmployeeId());
+        dto.setFullName(entity.getFullName());
+        dto.setAge(entity.getAge());
+        dto.setGender(entity.getGender());
+        dto.setAddress(entity.getAddress());
+        dto.setPhoneNumber(entity.getPhoneNumber());
+        dto.setStartDay(entity.getStartDay());
+        dto.setMoneyPerHour(entity.getMoneyPerHour());
+        dto.setTotalHours(entity.getTotalHours());
+        dto.setImageURL(entity.getImageURL());
+//        dto.setTeamInfo(entity.getEmployeeTeam());
+        dto.setTeamName(entity.getEmployeeTeam().getName());
+//        dto.setWorkingInfo(entity.getWorkings());
+//        dto.setAdvancesInfo(entity.getAdvances());
         return dto;
     }
 

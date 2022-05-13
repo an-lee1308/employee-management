@@ -35,7 +35,7 @@ public class EmployeeService implements INewService {
         List<EmployeeDTO> employeeDTOList = new ArrayList<>();
         employeeList.stream().forEach(employee -> {
 //            EmployeeDTO employeeDTO=mapper.toEmployeeDTO(employee);
-            employeeDTOList.add(mapper.toEmployeeDTO(employee));
+            employeeDTOList.add(mapper.toEmployeeDTOList(employee));
         });
         return employeeDTOList;
     }
