@@ -1,6 +1,6 @@
 import './Teams.scss';
 import 'antd/dist/antd.css';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import TableTeamList from '../../components/Table/TableTeamList';
 import TableMemberList from '../../components/Table/TableMemberList';
 import { FaPlusCircle } from 'react-icons/fa';
@@ -15,6 +15,7 @@ function Teams() {
 	// };
 	const [teamList, setTeamList] = useState([]);
 	const [teamMember, setTeamMember] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 	const { id } = useParams();
 	console.log(id);
 
@@ -25,6 +26,7 @@ function Teams() {
 
 			console.log('response', response.data);
 			setTeamList(response.data);
+			setIsLoading(false);
 		}
 		getTeamList();
 	}, []);
@@ -41,7 +43,7 @@ function Teams() {
 	}, [id]);
 
 	return (
-		<>
+		<div>
 			<div className='head_container'>
 				<div className='head_container__title'>Team</div>
 				<div className='head_container__button'>
@@ -53,23 +55,29 @@ function Teams() {
 					</div>
 				</div>
 			</div>
-			<Row>
-				<Col className='gutter-row' span={8}>
-					<div>Total {teamList.length} teams</div>
-					<TableTeamList teamList={teamList} />
-				</Col>
-				<Col className='gutter-row' span={1}></Col>
-				{id && teamMember.employee && (
-					<Col className='gutter-row' span={15}>
-						<div>
-							Result all employee team Manager - Total{' '}
-							{teamMember.employee.length} employees
-						</div>
-						<TableMemberList teamMember={teamMember} />
+			{isLoading ? (
+				<div style={{ marginLeft: '28vmax' }}>
+					<Spin tip='Loading...' />
+				</div>
+			) : (
+				<Row>
+					<Col className='gutter-row' span={8}>
+						<div>Total {teamList.length} teams</div>
+						<TableTeamList teamList={teamList} />
 					</Col>
-				)}
-			</Row>
-		</>
+					<Col className='gutter-row' span={1}></Col>
+					{id && teamMember.employee && (
+						<Col className='gutter-row' span={15}>
+							<div>
+								Result all employee team Manager - Total{' '}
+								{teamMember.employee.length} employees
+							</div>
+							<TableMemberList teamMember={teamMember} />
+						</Col>
+					)}
+				</Row>
+			)}
+		</div>
 	);
 }
 

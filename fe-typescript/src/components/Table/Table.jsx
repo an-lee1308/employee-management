@@ -86,7 +86,7 @@ const TableUI = (props) => {
 			id: employee.employeeId,
 			key: index + 1,
 			fullname: employee.fullName,
-			team: employee.teamInfo.name,
+			team: employee.teamName,
 			phone: employee.phoneNumber,
 		});
 	});

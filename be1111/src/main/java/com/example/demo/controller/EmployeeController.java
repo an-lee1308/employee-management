@@ -8,10 +8,12 @@ import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.repository.TeamRepository;
 import com.example.demo.service.EmployeeService;
 
+import com.example.demo.service.IstorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +62,8 @@ public class EmployeeController {
     EmployeeRepository employeeRepository;
     @Autowired
     EmployeeService employeeService;
+    @Autowired
+    private IstorageService storageService;
 
     //CRUD api
     @PostMapping()
@@ -68,17 +72,38 @@ public class EmployeeController {
     }
 
     @PostMapping("/create")
-    ResponseEntity<ResponseObject> insertEmployee(@RequestBody EmployeeModel employee) {
+    ResponseEntity<ResponseObject> insertEmployee(@RequestParam("file") MultipartFile file, @ModelAttribute EmployeeModel employee) {
 //        Optional<EmployeeModel> foundEmployee = employeeRepository.findById(employee.getEmployeeId());
 //        if (foundEmployee.equals(true)) {
 //            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
 //                    new ResponseObject("fail", "Employee already taken", "")
 //            );
 //        }
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("OK", "Insert Employee sucessfully", employeeRepository.save(employee))
-        );
+//        Integer team=Integer.parseInt(teamId);
+//        System.out.println(teamId);
+        try {
+            //save files to a folder => use a service
+            String imageUrl = "https://i.stack.imgur.com/l60Hf.png";
+
+            if (!file.isEmpty()) {
+                String generateFileName = storageService.storeFile(file);
+                imageUrl = "http://localhost:8080/api/v1/FileUpload/files/" + generateFileName;
+            }
+//            EmployeeModel employee = new EmployeeModel();
+//            System.out.println(employeeDto);
+            System.out.println(employee);
+            employee.setImageURL(imageUrl);
+//            employee.getEmployeeTeam().setTeamId(team);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("OK", "Insert Employee sucessfully", employeeRepository.save(employee))
+            );
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                    new ResponseObject("OK", exception.getMessage(), "")
+            );
+        }
     }
+
 
     @PutMapping("/update/{id}")
     ResponseEntity<ResponseObject> updateEmployee(@RequestBody EmployeeModel newEmployee, @PathVariable int id) {

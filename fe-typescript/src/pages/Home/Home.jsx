@@ -6,6 +6,7 @@ import '../../components/Container/Container.scss';
 import { Input, Spin } from 'antd';
 
 const { Search } = Input;
+const a = 2;
 export default function Home() {
 	const onSearch = (e) => {
 		if (e) {

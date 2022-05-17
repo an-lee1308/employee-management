@@ -100,28 +100,28 @@ function HeadContainer() {
 					}}
 				>
 					<Form.Item label='Fullname employee'>
-						<Input onChange={(e) => console.log(e.target.value)} />
+						<Input onChange={(e) => console.log(e.target.value)} required />
 					</Form.Item>
 
 					<Form.Item label='Address'>
-						<Input />
+						<Input onChange={(e) => console.log(e.target.value)} />
 					</Form.Item>
 					<Form.Item label='Sex employee'>
-						<Select>
+						<Select onChange={(e) => console.log(e)}>
 							<Select.Option value='Male'>Male</Select.Option>
 							<Select.Option value='Female'>Female</Select.Option>
 						</Select>
 					</Form.Item>
 
 					<Form.Item label='Age'>
-						<Input />
+						<Input onChange={(e) => console.log(e.target.value)} />
 					</Form.Item>
 					<Form.Item label='Start day'>
 						<DatePicker onChange={(e) => console.log(e._d)} />
 					</Form.Item>
 
 					<Form.Item label='Money/hour'>
-						<Input />
+						<Input onChange={(e) => console.log(e.target.value)} />
 					</Form.Item>
 
 					<Form.Item
@@ -136,14 +136,14 @@ function HeadContainer() {
 						</Upload>
 					</Form.Item>
 					<Form.Item label='Phone number'>
-						<Input />
+						<Input onChange={(e) => console.log(e.target.value)} />
 					</Form.Item>
 
 					<Form.Item label='Total hours'>
-						<Input />
+						<Input onChange={(e) => console.log(e.target.value)} />
 					</Form.Item>
 					<Form.Item label='Team'>
-						<Select>
+						<Select onChange={(e) => console.log(e)}>
 							{teamList &&
 								teamList.length > 0 &&
 								teamList.map((team, index) => {
