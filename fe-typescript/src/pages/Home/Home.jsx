@@ -6,8 +6,9 @@ import '../../components/Container/Container.scss';
 import { Input, Spin } from 'antd';
 
 const { Search } = Input;
-const a = 2;
-export default function Home() {
+
+export default function Home(props) {
+	const { render, renderPage } = props;
 	const onSearch = (e) => {
 		if (e) {
 			console.log(e);
@@ -22,6 +23,8 @@ export default function Home() {
 	const [employeeList, setEmployeeList] = useState([]);
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+
+	console.log('re-render');
 	useEffect(() => {
 		async function fetchData() {
 			try {
@@ -37,7 +40,7 @@ export default function Home() {
 			}
 		}
 		fetchData();
-	}, []);
+	}, [render]);
 
 	const totalEmployees = employeeList.length;
 	return (
@@ -65,7 +68,7 @@ export default function Home() {
 						<div className='container-table'></div>
 					</div>
 					{employeeList && employeeList.length > 0 && (
-						<Table employeeList={employeeList} />
+						<Table renderPage={renderPage} employeeList={employeeList} />
 					)}
 				</div>
 			)}

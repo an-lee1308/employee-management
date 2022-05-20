@@ -1,14 +1,17 @@
 import './EmployeeDetail.scss';
 import 'antd/dist/antd.css';
-import { Tabs, Row, Col } from 'antd';
+import { Tabs, Row, Col, Modal } from 'antd';
 import Working from '../../components/Working/Working';
 import Information from '../../components/Information/Information';
 import Advances from '../../components/Advances/Advances';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Statistics from '../../components/Statistics/Statistics';
 import axios from 'axios';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
+const { confirm } = Modal;
 
 const { TabPane } = Tabs;
 
@@ -21,9 +24,13 @@ function EmployeeDetail() {
 	//     some?: any,
 	//     style?: string,
 	// };
+
+	function handleEdit() {}
+
 	const { id } = useParams();
 	const [dataEmployee, setDataEmployee] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
+	const history = useHistory();
 	// console.log(id);
 
 	useEffect(() => {
@@ -38,6 +45,38 @@ function EmployeeDetail() {
 		}
 		getEmployee();
 	}, [id]);
+
+	function handleDelete(id) {
+		console.log(id);
+		function showPromiseConfirm(id) {
+			console.log('data in modal', id);
+			confirm({
+				title: 'Are you sure to delete employee ?',
+				icon: <ExclamationCircleOutlined />,
+				// content:
+				// 	'When clicked the OK button, this dialog will be closed after 1 second',
+				async onOk() {
+					try {
+						const response = await axios.delete(
+							// `http://localhost:8080/api/employees/${data}`
+							`http://localhost:8080/api/employees/delete/${id}`
+						);
+						console.log(response);
+						toast.success(response.data.message);
+						history.push('/');
+					} catch (error) {
+						toast.error(error);
+					}
+					return new Promise((resolve, reject) => {
+						setTimeout(Math.random() > 0.5 ? resolve : reject, 100);
+					}).catch(() => console.log('Oops errors!'));
+				},
+				onCancel() {},
+			});
+		}
+		showPromiseConfirm(id);
+	}
+
 	console.log('set state', dataEmployee);
 	const {
 		// address,
@@ -62,13 +101,13 @@ function EmployeeDetail() {
 					<div className='head_container__button'>
 						<div
 							className='head_container__button head_container__button--add'
-							onClick={() => alert('edit')}
+							onClick={() => handleEdit}
 						>
 							<FaEdit />{' '}
 						</div>
 						<div
 							className='head_container__button head_container__button--delete'
-							onClick={() => alert('delete')}
+							onClick={() => handleDelete(id)}
 						>
 							<FaTrashAlt />{' '}
 						</div>

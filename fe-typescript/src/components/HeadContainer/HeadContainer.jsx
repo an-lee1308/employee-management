@@ -5,17 +5,18 @@ import { Form, Select, Input, Button, Upload, Modal, DatePicker } from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import './HeadContainer.scss';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
 // const formData = new formData();
 
-function HeadContainer() {
+function HeadContainer(props) {
 	// type Props = {
 	//     some?: any,
 	//     style?: string,
 	//     Modal?: any
 	// };
-
+	const { renderPage } = props;
 	const [valueForm, setvalueForm] = useState({
 		fullname: '',
 		age: '',
@@ -136,7 +137,7 @@ function HeadContainer() {
 		setIsModalVisible(true);
 	};
 
-	const handleOk = () => {
+	const handleOk = async () => {
 		console.log(valueForm);
 		// const isEmpty = Object.values(valueForm).some((x) => x === '');
 		const isEmpty = Object.values(valueForm).every((x) => x !== '');
@@ -150,7 +151,7 @@ function HeadContainer() {
 			form.append('address', valueForm.address);
 			form.append('gender', valueForm.gender);
 			form.append('phoneNumber', valueForm.phonenumber);
-			form.append('moneyPerhour', valueForm.moneyperhour);
+			form.append('moneyPerHour', valueForm.moneyperhour);
 			form.append('startDay', valueForm.startday);
 			form.append('totalHours', valueForm.totalhours);
 			form.append('file', valueForm.image);
@@ -158,12 +159,30 @@ function HeadContainer() {
 			for (var pair of form.entries()) {
 				console.log(pair[0] + ', ' + pair[1]);
 			}
+			try {
+				const response = await axios.post(
+					`http://localhost:8080/api/employees/create`,
+					form,
+					{
+						headers: {
+							'Content-Type': 'multipart/form-data',
+						},
+					}
+				);
+				console.log(response);
+				toast.success(response.data.message);
+				renderPage();
+				setIsModalVisible(false);
+				resetForm();
+			} catch (error) {
+				throw new Error('Fail to post this datta');
+			}
 		} else {
 			// setIsModalVisible(false);
 			// resetForm();
 
 			// var form = new FormData();
-
+			toast.error('Vui lòng điền đầy đủ các trường');
 			console.log('văng');
 		}
 	};
@@ -322,7 +341,7 @@ function HeadContainer() {
 								})}
 						</Select>
 					</Form.Item>
-					<Form.Item
+					{/* <Form.Item
 						wrapperCol={{
 							span: 12,
 							offset: 6,
@@ -331,7 +350,7 @@ function HeadContainer() {
 						<Button type='primary' htmlType='submit'>
 							Submit
 						</Button>
-					</Form.Item>
+					</Form.Item> */}
 				</Form>
 			</Modal>
 		</>

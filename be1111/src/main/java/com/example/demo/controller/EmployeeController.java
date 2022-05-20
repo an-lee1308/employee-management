@@ -52,7 +52,7 @@ import java.util.Optional;
 //        System.out.println(list);
 //        };
 //        }
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
@@ -111,14 +111,14 @@ public class EmployeeController {
                 .map(employee -> {
 //                    employee.setImageURL(newEmployee.getImageURL());
                     employee.setFullName(newEmployee.getFullName());
-                    employee.setAge(newEmployee.getAge());
-                    employee.setEmployeeTeam(newEmployee.getEmployeeTeam());
-                    employee.setGender(newEmployee.getGender());
+//                    employee.setAge(newEmployee.getAge());
+//                    employee.setEmployeeTeam(newEmployee.getEmployeeTeam());
+//                    employee.setGender(newEmployee.getGender());
                     employee.setAddress(newEmployee.getAddress());
                     employee.setPhoneNumber(newEmployee.getPhoneNumber());
-                    employee.setStartDay(newEmployee.getStartDay());
-                    employee.setMoneyPerHour(newEmployee.getMoneyPerHour());
-                    employee.setTotalHours(newEmployee.getTotalHours());
+//                    employee.setStartDay(newEmployee.getStartDay());
+//                    employee.setMoneyPerHour(newEmployee.getMoneyPerHour());
+//                    employee.setTotalHours(newEmployee.getTotalHours());
 //                    employee.setImageURL(newEmployee.getImageURL());
                     return employeeRepository.save(employee);
                 }).orElseGet(() -> {
