@@ -184,6 +184,7 @@ function HeadContainer(props) {
 			// var form = new FormData();
 			toast.error('Vui lòng điền đầy đủ các trường');
 			console.log('văng');
+			onFinish();
 		}
 	};
 
@@ -217,44 +218,64 @@ function HeadContainer(props) {
 				destroyOnClose={true}
 			>
 				<Form
-					name='validate_other'
 					{...formItemLayout}
+					// onFinish={onFinish}
+					// initialValues={{
+					// 	'input-number': 3,
+					// 	'checkbox-group': ['A', 'B'],
+					// 	rate: 3.5,
+					// }}
+					autoComplete='off'
 					onFinish={onFinish}
-					initialValues={{
-						'input-number': 3,
-						'checkbox-group': ['A', 'B'],
-						rate: 3.5,
-					}}
 				>
 					<Form.Item
-						label='Fullname employee'
-						onBlur={onChangeForm}
-						validateStatus={valueForm.fullname === '' ? 'error' : 'validating'}
-						help={
-							valueForm.fullname === '' &&
-							'Should be combination of numbers & alphabets'
-						}
+						name='fullname'
+						label='Full name'
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: 'Please input Full Name!',
+							},
+						]}
 					>
 						<Input
+							// disabled
+							placeholder='Type your name'
 							onChange={onChangeForm}
 							name='fullname'
 							value={valueForm.fullname}
 						/>
 					</Form.Item>
-					{/* <Form.Item label='upload file'>
-						<Input
-							type='file'
-							onChange={(e) => console.log(e.target.files[0])}
-						/>
-					</Form.Item> */}
-					<Form.Item label='Address'>
+
+					<Form.Item
+						label='Address'
+						name='address'
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: 'Please input Address!',
+							},
+						]}
+					>
 						<Input
 							onChange={onChangeForm}
 							name='address'
 							value={valueForm.address}
 						/>
 					</Form.Item>
-					<Form.Item label='Sex employee'>
+					<Form.Item
+						label='Sex employee'
+						name='gender'
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: 'Please input gender!',
+							},
+						]}
+					>
 						<Select
 							onChange={onChangeFormSelect}
 							// name='gender'
@@ -265,7 +286,17 @@ function HeadContainer(props) {
 						</Select>
 					</Form.Item>
 
-					<Form.Item label='Age'>
+					<Form.Item
+						label='Age'
+						name='age'
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: 'Please input Age!',
+							},
+						]}
+					>
 						<Input
 							onChange={onChangeForm}
 							name='age'
@@ -273,7 +304,17 @@ function HeadContainer(props) {
 							value={valueForm.age}
 						/>
 					</Form.Item>
-					<Form.Item label='Start day'>
+					<Form.Item
+						label='Start day'
+						name='startday'
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: 'Please input Start Day!',
+							},
+						]}
+					>
 						<DatePicker
 							onChange={onChangeDatePicker}
 							name='startday'
@@ -281,7 +322,17 @@ function HeadContainer(props) {
 						/>
 					</Form.Item>
 
-					<Form.Item label='Money/hour'>
+					<Form.Item
+						label='Money/hour'
+						name='moneyperhour'
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: 'Please input Money Per Hour!',
+							},
+						]}
+					>
 						<Input
 							onChange={onChangeForm}
 							name='moneyperhour'
@@ -296,6 +347,14 @@ function HeadContainer(props) {
 						// valuePropName='fileList'
 						// getValueFromEvent={normFile}
 						// onChange={(e) => console.log(e)}
+						// name='image'
+						// hasFeedback
+						// rules={[
+						// 	{
+						// 		required: true,
+						// 		message: 'Please upload Image!',
+						// 	},
+						// ]}
 					>
 						{/* <Upload name='logo' action='/upload.do' listType='picture'></Upload> */}
 						<Upload
@@ -308,7 +367,28 @@ function HeadContainer(props) {
 							<Button icon={<UploadOutlined />}>Click to upload</Button>
 						</Upload>
 					</Form.Item>
-					<Form.Item label='Phone number'>
+					<Form.Item
+						label='Phone number'
+						name='phonenumber'
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: 'Please input phone Number!',
+							},
+							{
+								// pattern: new RegExp('([0-9]{10}\\s*)+'),
+								// pattern: new RegExp('[0-9]{10}/g'),
+								pattern: new RegExp('((09|03|07|08|05)+([0-9]{8}))$'), //That's true regex VietNam number
+
+								message: 'phone number must have 10 number',
+							},
+							// {
+							// 	type: 'number',
+							// 	message: 'The input is not valid Number!',
+							// },
+						]}
+					>
 						<Input
 							onChange={onChangeForm}
 							name='phonenumber'
@@ -317,7 +397,17 @@ function HeadContainer(props) {
 						/>
 					</Form.Item>
 
-					<Form.Item label='Total hours'>
+					<Form.Item
+						label='Total hours'
+						name='totalhours'
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: 'Please input Total Hours!',
+							},
+						]}
+					>
 						<Input
 							onChange={onChangeForm}
 							name='totalhours'
@@ -325,7 +415,17 @@ function HeadContainer(props) {
 							value={valueForm.totalhours}
 						/>
 					</Form.Item>
-					<Form.Item label='Team'>
+					<Form.Item
+						label='Team'
+						name='team'
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: 'Please input Team!',
+							},
+						]}
+					>
 						<Select
 							onChange={onChangeFormSelectTeam}
 							value={valueForm.employeeteam}

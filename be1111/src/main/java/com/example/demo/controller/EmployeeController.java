@@ -3,9 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.DTO.EmployeeDTO;
 import com.example.demo.model.EmployeeModel;
 import com.example.demo.model.ResponseObject;
-import com.example.demo.model.Team;
 import com.example.demo.repository.EmployeeRepository;
-import com.example.demo.repository.TeamRepository;
 import com.example.demo.service.EmployeeService;
 
 import com.example.demo.service.IstorageService;
@@ -106,28 +104,43 @@ public class EmployeeController {
 
 
     @PutMapping("/update/{id}")
-    ResponseEntity<ResponseObject> updateEmployee(@RequestBody EmployeeModel newEmployee, @PathVariable int id) {
-        EmployeeModel updateEmployee = employeeRepository.findById(id)
-                .map(employee -> {
+    ResponseEntity<ResponseObject> updateEmployee(@RequestParam(value = "file", required = false) MultipartFile file, @ModelAttribute EmployeeModel newEmployee, @PathVariable int id) {
+        try {
+
+            EmployeeModel imageEmployee = employeeRepository.getById(id);
+            String imageUrl = imageEmployee.getImageURL();
+            if (!file.isEmpty()) {
+                String generateFileName = storageService.storeFile(file);
+                imageUrl = "http://localhost:8080/api/v1/FileUpload/files/" + generateFileName;
+            }
+            String finalImageUrl = imageUrl;
+            EmployeeModel updateEmployee = employeeRepository.findById(id)
+                    .map(employee -> {
 //                    employee.setImageURL(newEmployee.getImageURL());
-                    employee.setFullName(newEmployee.getFullName());
-//                    employee.setAge(newEmployee.getAge());
-//                    employee.setEmployeeTeam(newEmployee.getEmployeeTeam());
-//                    employee.setGender(newEmployee.getGender());
-                    employee.setAddress(newEmployee.getAddress());
-                    employee.setPhoneNumber(newEmployee.getPhoneNumber());
-//                    employee.setStartDay(newEmployee.getStartDay());
-//                    employee.setMoneyPerHour(newEmployee.getMoneyPerHour());
-//                    employee.setTotalHours(newEmployee.getTotalHours());
-//                    employee.setImageURL(newEmployee.getImageURL());
-                    return employeeRepository.save(employee);
-                }).orElseGet(() -> {
-                    newEmployee.setEmployeeId(id);
-                    return employeeRepository.save(newEmployee);
-                });
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Update sucessfully", updateEmployee)
-        );
+                        employee.setFullName(newEmployee.getFullName());
+                        employee.setAge(newEmployee.getAge());
+                        employee.setEmployeeTeam(newEmployee.getEmployeeTeam());
+                        employee.setGender(newEmployee.getGender());
+                        employee.setAddress(newEmployee.getAddress());
+                        employee.setPhoneNumber(newEmployee.getPhoneNumber());
+                        employee.setStartDay(newEmployee.getStartDay());
+                        employee.setMoneyPerHour(newEmployee.getMoneyPerHour());
+                        employee.setTotalHours(newEmployee.getTotalHours());
+                        employee.setImageURL(newEmployee.getImageURL());
+                        employee.setImageURL(finalImageUrl);
+                        return employeeRepository.save(employee);
+                    }).orElseGet(() -> {
+                        newEmployee.setEmployeeId(id);
+                        return employeeRepository.save(newEmployee);
+                    });
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Update sucessfully", updateEmployee)
+            );
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                    new ResponseObject("OK", exception.getMessage(), "")
+            );
+        }
     }
 
     @DeleteMapping("/delete/{id}")

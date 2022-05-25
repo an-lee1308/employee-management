@@ -43,6 +43,7 @@ public class Mapper {
         dto.setImageURL(entity.getImageURL());
         dto.setTeamInfo(entity.getEmployeeTeam());
         dto.setTeamName(entity.getEmployeeTeam().getName());
+        dto.setTeamId(entity.getEmployeeTeam().getTeamId());
         dto.setWorkingInfo(entity.getWorkings());
         dto.setAdvancesInfo(entity.getAdvances());
         return dto;

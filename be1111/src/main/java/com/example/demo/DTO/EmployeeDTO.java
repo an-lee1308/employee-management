@@ -33,7 +33,11 @@ public class EmployeeDTO {
     private String imageURL;
 
     private Team teamInfo;
+
     private String teamName;
+
+    private Integer teamId;
+
     private List<WorkingModel> workingInfo;
     private List<Advances> advancesInfo;
 }

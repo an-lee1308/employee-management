@@ -1,6 +1,17 @@
 import './EmployeeDetail.scss';
 import 'antd/dist/antd.css';
-import { Tabs, Row, Col, Modal } from 'antd';
+import {
+	Tabs,
+	Row,
+	Col,
+	Input,
+	Upload,
+	Modal,
+	Form,
+	Avatar,
+	Image,
+	Button,
+} from 'antd';
 import Working from '../../components/Working/Working';
 import Information from '../../components/Information/Information';
 import Advances from '../../components/Advances/Advances';
@@ -9,7 +20,13 @@ import { useState, useEffect } from 'react';
 import Statistics from '../../components/Statistics/Statistics';
 import axios from 'axios';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {
+	ExclamationCircleOutlined,
+	AntDesignOutlined,
+	UploadOutlined,
+} from '@ant-design/icons';
+import moment from 'moment';
+
 import { toast } from 'react-toastify';
 const { confirm } = Modal;
 
@@ -19,17 +36,29 @@ function callback(key) {
 	console.log(key);
 }
 
-function EmployeeDetail() {
+function EmployeeDetail(props) {
 	// type Props = {
 	//     some?: any,
 	//     style?: string,
 	// };
-
+	const { render, renderPage } = props;
 	function handleEdit() {}
 
 	const { id } = useParams();
 	const [dataEmployee, setDataEmployee] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
+	const [valueForm, setvalueForm] = useState({
+		fullname: '',
+		age: '',
+		address: '',
+		gender: '',
+		phonenumber: '',
+		startday: '',
+		totalhours: '',
+		moneyperhour: '',
+		employeeteam: '',
+		ImageUrl: '',
+	});
 	const history = useHistory();
 	// console.log(id);
 
@@ -40,11 +69,25 @@ function EmployeeDetail() {
 				`http://localhost:8080/api/employees/${id}`
 			);
 			setDataEmployee(response.data);
+
+			setvalueForm({
+				fullname: response.data.fullName,
+				age: response.data.age,
+				address: response.data.address,
+				gender: response.data.gender,
+				phonenumber: response.data.phoneNumber,
+				startday: moment(response.data.startDay).utc().format('YYYY/MM/DD'),
+				totalhours: response.data.totalHours,
+				moneyperhour: response.data.moneyPerHour,
+				employeeteam: response.data.teamId,
+				ImageUrl: response.data.imageURL,
+			});
+
 			setIsLoading(false);
 			console.log('response', response.data);
 		}
 		getEmployee();
-	}, [id]);
+	}, [id, render]);
 
 	function handleDelete(id) {
 		console.log(id);
@@ -78,30 +121,321 @@ function EmployeeDetail() {
 	}
 
 	console.log('set state', dataEmployee);
+	console.log('set value form', valueForm);
+
 	const {
-		// address,
+		address,
 		age,
 		fullName,
 		gender,
-		// id,
+		// employeeId,
 		imageURL,
-		// moneyPerHour,
-		// phoneNumber,
-		// startDay,
-		// team,
-		// totalHours,
+		moneyPerHour,
+		phoneNumber,
+		startDay,
+		teamId,
+		totalHours,
 	} = dataEmployee;
+
+	// valueForm({
+	// 	fullname: fullName,
+	// 	age: age,
+	// 	address: address,
+	// 	gender: gender,
+	// 	phonenumber: phoneNumber,
+	// 	startday: startDay,
+	// 	totalhours: totalHours,
+	// 	moneyperhour: moneyPerHour,
+	// 	// employeeteam: teamInfo.name,
+	// 	ImageUrl: imageURL,
+	// });
+	const formItemLayout = {
+		labelCol: {
+			span: 6,
+		},
+		wrapperCol: {
+			span: 14,
+		},
+	};
+
+	function onChangeFormUpload(e) {
+		console.log(e.file.originFileObj);
+		if (e.fileList.length > 0) {
+			var src = URL.createObjectURL(e.file.originFileObj);
+			console.log('Lofg src', src);
+		}
+		setvalueForm({
+			...valueForm,
+			image: e.file.originFileObj,
+		});
+	}
+
+	const dummyRequest = ({ file, onSuccess }) => {
+		setTimeout(() => {
+			onSuccess('ok');
+		}, 0);
+	};
+
+	function onChangeForm(e) {
+		setvalueForm({
+			...valueForm,
+			[e.target.name]: e.target.value,
+		});
+	}
+
+	function resetForm() {
+		setvalueForm({
+			fullname: '',
+			age: '',
+			address: '',
+			gender: '',
+			phonenumber: '',
+			startday: '',
+			totalhours: '',
+			moneyperhour: '',
+			employeeteam: '',
+		});
+	}
+
+	const onFinish = (values) => {
+		console.log('Received values of form: ', values);
+	};
+
+	const [isModalVisible, setIsModalVisible] = useState(false);
+
+	const showModal = () => {
+		setIsModalVisible(true);
+	};
+
+	const handleOk = async () => {
+		console.log(valueForm);
+		// const isEmpty = Object.values(valueForm).some((x) => x === '');
+		const isEmpty = Object.values(valueForm).every((x) => x !== '');
+		console.log(isEmpty);
+		const form = new FormData();
+		if (isEmpty) {
+			console.log('value fornm', valueForm);
+			console.log('đủ trường thì nhảy vào đây');
+			form.append('fullName', valueForm.fullname);
+			form.append('age', valueForm.age);
+			form.append('address', valueForm.address);
+			form.append('gender', valueForm.gender);
+			form.append('phoneNumber', valueForm.phonenumber);
+			form.append('moneyPerHour', valueForm.moneyperhour);
+			form.append('startDay', valueForm.startday);
+			form.append('totalHours', valueForm.totalhours);
+			if (valueForm.image) {
+				form.append('file', valueForm.image);
+			} else form.append('file', null);
+			form.append('employeeTeam', valueForm.employeeteam);
+			for (var pair of form.entries()) {
+				console.log(pair[0] + ', ' + pair[1]);
+			}
+			try {
+				const response = await axios.put(
+					`http://localhost:8080/api/employees/update/${id}`,
+					form,
+					{
+						headers: {
+							'Content-Type': 'multipart/form-data',
+						},
+					}
+				);
+				console.log('response sau update', response);
+				toast.success(response.data.message);
+				renderPage();
+				setIsModalVisible(false);
+				resetForm();
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
+			// setIsModalVisible(false);
+			// resetForm();
+
+			// var form = new FormData();
+			toast.error('Vui lòng điền đầy đủ các trường');
+			console.log('văng');
+			onFinish();
+		}
+	};
+
+	const handleCancel = () => {
+		setIsModalVisible(false);
+	};
+
 	if (isLoading) {
 		console.log(isLoading);
 	} else {
 		return (
 			<>
+				<Modal
+					title='Edit Employee'
+					visible={isModalVisible}
+					onOk={handleOk}
+					onCancel={handleCancel}
+					destroyOnClose={true}
+				>
+					<Avatar
+						src={valueForm.ImageUrl}
+						size={{
+							xs: 24,
+							sm: 32,
+							md: 40,
+							lg: 64,
+							xl: 80,
+							xxl: 100,
+						}}
+						icon={<AntDesignOutlined />}
+					/>
+					{/* <Image
+						width={100}
+						height={100}
+						preview={{
+							src: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+						}}
+						style={{ objectFit: 'cover', borderRadius: '50px' }}
+						src='https://newsmd1fr.keeng.net/tiin/archive/images/20210215/191503_batch_148189203_1082353422243802_7176013939645211715_o.jpg'
+					/> */}
+					<Form
+						{...formItemLayout}
+						// onFinish={onFinish}
+						// initialValues={{
+						// 	'input-number': 3,
+						// 	'checkbox-group': ['A', 'B'],
+						// 	rate: 3.5,
+						// }}
+						autoComplete='off'
+						onFinish={onFinish}
+					>
+						<Row>
+							<Col span={12}>
+								<Form.Item label='Full name'>
+									<Input
+										// placeholder='Type your name'
+										onChange={onChangeForm}
+										name='fullname'
+										hasFeedback
+										rules={[
+											{
+												required: true,
+												message: 'Please input Full Name!',
+											},
+										]}
+										value={valueForm.fullname}
+									/>
+								</Form.Item>
+							</Col>
+							<Col span={12}>
+								<Form.Item label='Address'>
+									<Input
+										// placeholder='Type your name'
+										onChange={onChangeForm}
+										name='address'
+										value={valueForm.address}
+										hasFeedback
+										rules={[
+											{
+												required: true,
+												message: 'Please input Full Name!',
+											},
+										]}
+									/>
+								</Form.Item>
+							</Col>
+						</Row>
+						<Row>
+							<Col span={12}>
+								<Form.Item label='Start day'>
+									<Input
+										disabled
+										// placeholder='Type your name'
+										// onChange={onChangeForm}
+										name='startday'
+										value={moment(valueForm.startday)
+											.utc()
+											.format('DD/MM/YYYY')}
+									/>
+								</Form.Item>
+							</Col>
+							<Col span={12}>
+								<Form.Item label='Money Per Hour'>
+									<Input
+										disabled
+										// placeholder='Type your name'
+										// onChange={onChangeForm}
+										name='moneyperhour'
+										value={valueForm.moneyperhour}
+									/>
+								</Form.Item>
+							</Col>
+						</Row>
+						<Row>
+							<Col span={12}>
+								<Form.Item
+									// name='phonenumber'
+									label='Phone Number'
+									// hasFeedback
+									// rules={[
+									// 	{
+									// 		required: true,
+									// 		message: 'Please input phone Number!',
+									// 	},
+									// 	{
+									// 		// pattern: new RegExp('([0-9]{10}\\s*)+'),
+									// 		// pattern: new RegExp('[0-9]{10}/g'),
+									// 		pattern: new RegExp('((09|03|07|08|05)+([0-9]{8}))$'), //That's true regex VietNam number
+
+									// 		message: 'phone number must have 10 number',
+									// 	},
+									// ]}
+								>
+									<Input
+										// disabled
+										// placeholder='Type your name'
+										onChange={onChangeForm}
+										name='phonenumber'
+										value={valueForm.phonenumber}
+									/>
+								</Form.Item>
+							</Col>
+							<Col span={12}>
+								<Form.Item label='Total hours'>
+									<Input
+										disabled
+										// placeholder='Type your name'
+										// onChange={onChangeForm}
+										name='fullname'
+										value={valueForm.totalhours}
+									/>
+								</Form.Item>
+							</Col>
+						</Row>
+						<div className='upload-picture'>
+							<Row>
+								<Col span={24}>
+									<Form.Item label='Upload Image'>
+										<Upload
+											listType='picture'
+											action={''}
+											accept='.png,.jpeg'
+											onChange={onChangeFormUpload}
+											customRequest={dummyRequest}
+										>
+											<Button icon={<UploadOutlined />}>Click to upload</Button>
+										</Upload>
+									</Form.Item>
+								</Col>
+							</Row>
+						</div>
+					</Form>
+				</Modal>
 				<div className='head_container'>
 					<div className='head_container__title'>{fullName}</div>
 					<div className='head_container__button'>
 						<div
 							className='head_container__button head_container__button--add'
-							onClick={() => handleEdit}
+							onClick={showModal}
 						>
 							<FaEdit />{' '}
 						</div>
@@ -139,7 +473,9 @@ function EmployeeDetail() {
 									<Information information={dataEmployee} />
 								</TabPane>
 								<TabPane tab='WORKING' key='working'>
-									{dataEmployee && <Working working={dataEmployee} />}
+									{dataEmployee && (
+										<Working employeeId={id} working={dataEmployee} />
+									)}
 								</TabPane>
 								<TabPane tab='ADVANCES' key='advances'>
 									<Advances advances={dataEmployee} />{' '}

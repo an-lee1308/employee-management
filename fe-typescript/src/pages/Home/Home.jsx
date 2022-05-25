@@ -10,6 +10,7 @@ const { Search } = Input;
 export default function Home(props) {
 	const { render, renderPage } = props;
 	const onSearch = (e) => {
+		setInputSearch('');
 		if (e) {
 			console.log(e);
 			const value = e.toLowerCase();
@@ -23,8 +24,10 @@ export default function Home(props) {
 	const [employeeList, setEmployeeList] = useState([]);
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [inputSearch, setInputSearch] = useState('');
 
 	console.log('re-render');
+	console.log(inputSearch);
 	useEffect(() => {
 		async function fetchData() {
 			try {
@@ -60,6 +63,8 @@ export default function Home(props) {
 								placeholder='input search text'
 								onSearch={onSearch}
 								style={{ width: 200 }}
+								onChange={(e) => setInputSearch(e.target.value)}
+								value={inputSearch}
 							/>
 						</div>
 					</div>
@@ -67,7 +72,7 @@ export default function Home(props) {
 						<div className='container__search-result'>Search result</div>
 						<div className='container-table'></div>
 					</div>
-					{employeeList && employeeList.length > 0 && (
+					{employeeList && (
 						<Table renderPage={renderPage} employeeList={employeeList} />
 					)}
 				</div>

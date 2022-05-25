@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.EmployeeModel;
 import com.example.demo.model.ResponseObject;
 
 import com.example.demo.model.WorkingModel;
@@ -24,8 +23,9 @@ public class WorkingController {
     //CRUD api
     @Autowired
     EmployeeRepository employeeRepository;
-    @PostMapping(value="/insert")
-    ResponseEntity<ResponseObject> addWorking(@RequestBody WorkingModel working) {
+
+    @PostMapping(value = "/insert")
+    ResponseEntity<ResponseObject> addWorking(@ModelAttribute WorkingModel working) {
 //        Optional<WorkingModel> foundWorking = workingRepository.findById(working.getWorkingId());
 //        if (foundWorking.equals(true)) {
 //            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
@@ -42,6 +42,28 @@ public class WorkingController {
         );
     }
 
+    @PutMapping("/update/{id}")
+    ResponseEntity<ResponseObject> updateWorking(@RequestBody WorkingModel working, @PathVariable int id) {
+        WorkingModel updateWorking = workingRepository.getById(id);
+        if (updateWorking.equals(true)) {
+            if (working.getDate() != null)
+                updateWorking.setDate(working.getDate());
+
+            if (working.getHour() != 0) {
+                updateWorking.setHour(updateWorking.getHour());
+            }
+            if (working.getEmployeeModel().equals(true)) {
+                updateWorking.setEmployeeModel(working.getEmployeeModel());
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Update sucessfully", workingRepository.save(updateWorking))
+            );
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "Update sucessfully", workingRepository.save(working)));
+
+
+    }
 
 //    @PostMapping("/insert")
 //    ResponseEntity<ResponseObject> insertEmployee(@RequestBody EmployeeModel employee) {
@@ -56,6 +78,8 @@ public class WorkingController {
 //        );
 //    }
 
+
+    //
     @DeleteMapping("/delete/{id}")
     ResponseEntity<ResponseObject> deleteEmployeeById(@PathVariable int id) {
         System.out.println(id);
@@ -68,5 +92,4 @@ public class WorkingController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ResponseObject("fail", "Cannot find Working to delete", ""));
     }
-//
 }
