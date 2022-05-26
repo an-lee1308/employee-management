@@ -4,10 +4,14 @@ import Table from '../../components/Table/Table';
 import axios from 'axios';
 import '../../components/Container/Container.scss';
 import { Input, Spin } from 'antd';
+import HeadContainer from '../../components/HeadContainer/HeadContainer';
 
 const { Search } = Input;
-export default function Home() {
+
+export default function Home(props) {
+	const { render, renderPage } = props;
 	const onSearch = (e) => {
+		setInputSearch('');
 		if (e) {
 			console.log(e);
 			const value = e.toLowerCase();
@@ -21,6 +25,15 @@ export default function Home() {
 	const [employeeList, setEmployeeList] = useState([]);
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [inputSearch, setInputSearch] = useState('');
+	const [selectedDelete, setSelectedDelete] = useState([]);
+
+	console.log('selectedDelete', selectedDelete);
+
+	function getSelected(array) {
+		setSelectedDelete(array);
+	}
+
 	useEffect(() => {
 		async function fetchData() {
 			try {
@@ -36,11 +49,17 @@ export default function Home() {
 			}
 		}
 		fetchData();
-	}, []);
+	}, [render]);
+
+	//mai nhứ làm chỗ search với delete
 
 	const totalEmployees = employeeList.length;
 	return (
 		<div>
+			<HeadContainer
+				selectedDelete={selectedDelete}
+				renderPage={renderPage}
+			></HeadContainer>
 			{isLoading ? (
 				<div style={{ marginLeft: '28vmax' }}>
 					<Spin tip='Loading...' />
@@ -52,10 +71,15 @@ export default function Home() {
 							Total {totalEmployees} employees
 						</div>
 						<div className='search-block__search-input'>
-							<Search
+							<Input
 								placeholder='input search text'
-								onSearch={onSearch}
+								// onChange={onSearch}
 								style={{ width: 200 }}
+								onChange={(e) => {
+									// setInputSearch(e.target.value);
+									onSearch(e.target.value);
+								}}
+								// value={inputSearch}
 							/>
 						</div>
 					</div>
@@ -63,8 +87,12 @@ export default function Home() {
 						<div className='container__search-result'>Search result</div>
 						<div className='container-table'></div>
 					</div>
-					{employeeList && employeeList.length > 0 && (
-						<Table employeeList={employeeList} />
+					{employeeList && (
+						<Table
+							getSelected={getSelected}
+							renderPage={renderPage}
+							employeeList={employeeList}
+						/>
 					)}
 				</div>
 			)}

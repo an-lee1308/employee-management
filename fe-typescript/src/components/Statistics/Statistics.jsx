@@ -39,7 +39,7 @@ function Statistics(props) {
 			<div className='info-container'>
 				<Row gutter={24}>
 					<Col className='gutter-row' span={24}>
-						<div className='info-box' style={{ backgroundColor: 'green' }}>
+						<div className='info-box' style={{ backgroundColor: '#c1f1c1' }}>
 							Number of working day : {numberOfWorkingDay(workingInfo)}
 						</div>
 					</Col>
@@ -53,14 +53,14 @@ function Statistics(props) {
 				</Row>
 				<Row gutter={24}>
 					<Col className='gutter-row' span={24}>
-						<div className='info-box' style={{ backgroundColor: 'blue' }}>
+						<div className='info-box' style={{ backgroundColor: '#bbbbf5' }}>
 							Total advances : {totalAdvances(advancesInfo)}
 						</div>
 					</Col>
 				</Row>
 				<Row gutter={24}>
 					<Col className='gutter-row' span={24}>
-						<div className='info-box' style={{ backgroundColor: 'red' }}>
+						<div className='info-box' style={{ backgroundColor: '#e7b6b6' }}>
 							Sumary : {Sumary()}$
 						</div>
 					</Col>

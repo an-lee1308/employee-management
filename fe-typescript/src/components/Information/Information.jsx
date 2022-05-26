@@ -1,7 +1,7 @@
 import './Information.scss';
 import 'antd/dist/antd.css';
 import moment from 'moment';
-import { Row, Col } from 'antd';
+import {  Row, Col } from 'antd';
 import { useEffect, useState } from 'react';
 
 function Information(props) {
@@ -10,7 +10,18 @@ function Information(props) {
 	//     style?: string,
 	// };
 	console.log(props.information);
-	const { startDay, teamInfo, address, moneyPerHour } = props.information;
+	const {
+		startDay,
+		teamInfo,
+		address,
+		moneyPerHour,
+		// fullName,
+		// age,
+		// gender,
+		// phoneNumber,
+		// totalHours,
+	} = props.information;
+
 	return (
 		<>
 			<h1>INFORMATION</h1>

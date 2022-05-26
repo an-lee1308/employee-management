@@ -14,6 +14,11 @@ public interface EmployeeRepository extends JpaRepository<EmployeeModel, Integer
 
     @Query(value = "SELECT * from employee  where team_id=?1", nativeQuery = true)
     List<EmployeeModel> findEmployeeInTeam(int id);
+
+    //Phân trang
+    //SELECT * FROM `employee`
+    //LIMIT 5
+    //OFFSET 1
 //        @Query("SELECT u FROM User u WHERE u.def = :def")
 //        public List<EmployeeModel> findUserByDefQuery(@Param("def") Integer def);
 

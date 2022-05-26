@@ -7,7 +7,6 @@ function TableMemberList(props) {
 	//     some?: any,
 	//     style?: string,
 	// };
-	// const { teamMember } = props;
 	const teamMember = props.teamMember.employee;
 	console.log('team member', teamMember);
 

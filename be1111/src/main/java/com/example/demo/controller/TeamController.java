@@ -42,7 +42,7 @@ public class TeamController {
     }
 
     @PostMapping(value="/insert")
-    ResponseEntity<ResponseObject> addNewTeam(@RequestBody(required = false) Team team) {
+    ResponseEntity<ResponseObject> addNewTeam(@ModelAttribute Team team) {
 //        Optional<WorkingModel> foundWorking = workingRepository.findById(working.getWorkingId());
 //        if (foundWorking.equals(true)) {
 //            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(

@@ -88,15 +88,59 @@ width: 100%;
   font-weight: 500;
   min-width:50px;
   &.tag--no{
-    background-color:blue;
+    background-color:#5994ed;
     color: white;
   }
   &.tag--age{
-    background-color:aqua;
+    background-color:#106a1f;
     color: white;
   }
   &.tag--sex{
-    background-color:yellow;
+    background-color:#f3f388;
+  }
+}
+.ant-avatar {
+  margin: 0 auto;
+  display: block;
+}
+.ant-avatar{
+  &.ant-avatar-circle{
+    &.ant-avatar-image{
+      &.ant-avatar-icon{
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}
+
+.ant-col.ant-col-12{
+  .ant-row.ant-form-item{
+display: flex;
+flex-direction: column;
+  }
+
+}
+
+.ant-col.ant-col-14.ant-form-item-control {
+  max-width: 95% !important;
+}
+.ant-col.ant-col-6.ant-form-item-label{
+  max-width: 100% !important;
+    text-align: left;
+}
+
+.upload-picture{
+display: flex;
+  .ant-row{
+    flex-direction: column;
+    width:100%;
+    // align-items:center
+    .ant-col.ant-col-24{
+      align-items: center;
+    }
+    .ant-row.ant-form-item{
+      align-items: center;
+    }
   }
 }
 

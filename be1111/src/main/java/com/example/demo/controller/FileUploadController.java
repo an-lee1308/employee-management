@@ -39,6 +39,7 @@ public class FileUploadController {
     public ResponseEntity<byte[]> readDetailFile(@PathVariable String fileName) {
         try {
             byte[] bytes = storageService.readFileContent((fileName));
+            System.out.println(bytes);
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
                     .body(bytes);
         } catch (Exception exception) {
