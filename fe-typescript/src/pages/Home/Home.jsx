@@ -51,6 +51,8 @@ export default function Home(props) {
 		fetchData();
 	}, [render]);
 
+	//mai nhứ làm chỗ search với delete
+
 	const totalEmployees = employeeList.length;
 	return (
 		<div>
@@ -69,12 +71,15 @@ export default function Home(props) {
 							Total {totalEmployees} employees
 						</div>
 						<div className='search-block__search-input'>
-							<Search
+							<Input
 								placeholder='input search text'
-								onSearch={onSearch}
+								// onChange={onSearch}
 								style={{ width: 200 }}
-								onChange={(e) => setInputSearch(e.target.value)}
-								value={inputSearch}
+								onChange={(e) => {
+									// setInputSearch(e.target.value);
+									onSearch(e.target.value);
+								}}
+								// value={inputSearch}
 							/>
 						</div>
 					</div>

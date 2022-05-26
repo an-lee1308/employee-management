@@ -23,7 +23,7 @@ function TableTeamList(props) {
 		// };
 		// console.log('employee object', employeeObject);
 		teamRender.push({
-			id: team.workingId,
+			id: team.teamId,
 			no: index + 1,
 			key: index + 1,
 			nameteam: team.name,
@@ -47,8 +47,8 @@ function TableTeamList(props) {
 					<div
 						style={{ cursor: 'pointer' }}
 						onClick={() => {
-							console.log(piece.key);
-							history.push(`/teams/${piece.key}`);
+							console.log(piece.id);
+							history.push(`/teams/${piece.id}`);
 						}}
 					>
 						<FaAddressCard />

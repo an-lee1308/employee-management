@@ -104,8 +104,18 @@ function HeadContainer(props) {
 		});
 	}
 
-	const handleDelete = (selectedDelete) => {
+	const handleDelete = async (selectedDelete) => {
 		console.log('handle delete', selectedDelete);
+		try {
+			const response = await axios.delete(
+				`http://localhost:8080/api/employees/delete`,
+				{ data: selectedDelete }
+			);
+			console.log(response);
+			renderPage();
+		} catch (e) {
+			console.log(e);
+		}
 		//truyền mảng vô data là dc
 	};
 	// const { Option } = Select;
