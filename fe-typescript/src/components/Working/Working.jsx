@@ -5,38 +5,45 @@ import { FaPlusCircle, FaTrashAlt } from 'react-icons/fa';
 import { Table, Space, Form, Modal, Input, DatePicker } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
-const columns = [
-	{
-		title: 'No',
-		dataIndex: 'no',
-	},
-	{
-		title: 'Date',
-		dataIndex: 'date',
-	},
-	{
-		title: 'Hour',
-		dataIndex: 'hour',
-	},
-	{
-		title: 'Option',
-		render: (piece) => (
-			<Space size='middle'>
-				<div
-					onClick={() => console.log(piece.id)}
-					// className='head_container__button head_container__button--add'
-				>
-					<FaTrashAlt />
-				</div>
-			</Space>
-		),
-	},
-];
+//Thiếu cái render
+
 function Working(props) {
-	const { employeeId } = props;
+	const { employeeId, renderPage } = props;
 	const { workingInfo } = props.working;
+
+	const columns = [
+		{
+			title: 'No',
+			dataIndex: 'no',
+		},
+		{
+			title: 'Date',
+			dataIndex: 'date',
+		},
+		{
+			title: 'Hour',
+			dataIndex: 'hour',
+		},
+		{
+			title: 'Option',
+			render: (piece) => (
+				<Space size='middle'>
+					<div
+						onClick={() => handleDelete(piece.id)}
+						// className='head_container__button head_container__button--add'
+					>
+						<FaTrashAlt />
+					</div>
+				</Space>
+			),
+		},
+	];
 	const workingRender = [];
+	console.log('workingInfo', workingInfo);
+	workingInfo.sort((a, b) => b.workingId - a.workingId);
+	console.log('workingInfo after sort', workingInfo);
 	workingInfo.forEach((working, index) => {
 		workingRender.push({
 			id: working.workingId,
@@ -56,12 +63,27 @@ function Working(props) {
 	};
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [valueForm, setvalueForm] = useState({
-		date: moment(Date.now()).utc().format('DD/MM/YYYY'),
+		date: moment(Date.now()).format('YYYY/MM/DD'),
 		hour: '',
 	});
 
-	console.log(valueForm);
+	console.log('value form', valueForm);
 
+	const handleDelete = async (id) => {
+		console.log(id);
+		const response = await axios.delete(
+			`http://localhost:8080/api/working/delete/${id}`
+		);
+		console.log(response);
+		toast.success(response.data.message);
+		renderPage();
+		setIsModalVisible(false);
+		resetForm();
+	};
+
+	function resetForm() {
+		setvalueForm({ date: moment(Date.now()).format('YYYY/MM/DD'), hour: '' });
+	}
 	function onChangeFormDate(e) {
 		setvalueForm({
 			...valueForm,
@@ -88,9 +110,13 @@ function Working(props) {
 		if (isEmpty) {
 			console.log('value fornm', valueForm);
 			console.log('đủ trường thì nhảy vào đây');
-			form.append('date', moment(valueForm.date).utc().format('YYYY/MM/DD'));
+			form.append('date', moment(valueForm.date).format('YYYY/MM/DD'));
 			form.append('hour', valueForm.hour);
 			form.append('employeeModel', employeeId);
+
+			for (var pair of form.entries()) {
+				console.log(pair[0] + ', ' + pair[1]);
+			}
 			try {
 				const response = await axios.post(
 					`http://localhost:8080/api/working/insert`,
@@ -102,15 +128,15 @@ function Working(props) {
 					}
 				);
 				console.log('response sau update', response);
-				// toast.success(response.data.message);
-				// renderPage();
+				toast.success(response.data.message);
+				renderPage();
 				setIsModalVisible(false);
-				// resetForm();
+				resetForm();
 			} catch (error) {
 				console.log(error);
 			}
 		} else {
-			// toast.error('Vui lòng điền đầy đủ các trường');
+			toast.error('Vui lòng điền đầy đủ các trường');
 			console.log('văng');
 		}
 	};
@@ -122,7 +148,7 @@ function Working(props) {
 	return (
 		<>
 			<Modal
-				title='Edit Employee'
+				title='Add Working'
 				visible={isModalVisible}
 				onOk={handleOk}
 				onCancel={handleCancel}

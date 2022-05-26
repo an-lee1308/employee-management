@@ -41,11 +41,11 @@ function App() {
 				pauseOnHover
 			/>
 			<Header />
-			{location === '/employee' ? (
+			{/* {location === '/employee' ? (
 				<HeadContainer renderPage={renderPage} />
 			) : (
 				''
-			)}
+			)} */}
 			<Switch>
 				<Route path='/' exact={true} component={Background} />
 				{/* <Route path='/employee' exact={true} component={Home} /> */}
@@ -58,8 +58,16 @@ function App() {
 					<EmployeeDetail render={render} renderPage={renderPage} />
 				</Route>
 
-				<Route path='/teams' exact={true} component={Teams} />
-				<Route path='/teams/:id' exact={true} component={Teams} />
+				<Route path='/teams' exact={true}>
+					<Teams render={render} renderPage={renderPage} />
+				</Route>
+
+				<Route path='/teams/:id' exact={true}>
+					<Teams render={render} renderPage={renderPage} />
+				</Route>
+
+				{/* <Route path='/teams' exact={true} component={Teams} />
+				<Route path='/teams/:id' exact={true} component={Teams} /> */}
 				<Route component={ErrorPage} />
 			</Switch>
 		</>

@@ -106,7 +106,7 @@ function EmployeeDetail(props) {
 						);
 						console.log(response);
 						toast.success(response.data.message);
-						history.push('/');
+						history.push('/employee');
 					} catch (error) {
 						toast.error(error);
 					}
@@ -216,18 +216,32 @@ function EmployeeDetail(props) {
 		if (isEmpty) {
 			console.log('value fornm', valueForm);
 			console.log('đủ trường thì nhảy vào đây');
-			form.append('fullName', valueForm.fullname);
-			form.append('age', valueForm.age);
-			form.append('address', valueForm.address);
-			form.append('gender', valueForm.gender);
-			form.append('phoneNumber', valueForm.phonenumber);
-			form.append('moneyPerHour', valueForm.moneyperhour);
-			form.append('startDay', valueForm.startday);
-			form.append('totalHours', valueForm.totalhours);
 			if (valueForm.image) {
+				form.append('fullName', valueForm.fullname);
+				form.append('age', valueForm.age);
+				form.append('address', valueForm.address);
+				form.append('gender', valueForm.gender);
+				form.append('phoneNumber', valueForm.phonenumber);
+				form.append('moneyPerHour', valueForm.moneyperhour);
+				form.append('startDay', valueForm.startday);
+				form.append('totalHours', valueForm.totalhours);
 				form.append('file', valueForm.image);
-			} else form.append('file', null);
-			form.append('employeeTeam', valueForm.employeeteam);
+
+				form.append('employeeTeam', valueForm.employeeteam);
+				console.log('có ảnh');
+			} else {
+				form.append('fullName', valueForm.fullname);
+				form.append('age', valueForm.age);
+				form.append('address', valueForm.address);
+				form.append('gender', valueForm.gender);
+				form.append('phoneNumber', valueForm.phonenumber);
+				form.append('moneyPerHour', valueForm.moneyperhour);
+				form.append('startDay', valueForm.startday);
+				form.append('totalHours', valueForm.totalhours);
+				// form.append('file', '');
+				form.append('employeeTeam', valueForm.employeeteam);
+				console.log('ko có ảnh');
+			}
 			for (var pair of form.entries()) {
 				console.log(pair[0] + ', ' + pair[1]);
 			}
@@ -474,11 +488,19 @@ function EmployeeDetail(props) {
 								</TabPane>
 								<TabPane tab='WORKING' key='working'>
 									{dataEmployee && (
-										<Working employeeId={id} working={dataEmployee} />
+										<Working
+											renderPage={renderPage}
+											employeeId={id}
+											working={dataEmployee}
+										/>
 									)}
 								</TabPane>
 								<TabPane tab='ADVANCES' key='advances'>
-									<Advances advances={dataEmployee} />{' '}
+									<Advances
+										renderPage={renderPage}
+										employeeId={id}
+										advances={dataEmployee}
+									/>{' '}
 								</TabPane>
 								<TabPane tab='STATISTICS' key='statistics'>
 									<Statistics statistics={dataEmployee} />{' '}

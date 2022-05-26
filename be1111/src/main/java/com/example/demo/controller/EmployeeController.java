@@ -107,34 +107,30 @@ public class EmployeeController {
     ResponseEntity<ResponseObject> updateEmployee(@RequestParam(value = "file", required = false) MultipartFile file, @ModelAttribute EmployeeModel newEmployee, @PathVariable int id) {
         try {
 
-            EmployeeModel imageEmployee = employeeRepository.getById(id);
-            String imageUrl = imageEmployee.getImageURL();
+            EmployeeModel updateEmployee = employeeRepository.getById(id);
+            String imageUrl = updateEmployee.getImageURL();
             if (!file.isEmpty()) {
                 String generateFileName = storageService.storeFile(file);
                 imageUrl = "http://localhost:8080/api/v1/FileUpload/files/" + generateFileName;
             }
             String finalImageUrl = imageUrl;
-            EmployeeModel updateEmployee = employeeRepository.findById(id)
-                    .map(employee -> {
+
 //                    employee.setImageURL(newEmployee.getImageURL());
-                        employee.setFullName(newEmployee.getFullName());
-                        employee.setAge(newEmployee.getAge());
-                        employee.setEmployeeTeam(newEmployee.getEmployeeTeam());
-                        employee.setGender(newEmployee.getGender());
-                        employee.setAddress(newEmployee.getAddress());
-                        employee.setPhoneNumber(newEmployee.getPhoneNumber());
-                        employee.setStartDay(newEmployee.getStartDay());
-                        employee.setMoneyPerHour(newEmployee.getMoneyPerHour());
-                        employee.setTotalHours(newEmployee.getTotalHours());
-                        employee.setImageURL(newEmployee.getImageURL());
-                        employee.setImageURL(finalImageUrl);
-                        return employeeRepository.save(employee);
-                    }).orElseGet(() -> {
-                        newEmployee.setEmployeeId(id);
-                        return employeeRepository.save(newEmployee);
-                    });
+            updateEmployee.setFullName(newEmployee.getFullName());
+            updateEmployee.setAge(newEmployee.getAge());
+            updateEmployee.setEmployeeTeam(newEmployee.getEmployeeTeam());
+            updateEmployee.setGender(newEmployee.getGender());
+            updateEmployee.setAddress(newEmployee.getAddress());
+            updateEmployee.setPhoneNumber(newEmployee.getPhoneNumber());
+            updateEmployee.setStartDay(newEmployee.getStartDay());
+            updateEmployee.setMoneyPerHour(newEmployee.getMoneyPerHour());
+            updateEmployee.setTotalHours(newEmployee.getTotalHours());
+            updateEmployee.setImageURL(newEmployee.getImageURL());
+            updateEmployee.setImageURL(finalImageUrl);
+
+
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Update sucessfully", updateEmployee)
+                    new ResponseObject("ok", "Update sucessfully", employeeRepository.save(updateEmployee))
             );
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
@@ -144,7 +140,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteEmployeeById(@PathVariable int id) {
+    ResponseEntity<ResponseObject> deleteEmployeeById(@ModelAttribute int id) {
         boolean exist = employeeRepository.existsById(id);
         System.out.println(id);
         if (exist) {
@@ -160,6 +156,7 @@ public class EmployeeController {
     ResponseEntity<ResponseObject> deleteManyEmployeeById(@RequestBody List<Integer> ids) {
 
         employeeRepository.deleteAllById(ids);
+//        employeeRepository.deleteAllByIdInBatch(ids);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok", "Delete employee Successfully", ""));
     }

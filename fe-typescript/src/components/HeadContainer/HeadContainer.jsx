@@ -16,7 +16,7 @@ function HeadContainer(props) {
 	//     style?: string,
 	//     Modal?: any
 	// };
-	const { renderPage } = props;
+	const { renderPage, selectedDelete } = props;
 	const [valueForm, setvalueForm] = useState({
 		fullname: '',
 		age: '',
@@ -28,6 +28,7 @@ function HeadContainer(props) {
 		moneyperhour: '',
 		employeeteam: '',
 	});
+	console.log(selectedDelete, 'selectedDelete in head container');
 	const [teamList, setTeamList] = useState([]);
 	useEffect(() => {
 		async function getTeamList() {
@@ -103,8 +104,9 @@ function HeadContainer(props) {
 		});
 	}
 
-	const handleDelete = () => {
-		console.log('hihihihi');
+	const handleDelete = (selectedDelete) => {
+		console.log('handle delete', selectedDelete);
+		//truyền mảng vô data là dc
 	};
 	// const { Option } = Select;
 	const formItemLayout = {
@@ -204,7 +206,7 @@ function HeadContainer(props) {
 					</div>
 					<div
 						className='head_container__button head_container__button--delete'
-						onClick={handleDelete}
+						onClick={() => handleDelete(selectedDelete)}
 					>
 						<FaTrashAlt />
 					</div>

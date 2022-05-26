@@ -21,7 +21,7 @@ public class AdvancesController {
     @Autowired
     EmployeeRepository employeeRepository;
     @PostMapping(value="/insert")
-    ResponseEntity<ResponseObject> addAdvances(@RequestBody Advances advances) {
+    ResponseEntity<ResponseObject> addAdvances(@ModelAttribute Advances advances) {
 //        Optional<WorkingModel> foundWorking = workingRepository.findById(working.getWorkingId());
 //        if (foundWorking.equals(true)) {
 //            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(

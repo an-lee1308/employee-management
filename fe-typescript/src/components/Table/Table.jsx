@@ -9,24 +9,30 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 const { confirm } = Modal;
 
-const rowSelection = {
-	onChange: (selectedRowKeys, selectedRows) => {
-		console.log(
-			`selectedRowKeys: ${selectedRowKeys}`,
-			'selectedRows: ',
-			selectedRows
-		);
-	},
-	// getCheckboxProps: (record) => ({
-	// 	disabled: record.name === 'Disabled User',
-	// 	// Column configuration not to be checked
-	// 	name: record.name,
-	// }),
-};
+// getCheckboxProps: (record) => ({
+// 	disabled: record.name === 'Disabled User',
+// 	// Column configuration not to be checked
+// 	name: record.name,
+// }),
 
 const TableUI = (props) => {
-	const { renderPage } = props;
+	const { renderPage, getSelected } = props;
 
+	const rowSelection = {
+		onChange: (selectedRowKeys, selectedRows) => {
+			console.log(
+				`selectedRowKeys: ${selectedRowKeys}`,
+				'selectedRows: ',
+				selectedRows
+			);
+			let coppyArray = [];
+			coppyArray = selectedRows.map((selected) => {
+				return selected.id;
+			});
+			console.log('coppyArray', coppyArray);
+			getSelected(coppyArray);
+		},
+	};
 	const columns = [
 		{
 			title: 'No',

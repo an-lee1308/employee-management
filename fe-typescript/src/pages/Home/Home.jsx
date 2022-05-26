@@ -4,6 +4,7 @@ import Table from '../../components/Table/Table';
 import axios from 'axios';
 import '../../components/Container/Container.scss';
 import { Input, Spin } from 'antd';
+import HeadContainer from '../../components/HeadContainer/HeadContainer';
 
 const { Search } = Input;
 
@@ -25,9 +26,14 @@ export default function Home(props) {
 	const [data, setData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [inputSearch, setInputSearch] = useState('');
+	const [selectedDelete, setSelectedDelete] = useState([]);
 
-	console.log('re-render');
-	console.log(inputSearch);
+	console.log('selectedDelete', selectedDelete);
+
+	function getSelected(array) {
+		setSelectedDelete(array);
+	}
+
 	useEffect(() => {
 		async function fetchData() {
 			try {
@@ -48,6 +54,10 @@ export default function Home(props) {
 	const totalEmployees = employeeList.length;
 	return (
 		<div>
+			<HeadContainer
+				selectedDelete={selectedDelete}
+				renderPage={renderPage}
+			></HeadContainer>
 			{isLoading ? (
 				<div style={{ marginLeft: '28vmax' }}>
 					<Spin tip='Loading...' />
@@ -73,7 +83,11 @@ export default function Home(props) {
 						<div className='container-table'></div>
 					</div>
 					{employeeList && (
-						<Table renderPage={renderPage} employeeList={employeeList} />
+						<Table
+							getSelected={getSelected}
+							renderPage={renderPage}
+							employeeList={employeeList}
+						/>
 					)}
 				</div>
 			)}
