@@ -13,7 +13,7 @@ export default function Home(props) {
 	const onSearch = (e) => {
 		setInputSearch('');
 		if (e) {
-			console.log(e);
+			//console.log(e);
 			const value = e.toLowerCase();
 			const filterData = employeeList.filter((employee) => {
 				return employee.fullName.toLowerCase().includes(value);
@@ -28,7 +28,7 @@ export default function Home(props) {
 	const [inputSearch, setInputSearch] = useState('');
 	const [selectedDelete, setSelectedDelete] = useState([]);
 
-	console.log('selectedDelete', selectedDelete);
+	//console.log('selectedDelete', selectedDelete);
 
 	function getSelected(array) {
 		setSelectedDelete(array);
@@ -40,7 +40,7 @@ export default function Home(props) {
 				const response = await axios.get(
 					'http://localhost:8080/api/employees/list'
 				);
-				console.log(response);
+				//console.log(response);
 				setEmployeeList(response.data);
 				setData(response.data);
 				setIsLoading(false);

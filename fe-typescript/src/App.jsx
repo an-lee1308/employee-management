@@ -16,12 +16,12 @@ import { useState } from 'react';
 import ErrorPage from './components/ErrorPage';
 
 function App() {
-	// console.log(
+	// //console.log(
 	// 	'param',
 	// 	useLocation().pathname.slice(0, useLocation().pathname.lastIndexOf('/'))
 	// );
 	const location = useLocation().pathname;
-	console.log(location);
+	//console.log(location);
 	const [render, setRender] = useState(false);
 	function renderPage() {
 		setRender(!render);

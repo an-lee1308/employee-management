@@ -7,12 +7,12 @@ function Statistics(props) {
 	//     some?: any,
 	//     style?: string,
 	// };
-	console.log('stgatics', props.statistics);
+	//console.log('stgatics', props.statistics);
 	const { employeeId, fullName, moneyPerHour, workingInfo, advancesInfo } =
 		props.statistics;
-	console.log(moneyPerHour, workingInfo);
+	//console.log(moneyPerHour, workingInfo);
 	const totalGet = (moneyPerHour, workingInfo) => {
-		console.log(workingInfo);
+		//console.log(workingInfo);
 		let totalHours = workingInfo.reduce((prev, curr) => {
 			return prev + curr.hour;
 		}, 0);
@@ -23,7 +23,7 @@ function Statistics(props) {
 	};
 
 	const totalAdvances = (advancesInfo) => {
-		console.log(advancesInfo);
+		//console.log(advancesInfo);
 		let totalAdvances = advancesInfo.reduce((prev, curr) => {
 			return prev + curr.money;
 		}, 0);

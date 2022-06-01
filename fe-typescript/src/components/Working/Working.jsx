@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Working.scss';
 import 'antd/dist/antd.css';
 import { FaPlusCircle, FaTrashAlt } from 'react-icons/fa';
-import { Table, Space, Form, Modal, Input, DatePicker } from 'antd';
+import { Table, Space, Form, Modal, Input, DatePicker, Checkbox } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -41,9 +41,9 @@ function Working(props) {
 		},
 	];
 	const workingRender = [];
-	console.log('workingInfo', workingInfo);
+	//console.log('workingInfo', workingInfo);
 	workingInfo.sort((a, b) => b.workingId - a.workingId);
-	console.log('workingInfo after sort', workingInfo);
+	//console.log('workingInfo after sort', workingInfo);
 	workingInfo.forEach((working, index) => {
 		workingRender.push({
 			id: working.workingId,
@@ -62,19 +62,25 @@ function Working(props) {
 		},
 	};
 	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [isChecked, setIsChecked] = useState(false);
 	const [valueForm, setvalueForm] = useState({
 		date: moment(Date.now()).format('YYYY/MM/DD'),
 		hour: '',
 	});
 
-	console.log('value form', valueForm);
+	//console.log('value form', valueForm);
+
+	const onChange = (e) => {
+		//console.log(`checked = ${e.target.checked}`);
+		setIsChecked(e.target.checked);
+	};
 
 	const handleDelete = async (id) => {
-		console.log(id);
+		//console.log(id);
 		const response = await axios.delete(
 			`http://localhost:8080/api/working/delete/${id}`
 		);
-		console.log(response);
+		//console.log(response);
 		toast.success(response.data.message);
 		renderPage();
 		setIsModalVisible(false);
@@ -102,20 +108,20 @@ function Working(props) {
 	};
 
 	const handleOk = async () => {
-		console.log(valueForm);
+		//console.log(valueForm);
 		// const isEmpty = Object.values(valueForm).some((x) => x === '');
 		const isEmpty = Object.values(valueForm).every((x) => x !== '');
-		console.log(isEmpty);
+		//console.log(isEmpty);
 		const form = new FormData();
 		if (isEmpty) {
-			console.log('value fornm', valueForm);
-			console.log('đủ trường thì nhảy vào đây');
+			//console.log('value fornm', valueForm);
+			//console.log('đủ trường thì nhảy vào đây');
 			form.append('date', moment(valueForm.date).format('YYYY/MM/DD'));
 			form.append('hour', valueForm.hour);
 			form.append('employeeModel', employeeId);
 
 			for (var pair of form.entries()) {
-				console.log(pair[0] + ', ' + pair[1]);
+				//console.log(pair[0] + ', ' + pair[1]);
 			}
 			try {
 				const response = await axios.post(
@@ -127,17 +133,18 @@ function Working(props) {
 						},
 					}
 				);
-				console.log('response sau update', response);
+				//console.log('response sau update', response);
 				toast.success(response.data.message);
 				renderPage();
-				setIsModalVisible(false);
+
 				resetForm();
+				isChecked ? setIsModalVisible(true) : setIsModalVisible(false);
 			} catch (error) {
-				console.log(error);
+				//console.log(error);
 			}
 		} else {
 			toast.error('Vui lòng điền đầy đủ các trường');
-			console.log('văng');
+			//console.log('văng');
 		}
 	};
 
@@ -163,8 +170,9 @@ function Working(props) {
 						/>
 					</Form.Item>
 					<Form.Item label='Hour'>
-						<Input onChange={onChangeForm} name='hour' />
+						<Input onChange={onChangeForm} name='hour' value={valueForm.hour} />
 					</Form.Item>
+					<Checkbox onChange={onChange}>Add more</Checkbox>
 				</Form>
 			</Modal>
 			<div

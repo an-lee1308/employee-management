@@ -16,11 +16,11 @@ function Heading() {
 	// };
 	// const history = useHistory();
 	// const handleOnClickEmployee = () => {
-	// 	console.log(history);
+	// 	//console.log(history);
 	// 	history.push('/employee');
 	// };
 	// const handleOnClickTeam = () => {
-	// 	console.log(history);
+	// 	//console.log(history);
 	// 	history.push('/teams');
 	// };
 
@@ -30,7 +30,7 @@ function Heading() {
 	//     Modal?: any
 	// };
 	const location = useLocation();
-	console.log(location);
+	//console.log(location);
 	let flag = '';
 	location.pathname === 'teams' ? (flag = 'team') : (flag = '');
 	return (

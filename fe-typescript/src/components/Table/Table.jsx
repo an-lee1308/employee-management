@@ -20,7 +20,7 @@ const TableUI = (props) => {
 
 	const rowSelection = {
 		onChange: (selectedRowKeys, selectedRows) => {
-			console.log(
+			//console.log(
 				`selectedRowKeys: ${selectedRowKeys}`,
 				'selectedRows: ',
 				selectedRows
@@ -29,7 +29,7 @@ const TableUI = (props) => {
 			coppyArray = selectedRows.map((selected) => {
 				return selected.id;
 			});
-			console.log('coppyArray', coppyArray);
+			//console.log('coppyArray', coppyArray);
 			getSelected(coppyArray);
 		},
 	};
@@ -70,9 +70,9 @@ const TableUI = (props) => {
 	];
 
 	const handleDeleteAnEmployee = (data) => {
-		console.log('log', data);
+		//console.log('log', data);
 		function showPromiseConfirm(data) {
-			console.log('data in modal', data);
+			//console.log('data in modal', data);
 			confirm({
 				title: 'Are you sure to delete employee ?',
 				icon: <ExclamationCircleOutlined />,
@@ -84,7 +84,7 @@ const TableUI = (props) => {
 							// `http://localhost:8080/api/employees/${data}`
 							`http://localhost:8080/api/employees/delete/${data}`
 						);
-						console.log(response);
+						//console.log(response);
 						renderPage();
 						toast.success(response.data.message);
 					} catch (error) {
@@ -92,20 +92,20 @@ const TableUI = (props) => {
 					}
 					return new Promise((resolve, reject) => {
 						setTimeout(Math.random() > 0.5 ? resolve : reject, 400);
-					}).catch(() => console.log('Oops errors!'));
+					}).catch(() => //console.log('Oops errors!'));
 				},
 				onCancel() {},
 			});
 		}
 		showPromiseConfirm(data);
 		// if (window.confirm('Are you sure you want to delete') === true) {
-		// 	console.log(`cho phép gửi api xóa ${data}`);
+		// 	//console.log(`cho phép gửi api xóa ${data}`);
 		// 	try {
 		// 		const response = await axios.delete(
 		// 			// `http://localhost:8080/api/employees/${data}`
 		// 			`http://localhost:8080/api/employees/delete/${data}`
 		// 		);
-		// 		console.log(response);
+		// 		//console.log(response);
 		// 		renderPage();
 		// 		toast.success(response.data.message);
 		// 	} catch (error) {
@@ -113,9 +113,9 @@ const TableUI = (props) => {
 		// 	}
 		// }
 	};
-	console.log('rerender');
+	//console.log('rerender');
 	const employeeRender = [];
-	console.log(employeeRender);
+	//console.log(employeeRender);
 	const { employeeList } = props;
 	employeeList.forEach(async (employee, index) => {
 		await employeeRender.push({

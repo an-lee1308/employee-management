@@ -39,7 +39,7 @@
 	  -webkit-transition: background-color 100ms linear;
 	  -ms-transition: background-color 100ms linear;
 	   transition: background-color 100ms linear;
-	   color: #3498db;
+	   color: #077bc9;
 	display: inline-block;
 	text-align: center;
   }
@@ -49,30 +49,30 @@
   }
   
   .btn-round-1 {
-	border-radius: 20px;
+	border-radius: 10px;
   }
   
   .btn-round-2 {
-	border-radius: 20px;
+	border-radius: 10px;
   }
 
   
   .btn-light {
 	background: #ededed;
-	color: #3498db;
+	color: #077bc9;
   }
   
   .btn-light:hover {
 	background: #dbdbdb;
-	color: #3498db;
+	color: #077bc9;
   }
   
   .btn-active {
-	background: #3498db;
+	background: #077bc9;
 	color: #ffffff!important;
   }
   
   .btn-active:hover {
-	background: #2980b9;
+	background: #077bc9;
 	color: #ffffff;
   }

@@ -14,14 +14,14 @@ function TableTeamList(props) {
 
 	const teamRender = [];
 	teamList.forEach((team, index) => {
-		// console.log(employee);
+		// //console.log(employee);
 		// const employeeObject = {
 		// 	no: index,
 		// 	fullname: employee.fullName,
 		// 	phone: employee.phoneNumber,
 		// 	team: employee.teamID,
 		// };
-		// console.log('employee object', employeeObject);
+		// //console.log('employee object', employeeObject);
 		teamRender.push({
 			id: team.teamId,
 			no: index + 1,
@@ -47,7 +47,7 @@ function TableTeamList(props) {
 					<div
 						style={{ cursor: 'pointer' }}
 						onClick={() => {
-							console.log(piece.id);
+							//console.log(piece.id);
 							history.push(`/teams/${piece.id}`);
 						}}
 					>

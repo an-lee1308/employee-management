@@ -11,7 +11,7 @@ function Container(props) {
 
 	const { total } = props;
 	const onSearch = (e) => {
-		console.log(e);
+		//console.log(e);
 	};
 	return (
 		<>

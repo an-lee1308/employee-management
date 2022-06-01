@@ -33,7 +33,7 @@ const { confirm } = Modal;
 const { TabPane } = Tabs;
 
 function callback(key) {
-	console.log(key);
+	//console.log(key);
 }
 
 function EmployeeDetail(props) {
@@ -60,7 +60,7 @@ function EmployeeDetail(props) {
 		ImageUrl: '',
 	});
 	const history = useHistory();
-	// console.log(id);
+	// //console.log(id);
 
 	useEffect(() => {
 		async function getEmployee() {
@@ -84,15 +84,15 @@ function EmployeeDetail(props) {
 			});
 
 			setIsLoading(false);
-			console.log('response', response.data);
+			//console.log('response', response.data);
 		}
 		getEmployee();
 	}, [id, render]);
 
 	function handleDelete(id) {
-		console.log(id);
+		//console.log(id);
 		function showPromiseConfirm(id) {
-			console.log('data in modal', id);
+			//console.log('data in modal', id);
 			confirm({
 				title: 'Are you sure to delete employee ?',
 				icon: <ExclamationCircleOutlined />,
@@ -104,7 +104,7 @@ function EmployeeDetail(props) {
 							// `http://localhost:8080/api/employees/${data}`
 							`http://localhost:8080/api/employees/delete/${id}`
 						);
-						console.log(response);
+						//console.log(response);
 						toast.success(response.data.message);
 						history.push('/employee');
 					} catch (error) {
@@ -120,8 +120,8 @@ function EmployeeDetail(props) {
 		showPromiseConfirm(id);
 	}
 
-	console.log('set state', dataEmployee);
-	console.log('set value form', valueForm);
+	//console.log('set state', dataEmployee);
+	//console.log('set value form', valueForm);
 
 	const {
 		address,
@@ -159,10 +159,10 @@ function EmployeeDetail(props) {
 	};
 
 	function onChangeFormUpload(e) {
-		console.log(e.file.originFileObj);
+		//console.log(e.file.originFileObj);
 		if (e.fileList.length > 0) {
 			var src = URL.createObjectURL(e.file.originFileObj);
-			console.log('Lofg src', src);
+			//console.log('Lofg src', src);
 		}
 		setvalueForm({
 			...valueForm,
@@ -198,7 +198,7 @@ function EmployeeDetail(props) {
 	}
 
 	const onFinish = (values) => {
-		console.log('Received values of form: ', values);
+		//console.log('Received values of form: ', values);
 	};
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -208,60 +208,69 @@ function EmployeeDetail(props) {
 	};
 
 	const handleOk = async () => {
-		console.log(valueForm);
+		//console.log(valueForm);
 		// const isEmpty = Object.values(valueForm).some((x) => x === '');
 		const isEmpty = Object.values(valueForm).every((x) => x !== '');
-		console.log(isEmpty);
+		//console.log(isEmpty);
 		const form = new FormData();
 		if (isEmpty) {
-			console.log('value fornm', valueForm);
-			console.log('đủ trường thì nhảy vào đây');
-			if (valueForm.image) {
-				form.append('fullName', valueForm.fullname);
-				form.append('age', valueForm.age);
-				form.append('address', valueForm.address);
-				form.append('gender', valueForm.gender);
-				form.append('phoneNumber', valueForm.phonenumber);
-				form.append('moneyPerHour', valueForm.moneyperhour);
-				form.append('startDay', valueForm.startday);
-				form.append('totalHours', valueForm.totalhours);
-				form.append('file', valueForm.image);
+			//console.log('value fornm', valueForm);
+			//console.log('đủ trường thì nhảy vào đây');
 
-				form.append('employeeTeam', valueForm.employeeteam);
-				console.log('có ảnh');
+			form.append('fullName', valueForm.fullname);
+			form.append('age', valueForm.age);
+			form.append('address', valueForm.address);
+			form.append('gender', valueForm.gender);
+			form.append('phoneNumber', valueForm.phonenumber);
+			form.append('moneyPerHour', valueForm.moneyperhour);
+			form.append('startDay', valueForm.startday);
+			form.append('totalHours', valueForm.totalhours);
+
+			form.append('employeeTeam', valueForm.employeeteam);
+			//console.log('có ảnh');
+			if (valueForm.image) {
+				form.append('file', valueForm.image);
+				try {
+					const response = await axios.put(
+						`http://localhost:8080/api/employees/update/${id}`,
+						form,
+						{
+							headers: {
+								'Content-Type': 'multipart/form-data',
+							},
+						}
+					);
+					//console.log('response sau update', response);
+					toast.success(response.data.message);
+					renderPage();
+					setIsModalVisible(false);
+					resetForm();
+				} catch (error) {
+					//console.log(error);
+				}
 			} else {
-				form.append('fullName', valueForm.fullname);
-				form.append('age', valueForm.age);
-				form.append('address', valueForm.address);
-				form.append('gender', valueForm.gender);
-				form.append('phoneNumber', valueForm.phonenumber);
-				form.append('moneyPerHour', valueForm.moneyperhour);
-				form.append('startDay', valueForm.startday);
-				form.append('totalHours', valueForm.totalhours);
-				// form.append('file', '');
-				form.append('employeeTeam', valueForm.employeeteam);
-				console.log('ko có ảnh');
+				try {
+					const response = await axios.put(
+						`http://localhost:8080/api/employees/update-no-file/${id}`,
+						form,
+						{
+							headers: {
+								'Content-Type': 'multipart/form-data',
+							},
+						}
+					);
+					//console.log(response);
+					toast.success(response.data.message);
+					renderPage();
+					setIsModalVisible(false);
+					resetForm();
+				} catch (error) {
+					//console.log(error);
+				}
 			}
+
 			for (var pair of form.entries()) {
-				console.log(pair[0] + ', ' + pair[1]);
-			}
-			try {
-				const response = await axios.put(
-					`http://localhost:8080/api/employees/update/${id}`,
-					form,
-					{
-						headers: {
-							'Content-Type': 'multipart/form-data',
-						},
-					}
-				);
-				console.log('response sau update', response);
-				toast.success(response.data.message);
-				renderPage();
-				setIsModalVisible(false);
-				resetForm();
-			} catch (error) {
-				console.log(error);
+				//console.log(pair[0] + ', ' + pair[1]);
 			}
 		} else {
 			// setIsModalVisible(false);
@@ -269,7 +278,7 @@ function EmployeeDetail(props) {
 
 			// var form = new FormData();
 			toast.error('Vui lòng điền đầy đủ các trường');
-			console.log('văng');
+			//console.log('văng');
 			onFinish();
 		}
 	};
@@ -279,7 +288,7 @@ function EmployeeDetail(props) {
 	};
 
 	if (isLoading) {
-		console.log(isLoading);
+		//console.log(isLoading);
 	} else {
 		return (
 			<>

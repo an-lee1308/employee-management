@@ -2,12 +2,17 @@ import { FaPlusCircle, FaTrashAlt } from 'react-icons/fa';
 import { useState } from 'react';
 import 'antd/dist/antd.css';
 import { Form, Select, Input, Button, Upload, Modal, DatePicker } from 'antd';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import {
+	UploadOutlined,
+	InboxOutlined,
+	ExclamationCircleOutlined,
+} from '@ant-design/icons';
 import './HeadContainer.scss';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 
+const { confirm } = Modal;
 // const formData = new formData();
 
 function HeadContainer(props) {
@@ -28,21 +33,21 @@ function HeadContainer(props) {
 		moneyperhour: '',
 		employeeteam: '',
 	});
-	console.log(selectedDelete, 'selectedDelete in head container');
+	//console.log(selectedDelete, 'selectedDelete in head container');
 	const [teamList, setTeamList] = useState([]);
 	useEffect(() => {
 		async function getTeamList() {
 			// SetLoading(true);
 			const response = await axios.get(`http://localhost:8080/api/team/list`);
 
-			console.log('response', response.data);
+			//console.log('response', response.data);
 			setTeamList(response.data);
 		}
 		getTeamList();
 	}, []);
-	console.log(valueForm);
+	//console.log(valueForm);
 	function onChangeFormSelect(e) {
-		console.log(e);
+		//console.log(e);
 		setvalueForm({
 			...valueForm,
 			gender: e,
@@ -50,10 +55,10 @@ function HeadContainer(props) {
 	}
 
 	function onChangeFormUpload(e) {
-		console.log(e.file.originFileObj);
+		//console.log(e.file.originFileObj);
 		if (e.fileList.length > 0) {
 			var src = URL.createObjectURL(e.file.originFileObj);
-			console.log('Lofg src', src);
+			//console.log('Lofg src', src);
 		}
 		setvalueForm({
 			...valueForm,
@@ -68,7 +73,7 @@ function HeadContainer(props) {
 	};
 
 	function onChangeFormSelectTeam(e) {
-		console.log(e);
+		//console.log(e);
 		setvalueForm({
 			...valueForm,
 			employeeteam: e,
@@ -76,7 +81,7 @@ function HeadContainer(props) {
 	}
 
 	function onChangeDatePicker(e) {
-		console.log(e._d);
+		//console.log(e._d);
 		setvalueForm({
 			...valueForm,
 			startday: e._d,
@@ -105,17 +110,46 @@ function HeadContainer(props) {
 	}
 
 	const handleDelete = async (selectedDelete) => {
-		console.log('handle delete', selectedDelete);
-		try {
-			const response = await axios.delete(
-				`http://localhost:8080/api/employees/delete`,
-				{ data: selectedDelete }
-			);
-			console.log(response);
-			renderPage();
-		} catch (e) {
-			console.log(e);
+		//console.log('handle delete', selectedDelete);
+		// try {
+		// 	const response = await axios.delete(
+		// 		`http://localhost:8080/api/employees/delete`,
+		// 		{ data: selectedDelete }
+		// 	);
+		// 	//console.log(response);
+		// 	renderPage();
+		// } catch (e) {
+		// 	//console.log(e);
+		// }
+
+		function showPromiseConfirm(selectedDelete) {
+			//console.log('data in modal', selectedDelete);
+			confirm({
+				title: 'Are you sure to delete employee ?',
+				icon: <ExclamationCircleOutlined />,
+				// content:
+				// 	'When clicked the OK button, this dialog will be closed after 1 second',
+				async onOk() {
+					try {
+						const response = await axios.delete(
+							`http://localhost:8080/api/employees/delete`,
+							{ data: selectedDelete }
+						);
+						//console.log(response);
+						toast.success(response.data.message);
+						renderPage();
+					} catch (error) {
+						toast.error(error);
+					}
+					return new Promise((resolve, reject) => {
+						setTimeout(Math.random() > 0.5 ? resolve : reject, 100);
+					}).catch(() => console.log('Oops errors!'));
+				},
+				onCancel() {},
+			});
 		}
+		showPromiseConfirm(selectedDelete);
+
 		//truyền mảng vô data là dc
 	};
 	// const { Option } = Select;
@@ -129,18 +163,16 @@ function HeadContainer(props) {
 	};
 
 	const normFile = (e) => {
-		console.log('Upload event:', e);
-		console.log('Test', e.file);
-
+		//console.log('Upload event:', e);
+		//console.log('Test', e.file);
 		// if (Array.isArray(e)) {
 		// 	return e;
 		// }
-
 		// return e && e.fileList;
 	};
 
 	const onFinish = (values) => {
-		console.log('Received values of form: ', values);
+		//console.log('Received values of form: ', values);
 	};
 
 	const [isModalVisible, setIsModalVisible] = useState(false);
@@ -150,14 +182,14 @@ function HeadContainer(props) {
 	};
 
 	const handleOk = async () => {
-		console.log(valueForm);
+		//console.log(valueForm);
 		// const isEmpty = Object.values(valueForm).some((x) => x === '');
 		const isEmpty = Object.values(valueForm).every((x) => x !== '');
-		console.log(isEmpty);
+		//console.log(isEmpty);
 		const form = new FormData();
 		if (isEmpty) {
-			console.log('value fornm', valueForm);
-			console.log('đủ trường thì nhảy vào đây');
+			//console.log('value fornm', valueForm);
+			//console.log('đủ trường thì nhảy vào đây');
 			form.append('fullName', valueForm.fullname);
 			form.append('age', valueForm.age);
 			form.append('address', valueForm.address);
@@ -166,28 +198,51 @@ function HeadContainer(props) {
 			form.append('moneyPerHour', valueForm.moneyperhour);
 			form.append('startDay', valueForm.startday);
 			form.append('totalHours', valueForm.totalhours);
-			form.append('file', valueForm.image);
 			form.append('employeeTeam', valueForm.employeeteam);
-			for (var pair of form.entries()) {
-				console.log(pair[0] + ', ' + pair[1]);
+			// form.append('file', valueForm.image);
+			if (valueForm.image) {
+				form.append('file', valueForm.image);
+				try {
+					const response = await axios.post(
+						`http://localhost:8080/api/employees/create`,
+						form,
+						{
+							headers: {
+								'Content-Type': 'multipart/form-data',
+							},
+						}
+					);
+					//console.log(response);
+					toast.success(response.data.message);
+					renderPage();
+					setIsModalVisible(false);
+					resetForm();
+				} catch (error) {
+					//console.log(error);
+				}
+			} else {
+				try {
+					const response = await axios.post(
+						`http://localhost:8080/api/employees/create-no-file`,
+						form,
+						{
+							headers: {
+								'Content-Type': 'multipart/form-data',
+							},
+						}
+					);
+					//console.log(response);
+					toast.success(response.data.message);
+					renderPage();
+					setIsModalVisible(false);
+					resetForm();
+				} catch (error) {
+					//console.log(error);
+				}
 			}
-			try {
-				const response = await axios.post(
-					`http://localhost:8080/api/employees/create`,
-					form,
-					{
-						headers: {
-							'Content-Type': 'multipart/form-data',
-						},
-					}
-				);
-				console.log(response);
-				toast.success(response.data.message);
-				renderPage();
-				setIsModalVisible(false);
-				resetForm();
-			} catch (error) {
-				throw new Error('Fail to post this datta');
+
+			for (var pair of form.entries()) {
+				//console.log(pair[0] + ', ' + pair[1]);
 			}
 		} else {
 			// setIsModalVisible(false);
@@ -195,7 +250,7 @@ function HeadContainer(props) {
 
 			// var form = new FormData();
 			toast.error('Vui lòng điền đầy đủ các trường');
-			console.log('văng');
+			//console.log('văng');
 			onFinish();
 		}
 	};
@@ -358,7 +413,7 @@ function HeadContainer(props) {
 						label='Upload image'
 						// valuePropName='fileList'
 						// getValueFromEvent={normFile}
-						// onChange={(e) => console.log(e)}
+						// onChange={(e) => //console.log(e)}
 						// name='image'
 						// hasFeedback
 						// rules={[

@@ -25,14 +25,14 @@ function Teams(props) {
 	});
 
 	const { id } = useParams();
-	console.log(id);
+	//console.log(id);
 
 	useEffect(() => {
 		async function getTeamList() {
 			// SetLoading(true);
 			const response = await axios.get(`http://localhost:8080/api/team/list`);
 
-			console.log('response', response.data);
+			//console.log('response', response.data);
 			setTeamList(response.data);
 			setIsLoading(false);
 		}
@@ -44,10 +44,10 @@ function Teams(props) {
 			// SetLoading(true);
 			const response = await axios.get(`http://localhost:8080/api/team/${id}`);
 
-			console.log('response data team', response.data);
+			//console.log('response data team', response.data);
 			setTeamMember(response.data);
 		}
-		id ? getTeamMember() : console.log('no call api');
+		id ? getTeamMember() : //console.log('no call api');
 	}, [id]);
 
 	const formItemLayout = {
@@ -59,14 +59,14 @@ function Teams(props) {
 		},
 	};
 
-	console.log('value form', valueForm);
+	//console.log('value form', valueForm);
 
 	const handleDelete = async (id) => {
-		console.log(id);
+		//console.log(id);
 		const response = await axios.delete(
 			`http://localhost:8080/api/working/delete/${id}`
 		);
-		console.log(response);
+		//console.log(response);
 		toast.success(response.data.message);
 		renderPage();
 		setIsModalVisible(false);
@@ -88,18 +88,18 @@ function Teams(props) {
 	};
 
 	const handleOk = async () => {
-		console.log(valueForm);
+		//console.log(valueForm);
 		// const isEmpty = Object.values(valueForm).some((x) => x === '');
 		const isEmpty = Object.values(valueForm).every((x) => x !== '');
-		console.log(isEmpty);
+		//console.log(isEmpty);
 		const form = new FormData();
 		if (isEmpty) {
-			console.log('value fornm', valueForm);
-			console.log('đủ trường thì nhảy vào đây');
+			//console.log('value fornm', valueForm);
+			//console.log('đủ trường thì nhảy vào đây');
 			form.append('name', valueForm.name);
 
 			for (var pair of form.entries()) {
-				console.log(pair[0] + ', ' + pair[1]);
+				//console.log(pair[0] + ', ' + pair[1]);
 			}
 			try {
 				const response = await axios.post(
@@ -111,17 +111,17 @@ function Teams(props) {
 						},
 					}
 				);
-				console.log('response sau update', response);
+				//console.log('response sau update', response);
 				toast.success(response.data.message);
 				renderPage();
 				setIsModalVisible(false);
 				resetForm();
 			} catch (error) {
-				console.log(error);
+				//console.log(error);
 			}
 		} else {
 			toast.error('Vui lòng điền đầy đủ các trường');
-			console.log('văng');
+			//console.log('văng');
 		}
 	};
 

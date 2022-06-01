@@ -52,7 +52,7 @@ import java.util.Optional;
 //        }
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/employees")
+@RequestMapping(value = "/api/employees")
 public class EmployeeController {
 //    public static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
@@ -79,6 +79,7 @@ public class EmployeeController {
 //        }
 //        Integer team=Integer.parseInt(teamId);
 //        System.out.println(teamId);
+        System.out.println("have-file");
         try {
             //save files to a folder => use a service
             String imageUrl = "https://i.stack.imgur.com/l60Hf.png";
@@ -92,6 +93,24 @@ public class EmployeeController {
             System.out.println(employee);
             employee.setImageURL(imageUrl);
 //            employee.getEmployeeTeam().setTeamId(team);
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("OK", "Insert Employee sucessfully", employeeRepository.save(employee))
+            );
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                    new ResponseObject("OK", exception.getMessage(), "")
+            );
+        }
+    }
+
+    @PostMapping("/create-no-file")
+    ResponseEntity<ResponseObject> insertEmployeeNoFile(@ModelAttribute EmployeeModel employee) {
+        System.out.println("no-file");
+        try {
+            //save files to a folder => use a service
+            String imageUrl = "https://i.stack.imgur.com/l60Hf.png";
+            System.out.println(employee);
+            employee.setImageURL(imageUrl);
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ResponseObject("OK", "Insert Employee sucessfully", employeeRepository.save(employee))
             );
@@ -139,8 +158,41 @@ public class EmployeeController {
         }
     }
 
+    @PutMapping("/update-no-file/{id}")
+    ResponseEntity<ResponseObject> updateEmployeeNoFile(@ModelAttribute EmployeeModel newEmployee, @PathVariable int id) {
+        try {
+
+            EmployeeModel updateEmployee = employeeRepository.getById(id);
+            String imageUrl = updateEmployee.getImageURL();
+            String finalImageUrl = imageUrl;
+
+//                    employee.setImageURL(newEmployee.getImageURL());
+            updateEmployee.setFullName(newEmployee.getFullName());
+            updateEmployee.setAge(newEmployee.getAge());
+            updateEmployee.setEmployeeTeam(newEmployee.getEmployeeTeam());
+            updateEmployee.setGender(newEmployee.getGender());
+            updateEmployee.setAddress(newEmployee.getAddress());
+            updateEmployee.setPhoneNumber(newEmployee.getPhoneNumber());
+            updateEmployee.setStartDay(newEmployee.getStartDay());
+            updateEmployee.setMoneyPerHour(newEmployee.getMoneyPerHour());
+            updateEmployee.setTotalHours(newEmployee.getTotalHours());
+            updateEmployee.setImageURL(newEmployee.getImageURL());
+            updateEmployee.setImageURL(finalImageUrl);
+
+
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("ok", "Update sucessfully", employeeRepository.save(updateEmployee))
+            );
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                    new ResponseObject("OK", exception.getMessage(), "")
+            );
+        }
+    }
+
+
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<ResponseObject> deleteEmployeeById(@ModelAttribute int id) {
+    ResponseEntity<ResponseObject> deleteEmployeeById(@PathVariable int id) {
         boolean exist = employeeRepository.existsById(id);
         System.out.println(id);
         if (exist) {

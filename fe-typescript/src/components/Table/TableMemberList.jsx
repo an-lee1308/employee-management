@@ -8,7 +8,7 @@ function TableMemberList(props) {
 	//     style?: string,
 	// };
 	const teamMember = props.teamMember.employee;
-	console.log('team member', teamMember);
+	//console.log('team member', teamMember);
 
 	const meberRender = [];
 	teamMember.forEach((member, index) => {

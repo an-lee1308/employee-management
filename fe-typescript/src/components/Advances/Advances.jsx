@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FaPlusCircle, FaTrashAlt } from 'react-icons/fa';
 import './Advances.scss';
 import 'antd/dist/antd.css';
-import { Table, Space, Form, Modal, Input, DatePicker } from 'antd';
+import { Table, Space, Form, Modal, Input, DatePicker, Checkbox } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -14,19 +14,17 @@ function Advances(props) {
 	// };
 	const { employeeId, renderPage } = props;
 	const { advancesInfo } = props.advances;
-	console.log('advancesInfo', advancesInfo);
 	advancesInfo.sort((a, b) => b.advancesId - a.advancesId);
-	console.log('advancesInfo after sort', advancesInfo);
 	const advancesRender = [];
 	advancesInfo.forEach((advance, index) => {
-		// console.log(employee);
+		// //console.log(employee);
 		// const employeeObject = {
 		// 	no: index,
 		// 	fullname: employee.fullName,
 		// 	phone: employee.phoneNumber,
 		// 	team: employee.teamID,
 		// };
-		// console.log('employee object', employeeObject);
+		// //console.log('employee object', employeeObject);
 		advancesRender.push({
 			id: advance.advancesId,
 			no: index + 1,
@@ -78,19 +76,21 @@ function Advances(props) {
 		date: moment(Date.now()).format('YYYY/MM/DD'),
 		money: '',
 	});
-
-	console.log(valueForm);
+	const [isChecked, setIsChecked] = useState(false);
 
 	const handleDelete = async (id) => {
-		console.log(id);
 		const response = await axios.delete(
 			`http://localhost:8080/api/advances/delete/${id}`
 		);
-		console.log(response);
 		toast.success(response.data.message);
 		renderPage();
 		setIsModalVisible(false);
 		resetForm();
+	};
+
+	const onChange = (e) => {
+		//console.log(`checked = ${e.target.checked}`);
+		setIsChecked(e.target.checked);
 	};
 
 	function onChangeFormDate(e) {
@@ -115,20 +115,18 @@ function Advances(props) {
 	};
 
 	const handleOk = async () => {
-		console.log(valueForm);
 		// const isEmpty = Object.values(valueForm).some((x) => x === '');
 		const isEmpty = Object.values(valueForm).every((x) => x !== '');
-		console.log(isEmpty);
 		const form = new FormData();
 		if (isEmpty) {
-			console.log('value fornm', valueForm);
-			console.log('đủ trường thì nhảy vào đây');
+			//console.log('value fornm', valueForm);
+			//console.log('đủ trường thì nhảy vào đây');
 			form.append('date', moment(valueForm.date).format('YYYY/MM/DD'));
 			form.append('money', valueForm.money);
 			form.append('employeeModel', employeeId);
 
 			for (var pair of form.entries()) {
-				console.log(pair[0] + ', ' + pair[1]);
+				//console.log(pair[0] + ', ' + pair[1]);
 			}
 			try {
 				const response = await axios.post(
@@ -140,17 +138,18 @@ function Advances(props) {
 						},
 					}
 				);
-				console.log('response sau update', response);
+				//console.log('response sau update', response);
 				toast.success(response.data.message);
 				renderPage();
-				setIsModalVisible(false);
+
 				resetForm();
+				isChecked ? setIsModalVisible(true) : setIsModalVisible(false);
 			} catch (error) {
-				console.log(error);
+				//console.log(error);
 			}
 		} else {
 			toast.error('Vui lòng điền đầy đủ các trường');
-			console.log('văng');
+			//console.log('văng');
 		}
 	};
 
@@ -176,8 +175,13 @@ function Advances(props) {
 						/>
 					</Form.Item>
 					<Form.Item label='Money'>
-						<Input onChange={onChangeForm} name='money' />
+						<Input
+							onChange={onChangeForm}
+							name='money'
+							value={valueForm.money}
+						/>
 					</Form.Item>
+					<Checkbox onChange={onChange}>Add more</Checkbox>
 				</Form>
 			</Modal>
 			<div
